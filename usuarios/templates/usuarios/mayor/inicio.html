@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block titulo %}Inicio — ConectaMayor{% endblock %}
+
+{% block estilos_extra %}
+<style>
+    .icono-mayor {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    .btn-mayor {
+        font-size: 1.4rem;
+        padding: 1.5rem;
+        border-radius: 16px;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+    <div class="p-4 rounded mb-4 text-white" style="background-color: var(--color-principal);">
+        <h1 class="mb-0">¡Hola, {{ user.first_name|default:user.username }}! 👋</h1>
+    </div>
+
+    {% if not user.grupo_familiar %}
+    <div class="alert alert-warning">
+        <strong>Aún no perteneces a ningún grupo.</strong>
+        <a href="{% url 'unirse_grupo' %}" class="btn btn-warning ms-2">Unirme con código</a>
+    </div>
+    {% endif %}
+
+    <div class="row g-3 mt-2">
+        <div class="col-6">
+            <a href="{% url 'agenda:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
+                <span class="icono-mayor">📅</span> Agenda
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'mensajes:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
+                <span class="icono-mayor">💬</span> Mensajes
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'galeria:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
+                <span class="icono-mayor">🖼️</span> Fotos
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'contactos:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
+                <span class="icono-mayor">📞</span> Contactos
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

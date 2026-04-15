@@ -1,0 +1,35 @@
+SPRINT 0 — Setup inicial
+Fechas: [fecha inicio] – [fecha fin]
+
+Planificado:
+- Setup entorno Python/Django/SQLite
+- Crear estructura de apps
+- Definir todos los modelos
+
+Hecho:
+- Entorno virtual configurado
+- Proyecto Django arrancando con runserver
+- 5 apps creadas: usuarios, agenda, contactos, mensajes, galeria
+- Modelos definidos y migrados
+- Panel admin funcionando con todos los modelos visibles
+
+Pendiente / Decisiones tomadas:
+- AUTH_USER_MODEL configurado antes de migrate (lección aprendida)
+- SQLite como BD de desarrollo, PostgreSQL como mejora futura
+
+
+SPRINT 1 — Autenticación y roles
+Fechas: [fecha inicio] – hoy
+
+Hecho:
+- Login, logout y registro funcionando
+- Tres roles implementados: mayor, editor, amigo
+- Sistema de vinculación por código FAM-XXXX
+- Cada rol ve una pantalla diferente al hacer login
+- Pantalla del mayor: iconos grandes, saludo personalizado
+- Pantalla del familiar: código del grupo visible para compartir
+
+Decisiones tomadas:
+- URLs temporales con "Próximamente" para módulos del Sprint 2/3
+- El familiar-editor crea el grupo al registrarse
+- El mayor y amigo se unen con código después del registro

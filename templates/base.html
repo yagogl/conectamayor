@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}ConectaMayor{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-principal: #2E86AB;
+            --color-acento: #F6AE2D;
+        }
+        body { font-size: 18px; }
+    </style>
+    {% block estilos_extra %}{% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--color-principal);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'inicio' %}">ConectaMayor</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text text-white me-3">
+                    Hola, {{ user.first_name|default:user.username }}
+                </span>
+                <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Salir</a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    {% if messages %}
+    <div class="container mt-2">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main>
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts_extra %}{% endblock %}
+</body>
+</html>
