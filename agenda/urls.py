@@ -1,13 +1,13 @@
 from django.urls import path
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from . import views
 
 app_name = 'agenda'
 
-@login_required
-def lista(request):
-    return render(request, 'proximamente.html', {'modulo': 'Agenda'})
-
 urlpatterns = [
-    path('', lista, name='lista'),
+    path('', views.lista, name='lista'),
+    path('nuevo/', views.nuevo_recordatorio, name='nuevo'),
+    path('editar/<int:pk>/', views.editar_recordatorio, name='editar'),
+    path('borrar/<int:pk>/', views.borrar_recordatorio, name='borrar'),
+    path('hecho/<int:pk>/', views.marcar_hecho, name='hecho'),
+    path('mas-tarde/<int:pk>/', views.recordar_mas_tarde, name='mas_tarde'),
 ]

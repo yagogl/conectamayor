@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block titulo %}Agenda — ConectaMayor{% endblock %}
+
+{% block estilos_extra %}
+<style>
+    .icono-tipo { font-size: 1.5rem; }
+    .recordatorio-hecho { opacity: 0.5; text-decoration: line-through; }
+    .dia-header {
+        background-color: var(--color-principal);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+    .dia-hoy { background-color: var(--color-acento) !important; color: #333 !important; }
+    {% if user.es_mayor %}
+    .btn { font-size: 1.1rem; padding: 0.6rem 1rem; }
+    {% endif %}
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 style="color: var(--color-principal);">📅 Agenda</h2>
+        {% if user.es_mayor or user.es_editor %}
+        <a href="{% url 'agenda:nuevo' %}" class="btn text-white"
+            style="background-color: var(--color-principal); font-size: {% if user.es_mayor %}1.2rem{% else %}1rem{% endif %};">
+            + Añadir recordatorio
+        </a>
+        {% endif %}
+    </div>
+
+    {% if not mayor %}
+    <div class="alert alert-info">No hay ninguna persona mayor en el grupo todavía.</div>
+    {% else %}
+        {% for dia in dias %}
+        <div class="mb-4">
+            <div class="dia-header {% if dia.es_hoy %}dia-hoy{% endif %}">
+                <strong>
+                    {% if dia.es_hoy %}Hoy — {% endif %}
+                    {{ dia.fecha|date:"l, j \d\e F" }}
+                </strong>
+            </div>
+
+            {% if dia.recordatorios %}
+                {% for rec in dia.recordatorios %}
+                <div class="card mb-2 {% if rec.hecho %}recordatorio-hecho{% endif %}">
+                    <div class="card-body py-2 px-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <span class="icono-tipo me-2">
+                                    {% if rec.tipo == 'pastilla' %}💊
+                                    {% elif rec.tipo == 'medico' %}🏥
+                                    {% elif rec.tipo == 'llamada' %}📞
+                                    {% elif rec.tipo == 'cumple' %}🎂
+                                    {% else %}📌{% endif %}
+                                </span>
+                                <strong>{{ rec.titulo }}</strong>
+                                {% if rec.hora %}
+                                <span class="text-muted ms-2">{{ rec.hora|time:"H:i" }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'agenda:hecho' rec.pk %}"
+                                    class="btn btn-sm {% if rec.hecho %}btn-secondary{% else %}btn-success{% endif %}">
+                                    {% if rec.hecho %}↩ Deshacer{% else %}✓ Hecho{% endif %}
+                                </a>
+                                {% if not rec.hecho %}
+                                <a href="{% url 'agenda:mas_tarde' rec.pk %}"
+                                    class="btn btn-sm btn-outline-secondary">
+                                    ⏰ Mañana
+                                </a>
+                                {% endif %}
+                                {% if user.es_editor %}
+                                <a href="{% url 'agenda:editar' rec.pk %}"
+                                    class="btn btn-sm btn-outline-primary">✏️</a>
+                                <a href="{% url 'agenda:borrar' rec.pk %}"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('¿Eliminar este recordatorio?')">🗑️</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted ps-2">Sin recordatorios.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
