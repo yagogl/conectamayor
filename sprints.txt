@@ -41,3 +41,12 @@ Hecho:
 - Contactos: lista por categorías, botón llamar, añadir/editar/borrar
 - Doble interfaz: formulario simplificado para mayor, completo para editor
 - El editor gestiona los datos del mayor desde su propia cuenta
+
+
+SPRINT 3 — Mensajes y Galería
+Hecho:
+- Chat 1 a 1 con AJAX polling cada 5 segundos
+- Burbujas de colores diferenciando mensajes propios y recibidos
+- Galería con subida de fotos, vista en mosaico y detalle
+- Comentarios en cada foto
+- Acceso privado: solo usuarios del grupo familiar
