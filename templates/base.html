@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,13 +7,7 @@
     <title>{% block titulo %}ConectaMayor{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --color-principal: #2E86AB;
-            --color-acento: #F6AE2D;
-        }
-        body { font-size: 18px; }
-    </style>
+    <link href="{% static 'css/temas.css' %}" rel="stylesheet">
     {% block estilos_extra %}{% endblock %}
 </head>
 <body>
@@ -20,8 +15,22 @@
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--color-principal);">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{% url 'inicio' %}">ConectaMayor</a>
-            <div class="navbar-nav ms-auto">
-                <span class="navbar-text text-white me-3">
+            <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-2">
+
+                <!-- Selector de temas -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-sm dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown" aria-label="Cambiar tema visual">
+                        🎨
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTema('claro')">☀️ Claro</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTema('oscuro')">🌙 Oscuro</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTema('contraste')">⚡ Alto contraste</a></li>
+                    </ul>
+                </div>
+
+                <span class="navbar-text text-white">
                     Hola, {{ user.first_name|default:user.username }}
                 </span>
                 <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Salir</a>
@@ -33,19 +42,38 @@
     {% if messages %}
     <div class="container mt-2">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show">
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <main>
+    <main role="main">
         {% block contenido %}{% endblock %}
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Temas visuales con CSS variables
+        function cambiarTema(tema) {
+            if (tema === 'claro') {
+                document.documentElement.removeAttribute('data-tema');
+            } else {
+                document.documentElement.setAttribute('data-tema', tema);
+            }
+            localStorage.setItem('tema', tema);
+        }
+
+        // Recuperar tema guardado al cargar
+        const temaGuardado = localStorage.getItem('tema');
+        if (temaGuardado && temaGuardado !== 'claro') {
+            document.documentElement.setAttribute('data-tema', temaGuardado);
+        }
+    </script>
+
     {% block scripts_extra %}{% endblock %}
 </body>
 </html>
