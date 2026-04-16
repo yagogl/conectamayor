@@ -1,13 +1,10 @@
 from django.urls import path
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from . import views
 
 app_name = 'mensajes'
 
-@login_required
-def lista(request):
-    return render(request, 'proximamente.html', {'modulo': 'Mensajes'})
-
 urlpatterns = [
-    path('', lista, name='lista'),
+    path('', views.lista, name='lista'),
+    path('<int:usuario_id>/', views.conversacion, name='conversacion'),
+    path('<int:usuario_id>/nuevos/', views.mensajes_nuevos, name='nuevos'),
 ]

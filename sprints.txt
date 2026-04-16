@@ -33,3 +33,11 @@ Decisiones tomadas:
 - URLs temporales con "Próximamente" para módulos del Sprint 2/3
 - El familiar-editor crea el grupo al registrarse
 - El mayor y amigo se unen con código después del registro
+
+
+SPRINT 2 — Agenda y Contactos
+Hecho:
+- Agenda: vista 7 días, añadir/editar/borrar, marcar hecho, mover a mañana
+- Contactos: lista por categorías, botón llamar, añadir/editar/borrar
+- Doble interfaz: formulario simplificado para mayor, completo para editor
+- El editor gestiona los datos del mayor desde su propia cuenta
