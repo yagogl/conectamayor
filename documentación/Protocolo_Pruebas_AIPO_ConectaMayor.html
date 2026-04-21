@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo de Pruebas AIPO — ConectaMayor</title>
+<style>
+  @media print {
+    .no-print { display: none !important; }
+    body { font-size: 11pt; }
+    .page-break { page-break-before: always; }
+    textarea { border: 1px solid #ccc !important; }
+    input[type="text"] { border-bottom: 1px solid #ccc !important; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; font-size: 14px; color: #222; line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 40px 30px; background: #fff; }
+  h1 { font-size: 1.6em; color: #1a6e8e; border-bottom: 3px solid #1a6e8e; padding-bottom: 6px; margin: 40px 0 16px; }
+  h2 { font-size: 1.25em; color: #1a6e8e; margin: 28px 0 12px; }
+  h3 { font-size: 1.1em; color: #555; margin: 20px 0 8px; }
+  p { margin: 8px 0; }
+  ul { margin: 8px 0 8px 24px; }
+  li { margin: 4px 0; }
+
+  /* Portada */
+  .portada { text-align: center; padding: 60px 0 30px; }
+  .portada h1 { font-size: 2em; border: none; color: #1a6e8e; }
+  .portada h2 { font-size: 2.5em; color: #1a6e8e; margin: 10px 0 20px; }
+  .portada p { color: #555; font-size: 1.05em; }
+
+  /* Tabla info portada */
+  .tabla-info { margin: 30px auto; border-collapse: collapse; width: 70%; }
+  .tabla-info td { padding: 10px 16px; border: 1px solid #bbb; }
+  .tabla-info td:first-child { background: #eff5f8; font-weight: bold; width: 120px; }
+
+  /* Campos rellenables */
+  input[type="text"] { border: none; border-bottom: 2px solid #1a6e8e; padding: 4px 8px; font-family: inherit; font-size: inherit; width: 350px; outline: none; background: #f9fcfe; }
+  input[type="text"]:focus { border-bottom-color: #d4940a; background: #fffef5; }
+  input[type="text"].corto { width: 150px; }
+  input[type="text"].largo { width: 100%; }
+
+  textarea { width: 100%; min-height: 90px; border: 2px solid #ddd; border-radius: 6px; padding: 10px; font-family: inherit; font-size: inherit; resize: vertical; background: #f9fcfe; outline: none; }
+  textarea:focus { border-color: #1a6e8e; background: #fffef5; }
+
+  /* Checkboxes */
+  .checkbox-group { margin: 8px 0 8px 16px; }
+  .checkbox-group label { display: block; padding: 4px 0; cursor: pointer; font-size: 0.95em; }
+  .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-right: 8px; vertical-align: middle; cursor: pointer; accent-color: #1a6e8e; }
+
+  /* Caja de aviso */
+  .aviso { background: #fff4e0; border: 1px solid #e6c97a; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+  .aviso strong { color: #b8860b; }
+
+  /* Caja de texto para leer */
+  .texto-leer { background: #f7f9fc; border: 1px solid #ccc; border-radius: 8px; padding: 20px; margin: 16px 0; font-style: italic; color: #444; }
+  .texto-leer strong { color: #1a6e8e; font-style: normal; }
+
+  /* Bloque de tarea */
+  .tarea { margin: 30px 0; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #fafbfc; }
+  .tarea-titulo { font-size: 1.2em; font-weight: bold; color: #1a6e8e; border-bottom: 2px solid #1a6e8e; padding-bottom: 6px; margin-bottom: 12px; }
+  .tarea .instruccion { font-style: italic; background: #f0f7fa; padding: 10px 14px; border-radius: 6px; margin: 10px 0; }
+
+  /* Tabla valoración */
+  table.valoracion { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  table.valoracion th { background: #1a6e8e; color: white; padding: 10px; text-align: left; }
+  table.valoracion td { padding: 10px; border: 1px solid #ddd; }
+  table.valoracion tr:nth-child(even) td { background: #f5f5f5; }
+  table.valoracion input[type="text"] { width: 60px; text-align: center; }
+
+  /* Tabla problemas */
+  table.problemas { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  table.problemas th { background: #1a6e8e; color: white; padding: 10px; text-align: left; }
+  table.problemas td { padding: 8px; border: 1px solid #ddd; vertical-align: top; }
+  table.problemas input[type="text"] { width: 100%; }
+  table.problemas select { padding: 4px; font-family: inherit; border: 1px solid #ccc; border-radius: 4px; }
+
+  /* Botón imprimir/guardar */
+  .barra-acciones { position: fixed; top: 0; left: 0; right: 0; background: #1a6e8e; padding: 10px 20px; display: flex; justify-content: center; gap: 12px; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .barra-acciones button { padding: 8px 24px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold; }
+  .btn-imprimir { background: #d4940a; color: white; }
+  .btn-imprimir:hover { background: #b8800a; }
+  .btn-guardar { background: white; color: #1a6e8e; }
+  .btn-guardar:hover { background: #e8e8e8; }
+  body { padding-top: 60px; }
+
+  /* Firma */
+  .firma { display: flex; justify-content: space-between; margin: 30px 0; }
+  .firma-bloque { width: 45%; }
+  .firma-linea { border-bottom: 1px solid #333; height: 50px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<!-- BARRA DE ACCIONES -->
+<div class="barra-acciones no-print">
+  <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  <button class="btn-guardar" onclick="guardarDatos()">💾 Guardar borrador</button>
+  <button class="btn-guardar" onclick="cargarDatos()">📂 Cargar borrador</button>
+</div>
+
+<!-- ==================== PORTADA ==================== -->
+<div class="portada">
+  <h1>Protocolo de Pruebas de Usabilidad</h1>
+  <h2>ConectaMayor</h2>
+  <p>Aplicación web para la inclusión digital de personas mayores</p>
+  <p style="margin-top: 30px;">Trabajo Fin de Grado — Ingeniería Informática</p>
+  <p>Escuela Politécnica Superior — Universidad Autónoma de Madrid</p>
+  <p style="color: #888; margin-top: 10px;">Metodología basada en AIPO — Asociación Interacción Persona-Ordenador</p>
+
+  <table class="tabla-info" style="margin-top: 40px;">
+    <tr><td>Autor</td><td>Yago Gamo López</td></tr>
+    <tr><td>Fecha</td><td><input type="text" class="corto" placeholder="DD/MM/AAAA" data-id="fecha_sesion"></td></tr>
+    <tr><td>Sesión</td><td>
+      <label><input type="checkbox" data-id="sesion_p1"> P1</label>
+      <label style="margin-left: 16px;"><input type="checkbox" data-id="sesion_p2"> P2</label>
+    </td></tr>
+  </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 1. INTRODUCCIÓN ==================== -->
+<h1>1. Introducción y contexto de la prueba</h1>
+
+<p>ConectaMayor es una aplicación web diseñada para conectar a personas mayores con sus familiares a través de un espacio privado y sencillo. La aplicación ha sido desarrollada como Trabajo Fin de Grado siguiendo una metodología de Diseño Centrado en el Usuario (DCU), por lo que la evaluación con usuarios reales es una parte fundamental del proyecto.</p>
+
+<p>Este documento recoge el protocolo completo de evaluación de usabilidad y permite registrar las observaciones durante la sesión con un participante. Los resultados obtenidos servirán para identificar mejoras de diseño que se aplicarán antes de la entrega final del TFG.</p>
+
+<h2>Objetivos de la evaluación</h2>
+<ul>
+  <li>Verificar que la interfaz simplificada del rol «persona mayor» resulta comprensible y usable.</li>
+  <li>Identificar puntos de fricción o confusión en los flujos principales (agenda, contactos, mensajes, galería).</li>
+  <li>Detectar elementos visuales o textuales que no cumplan las expectativas del usuario.</li>
+  <li>Recoger valoraciones subjetivas sobre la utilidad percibida de la aplicación.</li>
+</ul>
+
+<h2>Método</h2>
+<p>Se sigue una evaluación tipo «Think Aloud» (pensamiento en voz alta) con observación directa no participante. El participante realiza un conjunto predefinido de tareas representativas mientras verbaliza sus pensamientos. El evaluador toma notas sin intervenir salvo en caso de bloqueo prolongado.</p>
+
+<div class="page-break"></div>
+
+<!-- ==================== 2. DATOS DEL PARTICIPANTE ==================== -->
+<h1>2. Datos del participante</h1>
+
+<p>Esta información se recoge de forma anonimizada. No se registra ni el nombre real ni ningún dato identificativo del participante. En la memoria del TFG se hará referencia al participante como «P1» o «P2».</p>
+
+<h2>Identificación anónima</h2>
+<p><strong>Código del participante:</strong> <input type="text" class="corto" placeholder="P1 / P2" data-id="codigo_part"></p>
+<p><strong>Fecha de la sesión:</strong> <input type="text" class="corto" placeholder="DD/MM/AAAA" data-id="fecha_part"></p>
+<p><strong>Hora de inicio:</strong> <input type="text" class="corto" placeholder="HH:MM" data-id="hora_inicio"> &nbsp; <strong>Hora de fin:</strong> <input type="text" class="corto" placeholder="HH:MM" data-id="hora_fin"></p>
+<p><strong>Lugar de realización:</strong> <input type="text" placeholder="Ej: domicilio del participante" data-id="lugar"></p>
+
+<h2>Perfil del participante</h2>
+
+<p><strong>Edad aproximada:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="edad_60_70"> Entre 60 y 70 años</label>
+  <label><input type="checkbox" data-id="edad_70_80"> Entre 70 y 80 años</label>
+  <label><input type="checkbox" data-id="edad_80"> Más de 80 años</label>
+</div>
+
+<p><strong>Sexo:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="sexo_h"> Hombre</label>
+  <label><input type="checkbox" data-id="sexo_m"> Mujer</label>
+  <label><input type="checkbox" data-id="sexo_nd"> Prefiere no decirlo</label>
+</div>
+
+<p><strong>Nivel de estudios:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="est_primarios"> Sin estudios o estudios primarios</label>
+  <label><input type="checkbox" data-id="est_secundarios"> Estudios secundarios</label>
+  <label><input type="checkbox" data-id="est_universitarios"> Estudios universitarios</label>
+</div>
+
+<h2>Experiencia tecnológica previa</h2>
+
+<p><strong>¿Usa smartphone habitualmente?</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="smart_no"> No, nunca lo ha usado</label>
+  <label><input type="checkbox" data-id="smart_poco"> Ocasionalmente (llamadas básicas, poco más)</label>
+  <label><input type="checkbox" data-id="smart_si"> Habitualmente (mensajería, redes, navegación)</label>
+</div>
+
+<p><strong>¿Usa WhatsApp?</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="whats_no"> No</label>
+  <label><input type="checkbox" data-id="whats_ayuda"> Sí, pero con ayuda a veces</label>
+  <label><input type="checkbox" data-id="whats_si"> Sí, con soltura</label>
+</div>
+
+<p><strong>¿Usa ordenador o tablet?</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="pc_no"> No</label>
+  <label><input type="checkbox" data-id="pc_poco"> Ocasionalmente</label>
+  <label><input type="checkbox" data-id="pc_si"> Habitualmente</label>
+</div>
+
+<p><strong>Dispositivo usado en esta prueba:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="disp_tablet"> Tablet</label>
+  <label><input type="checkbox" data-id="disp_portatil"> Ordenador portátil</label>
+  <label><input type="checkbox" data-id="disp_movil"> Móvil</label>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 3. CONSENTIMIENTO ==================== -->
+<h1>3. Consentimiento informado del participante</h1>
+
+<p>Antes de iniciar la sesión, lee en voz alta al participante el siguiente texto:</p>
+
+<div class="texto-leer">
+  <strong>Texto para leer al participante:</strong><br><br>
+  «Muchas gracias por participar en esta prueba. Voy a pedirte que uses una aplicación que hemos diseñado para personas mayores. Es importante que sepas tres cosas:<br><br>
+  <strong>Primero:</strong> no te estamos evaluando a ti, estamos evaluando la aplicación. Si algo no funciona o te resulta confuso, es culpa del diseño, no tuya.<br><br>
+  <strong>Segundo:</strong> no hay respuestas correctas ni incorrectas. Todo lo que hagas nos sirve.<br><br>
+  <strong>Tercero:</strong> te voy a pedir que digas en voz alta lo que piensas mientras usas la aplicación. Por ejemplo: "ahora voy a buscar el botón de…", "esto no lo entiendo", etc. Todo lo que digas me ayuda.<br><br>
+  Todos los datos que recojamos serán anónimos. No guardamos tu nombre ni ningún dato personal. ¿Estás de acuerdo en participar?»
+</div>
+
+<p><strong>Consentimiento otorgado:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="cons_verbal"> Sí, verbalmente</label>
+  <label><input type="checkbox" data-id="cons_escrito"> Sí, por escrito (firma al final del documento)</label>
+  <label><input type="checkbox" data-id="cons_no"> No participa</label>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 4. PREPARACIÓN ==================== -->
+<h1>4. Preparación técnica previa (lista de comprobación)</h1>
+
+<p>Antes de que llegue el participante, completa todos los puntos siguientes:</p>
+
+<h2>Servidor y red</h2>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="prep_servidor"> Servidor Django arrancado con <code>python manage.py runserver 0.0.0.0:8000</code></label>
+  <label><input type="checkbox" data-id="prep_ip"> IP del ordenador anotada: <input type="text" class="corto" placeholder="192.168.x.x" data-id="prep_ip_valor"></label>
+  <label><input type="checkbox" data-id="prep_wifi"> Dispositivo del participante conectado a la misma red WiFi</label>
+  <label><input type="checkbox" data-id="prep_carga"> Comprobado que la app carga correctamente en el dispositivo</label>
+</div>
+
+<h2>Cuenta de prueba y datos precargados</h2>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="prep_cuenta"> Cuenta «mayor_prueba» creada y vinculada al grupo familiar</label>
+  <label><input type="checkbox" data-id="prep_pass"> Contraseña preparada: <code>Prueba2024</code></label>
+  <label><input type="checkbox" data-id="prep_login"> Sesión ya iniciada en el dispositivo del participante</label>
+</div>
+
+<p><strong>Datos precargados:</strong></p>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="datos_agenda"> Al menos 3 recordatorios (uno hoy, uno mañana, uno en la semana)</label>
+  <label><input type="checkbox" data-id="datos_contactos"> Al menos 4 contactos con categorías diferentes</label>
+  <label><input type="checkbox" data-id="datos_fotos"> Al menos 2 fotos subidas con título</label>
+  <label><input type="checkbox" data-id="datos_mensajes"> Al menos 1 conversación con algún mensaje previo</label>
+</div>
+
+<h2>Material del evaluador</h2>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="mat_doc"> Este documento abierto en otro dispositivo</label>
+  <label><input type="checkbox" data-id="mat_notas"> Cuaderno adicional para notas rápidas</label>
+  <label><input type="checkbox" data-id="mat_crono"> Cronómetro o móvil para medir tiempos</label>
+</div>
+
+<h2>Entorno físico</h2>
+<div class="checkbox-group">
+  <label><input type="checkbox" data-id="ent_tranquilo"> Espacio tranquilo, bien iluminado y sin distracciones</label>
+  <label><input type="checkbox" data-id="ent_silla"> Silla cómoda y mesa a altura adecuada</label>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 5. TAREAS ==================== -->
+<h1>5. Tareas de evaluación</h1>
+
+<div class="aviso">
+  <strong>IMPORTANTE — normas de conducción de la prueba:</strong><br>
+  • No ayudes al participante salvo que esté completamente bloqueado durante más de 2 minutos.<br>
+  • Si te hace una pregunta, responde con otra: «¿tú qué crees que pasaría si pulsas ahí?»<br>
+  • Anota todo: dudas, silencios, comentarios, gestos, quejas, felicitaciones.<br>
+  • Lee la instrucción tal cual está escrita, no la resumas ni añadas pistas.
+</div>
+
+<!-- TAREA 1 -->
+<div class="tarea">
+  <div class="tarea-titulo">TAREA 1 — Añadir un recordatorio a la agenda</div>
+  <div class="instruccion">
+    <strong>Instrucción:</strong> «Tienes una cita con el médico de cabecera el próximo viernes. Añádela a tu agenda.»
+  </div>
+
+  <p><strong>¿Completó la tarea?</strong></p>
+  <div class="checkbox-group">
+    <label><input type="checkbox" data-id="t1_si"> Sí, sin dificultad</label>
+    <label><input type="checkbox" data-id="t1_dif"> Sí, con alguna dificultad</label>
+    <label><input type="checkbox" data-id="t1_no"> No la completó</label>
+  </div>
+
+  <p><strong>Tiempo aproximado:</strong> <input type="text" class="corto" placeholder="minutos" data-id="t1_tiempo"></p>
+
+  <p><strong>Aspectos a observar:</strong></p>
+  <ul>
+    <li>¿Encuentra el icono de Agenda en la pantalla principal?</li>
+    <li>¿Identifica correctamente el botón «+ Añadir recordatorio»?</li>
+    <li>¿Comprende los iconos de tipo (pastilla, médico, llamada, cumpleaños)?</li>
+    <li>¿Sabe introducir la fecha correctamente?</li>
+    <li>¿Pulsa el botón «Guardar» sin confusión?</li>
+  </ul>
+
+  <p><strong>Observaciones del evaluador:</strong></p>
+  <textarea placeholder="Describe qué hizo el participante, dónde dudó, qué dijo..." data-id="t1_obs"></textarea>
+</div>
+
+<!-- TAREA 2 -->
+<div class="tarea">
+  <div class="tarea-titulo">TAREA 2 — Marcar un recordatorio como hecho</div>
+  <div class="instruccion">
+    <strong>Instrucción:</strong> «Busca el recordatorio de hoy y márcalo como completado.»
+  </div>
+
+  <p><strong>¿Completó la tarea?</strong></p>
+  <div class="checkbox-group">
+    <label><input type="checkbox" data-id="t2_si"> Sí, sin dificultad</label>
+    <label><input type="checkbox" data-id="t2_dif"> Sí, con alguna dificultad</label>
+    <label><input type="checkbox" data-id="t2_no"> No la completó</label>
+  </div>
+
+  <p><strong>Tiempo aproximado:</strong> <input type="text" class="corto" placeholder="minutos" data-id="t2_tiempo"></p>
+
+  <p><strong>Aspectos a observar:</strong></p>
+  <ul>
+    <li>¿Distingue visualmente el día de hoy del resto de días?</li>
+    <li>¿Identifica el botón «✓ Hecho»?</li>
+    <li>¿Percibe el cambio visual cuando el recordatorio queda tachado?</li>
+    <li>¿Entiende qué significa el botón «↩ Deshacer» que aparece después?</li>
+  </ul>
+
+  <p><strong>Observaciones del evaluador:</strong></p>
+  <textarea placeholder="Describe qué hizo el participante, dónde dudó, qué dijo..." data-id="t2_obs"></textarea>
+</div>
+
+<!-- TAREA 3 -->
+<div class="tarea">
+  <div class="tarea-titulo">TAREA 3 — Llamar a un contacto</div>
+  <div class="instruccion">
+    <strong>Instrucción:</strong> «Busca el teléfono de tu médico de cabecera y llámale desde la aplicación.»
+  </div>
+
+  <p><strong>¿Completó la tarea?</strong></p>
+  <div class="checkbox-group">
+    <label><input type="checkbox" data-id="t3_si"> Sí, sin dificultad</label>
+    <label><input type="checkbox" data-id="t3_dif"> Sí, con alguna dificultad</label>
+    <label><input type="checkbox" data-id="t3_no"> No la completó</label>
+  </div>
+
+  <p><strong>Tiempo aproximado:</strong> <input type="text" class="corto" placeholder="minutos" data-id="t3_tiempo"></p>
+
+  <p><strong>Aspectos a observar:</strong></p>
+  <ul>
+    <li>¿Encuentra la sección Contactos desde la pantalla principal?</li>
+    <li>¿Entiende la agrupación por categorías (Familia, Médico, Farmacia…)?</li>
+    <li>¿Identifica el botón «📞 Llamar»?</li>
+    <li>¿Se da cuenta de que al pulsar se abre el marcador del teléfono?</li>
+  </ul>
+
+  <p><strong>Observaciones del evaluador:</strong></p>
+  <textarea placeholder="Describe qué hizo el participante, dónde dudó, qué dijo..." data-id="t3_obs"></textarea>
+</div>
+
+<!-- TAREA 4 -->
+<div class="tarea">
+  <div class="tarea-titulo">TAREA 4 — Enviar un mensaje a un familiar</div>
+  <div class="instruccion">
+    <strong>Instrucción:</strong> «Envía un mensaje a tu hijo Carlos diciéndole que estás bien y que has comido ya.»
+  </div>
+
+  <p><strong>¿Completó la tarea?</strong></p>
+  <div class="checkbox-group">
+    <label><input type="checkbox" data-id="t4_si"> Sí, sin dificultad</label>
+    <label><input type="checkbox" data-id="t4_dif"> Sí, con alguna dificultad</label>
+    <label><input type="checkbox" data-id="t4_no"> No la completó</label>
+  </div>
+
+  <p><strong>Tiempo aproximado:</strong> <input type="text" class="corto" placeholder="minutos" data-id="t4_tiempo"></p>
+
+  <p><strong>Aspectos a observar:</strong></p>
+  <ul>
+    <li>¿Encuentra la sección Mensajes?</li>
+    <li>¿Sabe elegir el destinatario de la conversación?</li>
+    <li>¿Distingue los mensajes propios de los recibidos (colores, alineación)?</li>
+    <li>¿Sabe escribir en el campo de texto y pulsar «Enviar»?</li>
+    <li>¿Es capaz de volver al listado de conversaciones?</li>
+  </ul>
+
+  <p><strong>Observaciones del evaluador:</strong></p>
+  <textarea placeholder="Describe qué hizo el participante, dónde dudó, qué dijo..." data-id="t4_obs"></textarea>
+</div>
+
+<!-- TAREA 5 -->
+<div class="tarea">
+  <div class="tarea-titulo">TAREA 5 — Ver fotos familiares y comentar</div>
+  <div class="instruccion">
+    <strong>Instrucción:</strong> «Tu familia ha subido fotos nuevas. Míralas y escribe un comentario en alguna que te guste.»
+  </div>
+
+  <p><strong>¿Completó la tarea?</strong></p>
+  <div class="checkbox-group">
+    <label><input type="checkbox" data-id="t5_si"> Sí, sin dificultad</label>
+    <label><input type="checkbox" data-id="t5_dif"> Sí, con alguna dificultad</label>
+    <label><input type="checkbox" data-id="t5_no"> No la completó</label>
+  </div>
+
+  <p><strong>Tiempo aproximado:</strong> <input type="text" class="corto" placeholder="minutos" data-id="t5_tiempo"></p>
+
+  <p><strong>Aspectos a observar:</strong></p>
+  <ul>
+    <li>¿Encuentra la sección Fotos?</li>
+    <li>¿Comprende que debe pulsar una foto para verla más grande?</li>
+    <li>¿Ve el apartado de comentarios?</li>
+    <li>¿Sabe escribir y enviar un comentario?</li>
+    <li>¿Vuelve al mosaico de fotos con facilidad?</li>
+  </ul>
+
+  <p><strong>Observaciones del evaluador:</strong></p>
+  <textarea placeholder="Describe qué hizo el participante, dónde dudó, qué dijo..." data-id="t5_obs"></textarea>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== 6. ENTREVISTA FINAL ==================== -->
+<h1>6. Entrevista final al participante</h1>
+
+<p>Al terminar todas las tareas, haz estas preguntas. Anota las respuestas lo más literalmente posible.</p>
+
+<h3>Pregunta 1</h3>
+<p><em>«De todo lo que has probado, ¿qué parte te ha resultado más fácil o natural?»</em></p>
+<textarea placeholder="Respuesta del participante..." data-id="preg1"></textarea>
+
+<h3>Pregunta 2</h3>
+<p><em>«¿Qué parte te ha costado más o te ha resultado más confusa?»</em></p>
+<textarea placeholder="Respuesta del participante..." data-id="preg2"></textarea>
+
+<h3>Pregunta 3</h3>
+<p><em>«¿Hay algo que esperabas encontrar en la aplicación y no estaba?»</em></p>
+<textarea placeholder="Respuesta del participante..." data-id="preg3"></textarea>
+
+<h3>Pregunta 4</h3>
+<p><em>«¿Usarías esta aplicación en tu día a día? ¿Por qué?»</em></p>
+<textarea placeholder="Respuesta del participante..." data-id="preg4"></textarea>
+
+<h3>Pregunta 5</h3>
+<p><em>«Si pudieras cambiar una sola cosa de la aplicación, ¿qué sería?»</em></p>
+<textarea placeholder="Respuesta del participante..." data-id="preg5"></textarea>
+
+<h2>Valoración global (1 = muy mal, 5 = muy bien)</h2>
+
+<table class="valoracion">
+  <tr><th>Aspecto evaluado</th><th>Puntuación</th></tr>
+  <tr><td>Facilidad de uso general</td><td><input type="text" placeholder="/5" data-id="val1"></td></tr>
+  <tr><td>Claridad de los iconos y botones</td><td><input type="text" placeholder="/5" data-id="val2"></td></tr>
+  <tr><td>Tamaño del texto y de los botones</td><td><input type="text" placeholder="/5" data-id="val3"></td></tr>
+  <tr><td>Utilidad percibida en el día a día</td><td><input type="text" placeholder="/5" data-id="val4"></td></tr>
+  <tr><td>Confianza al usar la aplicación</td><td><input type="text" placeholder="/5" data-id="val5"></td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- ==================== 7. CONCLUSIONES ==================== -->
+<h1>7. Conclusiones del evaluador</h1>
+
+<p>Rellena esta sección después de la sesión, con calma. Es la base del capítulo de Evaluación en la memoria.</p>
+
+<h2>Resumen general de la sesión</h2>
+<p>Describe cómo transcurrió: nivel de comodidad del participante, actitud general, duración real.</p>
+<textarea style="min-height: 120px;" placeholder="Describe el desarrollo general de la sesión..." data-id="conc_resumen"></textarea>
+
+<h2>Puntos fuertes detectados</h2>
+<p>Qué aspectos de la aplicación funcionaron bien.</p>
+<textarea placeholder="Lo que mejor funcionó..." data-id="conc_fuertes"></textarea>
+
+<h2>Problemas de usabilidad identificados</h2>
+
+<table class="problemas">
+  <tr><th style="width:50%">Problema detectado</th><th style="width:20%">Gravedad</th><th style="width:30%">Tarea afectada</th></tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob1_desc"></td>
+    <td><select data-id="prob1_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob1_tarea"></td>
+  </tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob2_desc"></td>
+    <td><select data-id="prob2_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob2_tarea"></td>
+  </tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob3_desc"></td>
+    <td><select data-id="prob3_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob3_tarea"></td>
+  </tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob4_desc"></td>
+    <td><select data-id="prob4_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob4_tarea"></td>
+  </tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob5_desc"></td>
+    <td><select data-id="prob5_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob5_tarea"></td>
+  </tr>
+  <tr>
+    <td><input type="text" class="largo" data-id="prob6_desc"></td>
+    <td><select data-id="prob6_grav"><option value="">—</option><option>Crítico</option><option>Mayor</option><option>Menor</option></select></td>
+    <td><input type="text" class="largo" data-id="prob6_tarea"></td>
+  </tr>
+</table>
+
+<h2>Propuestas de mejora a aplicar</h2>
+<p>Cambios concretos que se implementarán. Se priorizan los problemas críticos.</p>
+<textarea style="min-height: 120px;" placeholder="Lista de cambios a implementar..." data-id="conc_mejoras"></textarea>
+
+<h2>Citas literales destacables</h2>
+<p>Frases del participante que podrían incluirse (anonimizadas) en la memoria.</p>
+<textarea placeholder="Frases textuales del participante..." data-id="conc_citas"></textarea>
+
+<div class="page-break"></div>
+
+<!-- ==================== 8. FIRMA ==================== -->
+<h1>8. Firma del consentimiento (opcional)</h1>
+
+<p>Si el participante otorgó consentimiento por escrito, se recoge aquí.</p>
+
+<p style="margin-top: 30px;">El/la participante, identificado/a como <input type="text" class="corto" placeholder="P1 / P2" data-id="firma_codigo">, declara haber sido informado/a del propósito de la prueba, del carácter anónimo de los datos recogidos y de la voluntariedad de su participación, y acepta participar en la evaluación de la aplicación ConectaMayor.</p>
+
+<div class="firma" style="margin-top: 50px;">
+  <div class="firma-bloque">
+    <div class="firma-linea"></div>
+    <p>Firma del participante</p>
+    <p>Fecha: <input type="text" class="corto" data-id="firma_fecha_part"></p>
+  </div>
+  <div class="firma-bloque">
+    <div class="firma-linea"></div>
+    <p>Firma del evaluador</p>
+    <p>Fecha: <input type="text" class="corto" data-id="firma_fecha_eval"></p>
+  </div>
+</div>
+
+<br><br>
+<p style="text-align: center; color: #888; font-style: italic;">— Fin del protocolo —</p>
+<p style="text-align: center; color: #888; font-size: 0.9em;">Para guardar como PDF: Imprimir → Destino: Guardar como PDF</p>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+function obtenerDatos() {
+  const datos = {};
+  document.querySelectorAll('[data-id]').forEach(el => {
+    if (el.type === 'checkbox') {
+      datos[el.dataset.id] = el.checked;
+    } else if (el.tagName === 'SELECT') {
+      datos[el.dataset.id] = el.value;
+    } else {
+      datos[el.dataset.id] = el.value;
+    }
+  });
+  return datos;
+}
+
+function cargarEnCampos(datos) {
+  document.querySelectorAll('[data-id]').forEach(el => {
+    const val = datos[el.dataset.id];
+    if (val === undefined) return;
+    if (el.type === 'checkbox') {
+      el.checked = val;
+    } else if (el.tagName === 'SELECT') {
+      el.value = val;
+    } else {
+      el.value = val;
+    }
+  });
+}
+
+function guardarDatos() {
+  const datos = obtenerDatos();
+  const codigo = datos.codigo_part || 'borrador';
+  const json = JSON.stringify(datos, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `prueba_aipo_${codigo}.json`;
+  a.click();
+  alert('Borrador guardado como archivo JSON. Podrás cargarlo más tarde.');
+}
+
+function cargarDatos() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const datos = JSON.parse(ev.target.result);
+        cargarEnCampos(datos);
+        alert('Borrador cargado correctamente.');
+      } catch {
+        alert('Error al leer el archivo.');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+</script>
+
+</body>
+</html>
