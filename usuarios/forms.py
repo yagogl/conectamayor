@@ -28,5 +28,13 @@ class RegistroForm(UserCreationForm):
         model = Usuario
         fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
         labels = {
-            'username': 'Nombre de usuario',
+            'username': (
+                'Nombre de usuario (este nombre usarás para entrar en la app)'
+            ),
+        }
+        help_texts = {
+            'username': (
+                'Elige un nombre fácil de recordar. '
+                'Por ejemplo: maria, abuela, pepe.'
+            ),
         }
