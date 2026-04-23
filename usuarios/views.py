@@ -36,7 +36,6 @@ def logout_view(request):
 
 
 def registro(request):
-    """Registro de nuevo usuario. El familiar-editor crea el grupo familiar."""
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
@@ -45,20 +44,33 @@ def registro(request):
             user.rol = rol
 
             if rol == 'editor':
-                # El editor crea un grupo familiar nuevo
                 nombre_grupo = form.cleaned_data.get('nombre_grupo', '')
                 grupo = GrupoFamiliar.objects.create(nombre=nombre_grupo)
                 user.grupo_familiar = grupo
+            else:
+                codigo = form.cleaned_data.get('codigo_grupo', '').strip().upper()
+                if codigo:
+                    try:
+                        grupo = GrupoFamiliar.objects.get(codigo=codigo)
+                        user.grupo_familiar = grupo
+                    except GrupoFamiliar.DoesNotExist:
+                        messages.error(
+                            request,
+                            f'El código "{codigo}" no existe. Puedes unirte más tarde.'
+                        )
 
             user.save()
-
-            # Si no es editor, puede unirse con código después
             login(request, user)
 
             if rol == 'editor':
                 messages.success(
                     request,
-                    f'Grupo familiar creado. Tu código es: {grupo.codigo}'
+                    f'Grupo familiar creado. Tu código es: {user.grupo_familiar.codigo}'
+                )
+            elif user.grupo_familiar:
+                messages.success(
+                    request,
+                    f'Te has unido al grupo {user.grupo_familiar.nombre or user.grupo_familiar.codigo}.'
                 )
             else:
                 messages.info(

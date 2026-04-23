@@ -25,8 +25,8 @@
         <h2 style="color: var(--color-principal);">📅 Agenda</h2>
         {% if user.es_mayor or user.es_editor %}
         <a href="{% url 'agenda:nuevo' %}" class="btn text-white"
-            style="background-color: var(--color-principal); font-size: {% if user.es_mayor %}1.2rem{% else %}1rem{% endif %};">
-            + Añadir recordatorio
+            style="background-color: var(--color-acento); font-size: {% if user.es_mayor %}1.3rem{% else %}1rem{% endif %}; padding: {% if user.es_mayor %}0.8rem 1.5rem{% else %}0.5rem 1rem{% endif %}; font-weight: bold;">
+            ➕ Añadir recordatorio
         </a>
         {% endif %}
     </div>

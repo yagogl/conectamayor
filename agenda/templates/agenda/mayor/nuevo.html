@@ -33,6 +33,14 @@
         {% csrf_token %}
 
         <div class="mb-4">
+            <label class="form-label fw-bold fs-5">{{ form.fecha.label }}</label>
+            <input type="date" name="fecha"
+                value="{{ form.fecha.value|default:'' }}"
+                class="form-control form-control-lg"
+                style="font-size: 1.3rem;" required>
+        </div>
+
+        <div class="mb-4">
             <label class="form-label fw-bold fs-5">{{ form.titulo.label }}</label>
             <input type="text" name="titulo"
                 value="{{ form.titulo.value|default:'' }}"
@@ -51,14 +59,6 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="form-label fw-bold fs-5">{{ form.fecha.label }}</label>
-            <input type="date" name="fecha"
-                value="{{ form.fecha.value|default:'' }}"
-                class="form-control form-control-lg"
-                style="font-size: 1.3rem;" required>
         </div>
 
         <div class="d-grid gap-2">

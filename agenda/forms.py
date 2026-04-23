@@ -20,7 +20,7 @@ class RecordatorioMayorForm(forms.ModelForm):
 
     class Meta:
         model = Recordatorio
-        fields = ['titulo', 'tipo', 'fecha']
+        fields = ['fecha', 'titulo', 'tipo']
         labels = {
             'titulo': '¿Qué tienes que hacer?',
             'fecha': '¿Cuándo?',

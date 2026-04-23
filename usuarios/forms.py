@@ -21,6 +21,15 @@ class RegistroForm(UserCreationForm):
         label='Nombre del grupo familiar (opcional)',
         help_text='Solo si eres el familiar de confianza que crea el grupo.'
     )
+    codigo_grupo = forms.CharField(
+        max_length=10,
+        required=False,
+        label='Código del grupo familiar',
+        help_text=(
+            'Si ya te han dado un código (ej: FAM-7X2K), '
+            'escríbelo aquí para unirte.'
+        )
+    )
     first_name = forms.CharField(max_length=50, label='Nombre')
     last_name = forms.CharField(max_length=50, label='Apellidos', required=False)
 
@@ -38,3 +47,12 @@ class RegistroForm(UserCreationForm):
                 'Por ejemplo: maria, abuela, pepe.'
             ),
         }
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if Usuario.objects.filter(username=username).exists():
+            raise forms.ValidationError(
+                f'El nombre "{username}" ya está en uso. '
+                f'Prueba con: {username}1, {username}2 o añade tu apellido.'
+            )
+        return username
