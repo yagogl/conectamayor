@@ -32,10 +32,16 @@ class RegistroForm(UserCreationForm):
     )
     first_name = forms.CharField(max_length=50, label='Nombre')
     last_name = forms.CharField(max_length=50, label='Apellidos', required=False)
+    telefono = forms.CharField(
+        max_length=20,
+        required=False,
+        label='Tu número de teléfono (opcional)',
+        help_text='Para que tu familia pueda llamarte desde la app.'
+    )
 
     class Meta:
         model = Usuario
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'telefono', 'password1', 'password2']
         labels = {
             'username': (
                 'Nombre de usuario (este nombre usarás para entrar en la app)'

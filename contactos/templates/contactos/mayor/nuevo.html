@@ -18,6 +18,11 @@
         <div class="mb-4">
             <label class="form-label fw-bold fs-5">{{ field.label }}</label>
             {{ field }}
+            {% for error in field.errors %}
+            <div class="alert alert-danger mt-2" style="font-size: 1.1rem;">
+                ⚠️ {{ error }}
+            </div>
+            {% endfor %}
         </div>
         {% endfor %}
         <div class="d-grid gap-2">

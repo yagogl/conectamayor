@@ -51,6 +51,14 @@
     {% endif %}
 
     <main role="main">
+        {% if user.is_authenticated %}
+        <div class="container mt-2">
+            <a href="javascript:history.back()" class="btn btn-sm mb-2"
+                style="min-height: 44px; font-size: 1rem; background-color: var(--color-principal); color: white; font-weight: bold;">
+                ← Volver
+            </a>
+        </div>
+        {% endif %}
         {% block contenido %}{% endblock %}
     </main>
 

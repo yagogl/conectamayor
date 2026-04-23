@@ -27,6 +27,7 @@ class Usuario(AbstractUser):
     ]
 
     rol = models.CharField(max_length=10, choices=ROL_CHOICES, default='amigo')
+    telefono = models.CharField(max_length=20, blank=True, verbose_name='Teléfono')
     grupo_familiar = models.ForeignKey(
         GrupoFamiliar,
         on_delete=models.SET_NULL,

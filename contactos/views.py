@@ -32,9 +32,17 @@ def lista(request):
             categorias[cat] = []
         categorias[cat].append(c)
 
+    # Miembros del grupo familiar
+    miembros = []
+    if user.grupo_familiar:
+        miembros = Usuario.objects.filter(
+            grupo_familiar=user.grupo_familiar
+        ).exclude(pk=user.pk).order_by('first_name')
+
     return render(request, 'contactos/lista.html', {
         'categorias': categorias,
         'mayor': mayor,
+        'miembros': miembros,
     })
 
 
@@ -52,7 +60,10 @@ def nuevo_contacto(request):
             rol='mayor'
         ).first()
         if not mayor:
-            messages.error(request, 'No hay ninguna persona mayor en tu grupo todavía.')
+            messages.error(
+                request,
+                'No hay ninguna persona mayor en tu grupo todavía.'
+            )
             return redirect('contactos:lista')
         FormClass = ContactoEditorForm
         template = 'contactos/familiar/nuevo.html'
