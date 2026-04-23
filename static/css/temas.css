@@ -67,3 +67,11 @@ a {
     border-radius: 16px;
     min-height: 80px;
 }
+
+/* ===== TAMAÑOS DE TEXTO ===== */
+[data-tamano="pequeno"] { font-size: 14px; }
+[data-tamano="normal"] { font-size: 18px; }
+[data-tamano="grande"] { font-size: 22px; }
+[data-tamano="grande"] .btn { font-size: 1.2rem; }
+[data-tamano="grande"] .form-control { font-size: 1.2rem; }
+[data-tamano="grande"] .burbuja { font-size: 1.2rem; }

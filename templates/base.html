@@ -17,6 +17,19 @@
             <a class="navbar-brand fw-bold" href="{% url 'inicio' %}">ConectaMayor</a>
             <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-2">
 
+                <!-- Selector de tamaño de texto -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-sm dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown" aria-label="Cambiar tamaño de texto">
+                        🔤
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTamano('pequeno')">A Pequeña</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTamano('normal')">A Normal</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cambiarTamano('grande')">A Grande</a></li>
+                    </ul>
+                </div>
+
                 <!-- Selector de temas -->
                 <div class="dropdown">
                     <button class="btn btn-outline-light btn-sm dropdown-toggle"
@@ -79,6 +92,25 @@
         const temaGuardado = localStorage.getItem('tema');
         if (temaGuardado && temaGuardado !== 'claro') {
             document.documentElement.setAttribute('data-tema', temaGuardado);
+        }
+
+        // Tamaño de texto
+        function cambiarTamano(tamano) {
+            const tamanos = { 'pequeno': '14px', 'normal': '18px', 'grande': '22px' };
+            document.documentElement.style.fontSize = tamanos[tamano];
+            localStorage.setItem('tamano', tamano);
+        }
+
+        // Cargar tamaño guardado o predeterminado según rol
+        const tamanoGuardado = localStorage.getItem('tamano');
+        if (tamanoGuardado) {
+            cambiarTamano(tamanoGuardado);
+        } else {
+            {% if user.is_authenticated and user.es_mayor %}
+            cambiarTamano('grande');
+            {% else %}
+            cambiarTamano('normal');
+            {% endif %}
         }
     </script>
 
