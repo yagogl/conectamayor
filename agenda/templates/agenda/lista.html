@@ -4,7 +4,6 @@
 {% block estilos_extra %}
 <style>
     .icono-tipo { font-size: 1.5rem; }
-    .recordatorio-hecho { opacity: 0.5; text-decoration: line-through; }
     .dia-header {
         background-color: var(--color-principal);
         color: white;
@@ -45,9 +44,10 @@
 
             {% if dia.recordatorios %}
                 {% for rec in dia.recordatorios %}
-                <div class="card mb-2 {% if rec.hecho %}recordatorio-hecho{% endif %}">
+                <div class="card mb-2"
+                     style="background-color: {% if rec.hecho %}#a8e6a0{% else %}#f5a0a0{% endif %};">
                     <div class="card-body py-2 px-3">
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-2">
                             <div>
                                 <span class="icono-tipo me-2">
                                     {% if rec.tipo == 'pastilla' %}💊
@@ -61,20 +61,18 @@
                                 <span class="text-muted ms-2">{{ rec.hora|time:"H:i" }}</span>
                                 {% endif %}
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 flex-wrap">
                                 <a href="{% url 'agenda:hecho' rec.pk %}"
-                                    class="btn btn-sm {% if rec.hecho %}btn-secondary{% else %}btn-success{% endif %}">
+                                    class="btn btn-sm {% if rec.hecho %}btn-secondary{% else %}btn-success{% endif %}"
+                                    style="background-color: {% if rec.hecho %}white; color: #333; border: 2px solid #333;{% else %}#198754; color: white;{% endif %}">
                                     {% if rec.hecho %}↩ Deshacer{% else %}✓ Hecho{% endif %}
                                 </a>
-                                {% if not rec.hecho %}
-                                <a href="{% url 'agenda:mas_tarde' rec.pk %}"
-                                    class="btn btn-sm btn-outline-secondary">
-                                    ⏰ Mañana
-                                </a>
-                                {% endif %}
-                                {% if user.es_editor %}
                                 <a href="{% url 'agenda:editar' rec.pk %}"
-                                    class="btn btn-sm btn-outline-primary">✏️</a>
+                                    class="btn btn-sm"
+                                    style="background-color: white; color: #333; border: 2px solid #333;">
+                                    ✏️ Cambiar recordatorio
+                                </a>
+                                {% if user.es_editor %}
                                 <a href="{% url 'agenda:borrar' rec.pk %}"
                                     class="btn btn-sm btn-outline-danger"
                                     onclick="return confirm('¿Eliminar este recordatorio?')">🗑️</a>

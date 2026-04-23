@@ -20,13 +20,15 @@ class RecordatorioMayorForm(forms.ModelForm):
 
     class Meta:
         model = Recordatorio
-        fields = ['fecha', 'titulo', 'tipo']
+        fields = ['fecha', 'titulo', 'tipo', 'hora']
         labels = {
             'titulo': '¿Qué tienes que hacer?',
             'fecha': '¿Cuándo?',
+            'hora': '¿A qué hora? (opcional)',
         }
         widgets = {
             'fecha': forms.DateInput(attrs={'type': 'date'}),
+            'hora': forms.TimeInput(attrs={'type': 'time'}),
         }
 
 

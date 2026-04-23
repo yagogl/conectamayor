@@ -61,6 +61,14 @@
             </div>
         </div>
 
+        <div class="mb-4">
+            <label class="form-label fw-bold fs-5">{{ form.hora.label }}</label>
+            <input type="time" name="hora"
+                value="{{ form.hora.value|default:'' }}"
+                class="form-control form-control-lg"
+                style="font-size: 1.3rem;">
+        </div>
+
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-lg text-white"
                 style="background-color: var(--color-principal); font-size: 1.4rem; padding: 1rem;">
