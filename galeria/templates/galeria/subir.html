@@ -18,7 +18,12 @@
             <label class="form-label fw-bold {% if user.es_mayor %}fs-5{% endif %}">
                 Selecciona una foto
             </label>
-            <input type="file" name="imagen" class="form-control" accept="image/*" required>
+            <label class="btn btn-lg btn-outline-primary w-100 py-3" style="cursor: pointer;" id="label-foto">
+                📷 Pulsa aquí para elegir una foto
+                <input type="file" name="imagen" accept="image/*" required
+                    style="display: none;"
+                    onchange="document.getElementById('label-foto').childNodes[0].textContent = '✅ Foto seleccionada: ' + this.files[0].name + ' ';">
+            </label>
         </div>
         <div class="mb-4">
             <label class="form-label fw-bold {% if user.es_mayor %}fs-5{% endif %}">

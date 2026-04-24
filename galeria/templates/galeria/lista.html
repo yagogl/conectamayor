@@ -50,6 +50,13 @@
                     {% endif %}
                 </div>
             </a>
+            {% if user == foto.subida_por or user.es_editor %}
+            <a href="{% url 'galeria:borrar' foto.pk %}"
+                class="btn btn-sm btn-outline-danger mt-1"
+                onclick="return confirm('¿Eliminar esta foto?')">
+                🗑️
+            </a>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
