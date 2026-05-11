@@ -1,0 +1,93 @@
+% =============================================================================
+%  Memoria del Trabajo Fin de Grado
+%  Yago Gamo López — Junio 2026
+%  Escuela Politécnica Superior — Universidad Autónoma de Madrid
+%  Grado en Ingeniería Informática
+%
+%  Plantilla: tfgtfmthesisuam (EPS-UAM)
+%  Compilación: pdflatex -> bibtex -> pdflatex -> pdflatex
+%  (o `latexmk -pdf memoria.tex` si tienes latexmk instalado)
+% =============================================================================
+
+% Directrices arara para compilación automática (opcional)
+% arara: pdflatex: {shell: yes}
+% arara: bibtex
+% arara: pdflatex: {shell: yes}
+% arara: pdflatex: {shell: yes}
+
+
+\documentclass[epsbased,copyright,final,printable,covers,extendedindex,firstnumbered,tfg]{tfgtfmthesisuam}
+
+% -----------------------------------------------------------------------------
+%  DATOS DE PORTADA
+% -----------------------------------------------------------------------------
+\title{ConectaMayor: aplicación web accesible para conectar a personas mayores con sus familias}
+\author{Yago Gamo López}
+\advisor{Pilar Rodríguez Marín}
+\levelin{Ingeniería Informática}
+\privateaddress{C\textbackslash\ Francisco Tomás y Valiente N\textsuperscript{o} 11}
+\copyrightdate{Junio de 2026}
+
+% -----------------------------------------------------------------------------
+%  PRELIMINARES
+% -----------------------------------------------------------------------------
+\dedication{}
+\famouscite{}
+\prefacefile{inicio/prefacio}
+\ackfile{inicio/agradecimientos}
+\resumenfile{inicio/resumen}
+\abstractfile{inicio/abstract}
+
+% Palabras clave (separadas por comas)
+\palabrasclave{Aplicación web, accesibilidad, personas mayores, brecha digital, inclusión digital, Django, WCAG 2.1, usabilidad, diseño centrado en el usuario, AIPO}
+\keywords{Web application, accessibility, elderly people, digital divide, digital inclusion, Django, WCAG 2.1, usability, user-centered design, AIPO}
+
+% Datos institucionales para la portada
+\coverdata
+{
+  Escuela Politécnica Superior \\
+  Universidad Autónoma de Madrid \\
+  C\textbackslash Francisco Tomás y Valiente n\textsuperscript{o} 11
+}
+
+% -----------------------------------------------------------------------------
+%  CONFIGURACIÓN DE DIRECTORIOS Y BIBLIOGRAFÍA
+% -----------------------------------------------------------------------------
+\bibliographyconfig{memoria}
+
+\datadir{data}
+\graphicsdir{img}
+\logosdir{img}
+\codesdir{codes}
+
+\usepackage{booktabs}
+
+% =============================================================================
+\begin{document}
+% =============================================================================
+
+% -----------------------------------------------------------------------------
+%  CAPÍTULOS
+% -----------------------------------------------------------------------------
+\chapter{Introducción\label{CAP:INTRODUCCION}}{capitulos/introduccion}
+
+\chapter{Estado del arte\label{CAP:ESTADOARTE}}{capitulos/estado_arte}
+
+\chapter{Diseño\label{CAP:DISENO}}{capitulos/diseno}
+
+\chapter{Implementación\label{CAP:IMPLEMENTACION}}{capitulos/implementacion}
+
+\chapter{Conclusiones\label{CAP:CONCLUSIONES}}{capitulos/conclusiones}
+
+
+% -----------------------------------------------------------------------------
+%  APÉNDICES
+% -----------------------------------------------------------------------------
+\appendix
+
+\chapter{Pruebas de usabilidad: tablas detalladas\label{APP:AIPO}}{apendices/pruebas_aipo}
+
+
+% =============================================================================
+\end{document}
+% =============================================================================
