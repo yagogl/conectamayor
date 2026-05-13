@@ -3,32 +3,30 @@
 %  CAPÍTULO 3 — DISEÑO
 % =============================================================================
 
-Este capítulo recoge las decisiones de diseño que se han tomado para
+Este capítulo recoge las decisiones de diseño adoptadas para
 \emph{ConectaMayor}. Se parte del análisis de los requisitos del sistema,
-agrupados por subsistema funcional, y se avanza hacia la arquitectura
-elegida, el modelo de datos y, por último, el diseño de la interfaz de
-usuario. La intención es ofrecer al lector una visión completa de cómo se
-ha llegado a la solución concreta que se implementa en el
-Capítulo~\ref{CAP:IMPLEMENTACION}, justificando las decisiones técnicas
-más relevantes.
+agrupados por subsistema funcional, y se avanza hacia la arquitectura elegida,
+el modelo de datos y, por último, el diseño de la interfaz de usuario. El
+propósito es ofrecer al lector una visión completa del proceso que ha conducido
+a la solución implementada en el Capítulo~\ref{CAP:IMPLEMENTACION},
+justificando las decisiones técnicas más relevantes.
 
 
 \section{Análisis de requisitos\label{SEC:DIS_REQUISITOS}}
 
-El sistema se ha estructurado en cinco subsistemas funcionales, cada uno
-de los cuales agrupa un conjunto coherente de funcionalidades. A esta
-descomposición se añade un sexto bloque de requisitos no funcionales que
-recoge las propiedades transversales del sistema —accesibilidad,
-privacidad, rendimiento y usabilidad—.
+El sistema se ha estructurado en cinco subsistemas funcionales, cada uno de los
+cuales agrupa un conjunto coherente de funcionalidades. A esta descomposición se
+añade un sexto bloque de requisitos no funcionales, que recoge las propiedades
+transversales del sistema —accesibilidad, privacidad, rendimiento y usabilidad—.
 
 \subsection{Subsistema de gestión de usuarios y vinculación
 familiar\label{SUB:REQ_USUARIOS}}
 
 Este subsistema gestiona el ciclo de vida de las cuentas de usuario y el
-mecanismo que permite agruparlas en unidades familiares. Su diseño parte
-de una decisión central: cada persona pertenece a un único grupo
-familiar, lo que simplifica notablemente el modelo de permisos y la
-gestión de privacidad.
+mecanismo que permite agruparlas en unidades familiares. Su diseño parte de una
+decisión central: cada persona pertenece a un único grupo familiar, lo que
+simplifica de forma significativa el modelo de permisos y la gestión de la
+privacidad.
 
 \begin{description}
   \item[RF1.1] El sistema permitirá registrar nuevos usuarios indicando
@@ -53,10 +51,9 @@ gestión de privacidad.
 \subsection{Subsistema de agenda\label{SUB:REQ_AGENDA}}
 
 El subsistema de agenda permite registrar y consultar los eventos y
-recordatorios del usuario mayor. Es uno de los módulos más utilizados en
-la práctica, dado que las personas mayores suelen tener un volumen
-importante de citas médicas, tomas de medicación y compromisos
-familiares.
+recordatorios del usuario mayor. Se trata de uno de los módulos con mayor valor
+práctico, dado que las personas mayores suelen gestionar citas médicas, tomas de
+medicación y compromisos familiares.
 
 \begin{description}
   \item[RF2.1] El sistema mostrará al usuario \emph{mayor} los eventos
@@ -74,10 +71,10 @@ familiares.
 
 \subsection{Subsistema de contactos\label{SUB:REQ_CONTACTOS}}
 
-El subsistema de contactos sustituye, en el ámbito de la aplicación, a la
-agenda telefónica del dispositivo. Su valor reside en la simplificación:
-los contactos se presentan agrupados por categorías relevantes y con
-acceso directo a la llamada telefónica.
+El subsistema de contactos sustituye, dentro del ámbito de la aplicación, a la
+agenda telefónica del dispositivo. Su valor reside en la simplificación: los
+contactos se presentan agrupados por categorías relevantes y con acceso directo
+a la llamada telefónica.
 
 \begin{description}
   \item[RF3.1] El sistema mostrará los contactos agrupados en tres
@@ -93,10 +90,9 @@ acceso directo a la llamada telefónica.
 \subsection{Subsistema de mensajería\label{SUB:REQ_MENSAJES}}
 
 El subsistema de mensajería habilita la comunicación uno a uno entre los
-miembros de un grupo familiar. Se ha optado deliberadamente por una
-mensajería privada y restringida al grupo, sin posibilidad de contactar
-con personas ajenas a este, como medida de protección frente a fraudes y
-contactos no solicitados.
+miembros de un grupo familiar. Se ha optado deliberadamente por una mensajería
+privada y restringida al grupo, sin posibilidad de contactar con personas ajenas
+a este, como medida de protección frente a fraudes y contactos no solicitados.
 
 \begin{description}
   \item[RF4.1] Los usuarios podrán enviar mensajes de texto a cualquier
@@ -112,9 +108,9 @@ contactos no solicitados.
 
 \subsection{Subsistema de galería\label{SUB:REQ_GALERIA}}
 
-El subsistema de galería permite que los miembros del grupo familiar
-compartan fotografías en un entorno privado, accesible únicamente para
-las personas vinculadas al grupo.
+El subsistema de galería permite que los miembros del grupo familiar compartan
+fotografías en un entorno privado, accesible únicamente para las personas
+vinculadas al grupo.
 
 \begin{description}
   \item[RF5.1] Cualquier miembro del grupo familiar podrá subir
@@ -132,10 +128,10 @@ las personas vinculadas al grupo.
 
 \subsection{Requisitos no funcionales\label{SUB:REQ_NOFUNCIONALES}}
 
-Los requisitos no funcionales recogen las propiedades transversales que
-debe satisfacer el sistema con independencia de los módulos concretos.
-Su cumplimiento es especialmente importante en este proyecto, dado que
-buena parte de su valor reside en la accesibilidad y la privacidad.
+Los requisitos no funcionales recogen las propiedades transversales que debe
+satisfacer el sistema con independencia de los módulos concretos. Su cumplimiento
+es especialmente relevante en este proyecto, dado que buena parte de su valor
+reside en la accesibilidad y la privacidad.
 
 \begin{description}
   \item[RNF1] \textbf{Accesibilidad.} La interfaz cumplirá las pautas
@@ -163,23 +159,22 @@ buena parte de su valor reside en la accesibilidad y la privacidad.
 
 \section{Arquitectura del sistema\label{SEC:DIS_ARQUITECTURA}}
 
-La aplicación sigue una arquitectura cliente--servidor en la que el
-navegador del usuario actúa como cliente y un servidor Django gestiona
-toda la lógica de negocio y el acceso a los datos. Este modelo es el
-estándar de facto para aplicaciones web, encaja con las necesidades del
-proyecto y permite reaprovechar buena parte del esfuerzo de desarrollo
-que ya proporciona el propio \emph{framework}.
+La aplicación sigue una arquitectura cliente--servidor en la que el navegador
+del usuario actúa como cliente y un servidor Django gestiona la lógica de
+negocio y el acceso a los datos. Este modelo es el estándar de facto para
+aplicaciones web, se ajusta a las necesidades del proyecto y permite aprovechar
+buena parte de las funcionalidades que proporciona el propio \emph{framework}.
 
-Internamente, Django sigue el patrón \emph{Modelo--Vista--Plantilla}
-(MVT), una variante del clásico MVC en la que las plantillas asumen el
-rol de la vista tradicional y las vistas se encargan de la lógica de
-presentación. Esta separación facilita la mantenibilidad del código y
-permite que los distintos roles de usuario reciban interfaces
-diferenciadas reutilizando la misma lógica de negocio en el servidor.
+Internamente, Django sigue el patrón \emph{Modelo--Vista--Plantilla} (MVT), una
+variante del clásico MVC en la que las plantillas asumen el papel de la vista
+tradicional y las vistas se encargan de la lógica de presentación. Esta
+separación facilita la mantenibilidad del código y permite ofrecer interfaces
+diferenciadas según el rol de usuario, reutilizando la misma lógica de negocio
+en el servidor.
 
 La Figura~\ref{FIG:DIS_ARQUITECTURA} muestra el esquema general de la
-arquitectura, identificando las capas principales y el flujo de datos
-entre ellas.
+arquitectura, identificando las capas principales y el flujo de datos entre
+ellas.
 
 \begin{figure}[arquitectura general]{FIG:DIS_ARQUITECTURA}{Arquitectura
 cliente--servidor de \emph{ConectaMayor}.}
@@ -224,73 +219,67 @@ cliente--servidor de \emph{ConectaMayor}.}
 
 \subsection{Justificación del \emph{stack} tecnológico\label{SUB:DIS_STACK}}
 
-La elección de las tecnologías se ha realizado priorizando la
-adecuación al proyecto y al perfil del desarrollador frente a la
-sofisticación técnica. A continuación se justifican las decisiones más
-relevantes.
+La elección de las tecnologías se ha realizado priorizando la adecuación al
+proyecto y al perfil del desarrollador frente a la sofisticación técnica. A
+continuación se justifican las decisiones más relevantes.
 
-\paragraph{Django como \emph{framework} principal.} Django incorpora
-de serie buena parte de los componentes que cualquier aplicación web
-necesita: sistema de autenticación, gestión de sesiones, ORM, panel de
-administración y soporte de internacionalización. Esto reduce el código
-que es preciso escribir desde cero y permite concentrar el esfuerzo en
-las funcionalidades específicas de \emph{ConectaMayor}. A esto se suma
-que Django impone una estructura de proyecto clara, lo que facilita
-tanto el mantenimiento como la futura ampliación del sistema.
+\paragraph{Django como \emph{framework} principal.} Django incorpora de serie
+buena parte de los componentes que cualquier aplicación web necesita: sistema de
+autenticación, gestión de sesiones, ORM, panel de administración y soporte de
+internacionalización. Esto reduce el código que es necesario escribir desde cero
+y permite concentrar el esfuerzo en las funcionalidades específicas de
+\emph{ConectaMayor}. A ello se suma que Django impone una estructura de proyecto
+clara, lo que facilita tanto el mantenimiento como la futura ampliación del
+sistema.
 
-\paragraph{SQLite como sistema de gestión de bases de datos.} SQLite es
-la opción por defecto de Django y resulta más que suficiente para el
-volumen de datos previsto en un entorno familiar: una decena de
-usuarios por grupo, unos cientos de mensajes y unas pocas docenas de
-fotografías. Su principal ventaja es que no requiere instalación de un
-servidor independiente, lo que simplifica el despliegue y la
-demostración del sistema. En un escenario de uso real con múltiples
-familias y mayor concurrencia, la migración a PostgreSQL sería
+\paragraph{SQLite como sistema de gestión de bases de datos.} SQLite es la
+opción por defecto de Django y resulta suficiente para el volumen de datos
+previsto en un entorno familiar: una decena de usuarios por grupo, unos cientos
+de mensajes y unas pocas docenas de fotografías. Su principal ventaja es que no
+requiere la instalación de un servidor independiente, lo que simplifica el
+despliegue y la demostración del sistema. En un escenario de uso real con
+múltiples familias y mayor concurrencia, la migración a PostgreSQL sería
 recomendable; se contempla como línea de trabajo futuro.
 
-\paragraph{Bootstrap 5 para la capa de presentación.} Bootstrap aporta
-un sistema de rejilla responsivo, componentes accesibles por defecto y
-una base estética profesional sin necesidad de invertir tiempo en
-diseño desde cero. Su comportamiento adaptable a distintos tamaños de
-pantalla es especialmente relevante para una aplicación cuyo público
-objetivo utiliza una mezcla de dispositivos —ordenador, tableta y
-teléfono—.
+\paragraph{Bootstrap 5 para la capa de presentación.} Bootstrap aporta un
+sistema de rejilla responsivo, componentes accesibles por defecto y una base
+estética profesional sin necesidad de invertir tiempo en diseñar una interfaz
+desde cero. Su comportamiento adaptable a distintos tamaños de pantalla es
+especialmente relevante para una aplicación cuyo público objetivo puede utilizar
+distintos dispositivos —ordenador, tableta o teléfono—.
 
-\paragraph{JavaScript estándar con sondeo AJAX para la
-mensajería.} La actualización del chat se ha resuelto mediante peticiones
-AJAX periódicas al servidor —técnica conocida como \emph{polling}— en
-lugar de WebSockets. Esta decisión merece una justificación detallada,
-puesto que existen alternativas más sofisticadas.
+\paragraph{JavaScript estándar con sondeo AJAX para la mensajería.} La
+actualización del chat se ha resuelto mediante peticiones AJAX periódicas al
+servidor —técnica conocida como \emph{polling}— en lugar de WebSockets. Esta
+decisión merece una justificación detallada, puesto que existen alternativas más
+sofisticadas.
 
-WebSockets ofrece comunicación bidireccional en tiempo real con menor
-latencia, pero introduce una complejidad notable: requiere un servidor
-ASGI (frente al WSGI estándar de Django), una capa adicional para
-gestionar las conexiones persistentes y una infraestructura de
-\emph{routing} que no forma parte del núcleo de Django. Para una
-aplicación de mensajería familiar, en la que la inmediatez absoluta no
+WebSockets ofrece comunicación bidireccional en tiempo real con menor latencia,
+pero introduce una complejidad notable: requiere un servidor ASGI, frente al WSGI
+estándar de Django, una capa adicional para gestionar las conexiones persistentes
+y una infraestructura de \emph{routing} que no forma parte del núcleo de Django.
+Para una aplicación de mensajería familiar, en la que la inmediatez absoluta no
 es crítica, este coste de complejidad no se compensa con beneficios
-proporcionales. Un sondeo cada cinco segundos resulta indistinguible
-del tiempo real desde la percepción del usuario y permite mantener el
-proyecto dentro de una pila tecnológica homogénea y manejable.
+proporcionales. Un sondeo cada cinco segundos resulta prácticamente equivalente
+al tiempo real desde la percepción del usuario y permite mantener el proyecto
+dentro de una pila tecnológica homogénea y manejable.
 
-\paragraph{JavaScript sin librerías de \emph{frontend}.} Se ha
-descartado el uso de \emph{frameworks} como React o Vue. Las plantillas
-de Django, combinadas con JavaScript estándar para los aspectos
-dinámicos puntuales, cubren las necesidades del proyecto sin introducir
-el coste de aprender y mantener una pila adicional. Esta decisión es
-también la más prudente dado el nivel de experiencia previa en
-desarrollo \emph{frontend}, y permite explicar con seguridad cada
-componente del sistema durante la defensa del trabajo.
+\paragraph{JavaScript sin librerías de \emph{frontend}.} Se ha descartado el uso
+de \emph{frameworks} como React o Vue. Las plantillas de Django, combinadas con
+JavaScript estándar para los aspectos dinámicos puntuales, cubren las necesidades
+del proyecto sin introducir el coste de aprender y mantener una pila adicional.
+Esta decisión resulta también prudente dado el nivel de experiencia previa en
+desarrollo \emph{frontend}, y permite explicar con seguridad cada componente del
+sistema durante la defensa del trabajo.
 
 
 \section{Modelo de datos\label{SEC:DIS_DATOS}}
 
-El modelo de datos se ha diseñado siguiendo la lógica natural del
-dominio: un grupo familiar agrupa a varios usuarios, y cada uno de los
-contenidos —recordatorios, contactos, mensajes y fotos— se asocia a
-un grupo familiar o a los usuarios que lo componen. La
-Figura~\ref{FIG:DIS_ER} muestra el diagrama entidad--relación
-simplificado.
+El modelo de datos se ha diseñado siguiendo la lógica natural del dominio: un
+grupo familiar agrupa a varios usuarios, y cada uno de los contenidos
+—recordatorios, contactos, mensajes y fotos— se asocia a un grupo familiar o a
+los usuarios que lo componen. La Figura~\ref{FIG:DIS_ER} muestra el diagrama
+entidad--relación simplificado.
 
 \begin{figure}[modelo entidad relación]{FIG:DIS_ER}{Modelo
 entidad--relación de \emph{ConectaMayor}.}
@@ -340,59 +329,56 @@ entidad--relación de \emph{ConectaMayor}.}
 \end{tikzpicture}
 \end{figure}
 
-A continuación se describen las entidades principales y los atributos
-más relevantes de cada una. Los nombres de los modelos se corresponden
-con los empleados en la implementación.
+A continuación se describen las entidades principales y los atributos más
+relevantes de cada una. Los nombres de los modelos se corresponden con los
+empleados en la implementación.
 
 \paragraph{Usuario.} Extiende el modelo \texttt{AbstractUser} de Django
-añadiendo el rol y el grupo familiar al que pertenece. El rol determina
-la pantalla principal a la que se redirige al usuario tras iniciar
-sesión y los permisos que puede ejercer dentro del grupo.
+añadiendo el rol y el grupo familiar al que pertenece. El rol determina la
+pantalla principal a la que se redirige al usuario tras iniciar sesión y los
+permisos que puede ejercer dentro del grupo.
 
-\paragraph{GrupoFamiliar.} Identifica de manera única a una familia
-dentro del sistema. Se crea automáticamente al registrarse el primer
-\emph{familiar editor} y genera un código de invitación con el formato
-\texttt{FAM-XXXX}, donde las cuatro últimas posiciones son
-alfanuméricas aleatorias. Los demás miembros se incorporan al grupo
-introduciendo este código durante su propio proceso de registro.
+\paragraph{GrupoFamiliar.} Identifica de manera única a una familia dentro del
+sistema. Se crea automáticamente al registrarse el primer \emph{familiar editor}
+y genera un código de invitación con el formato \texttt{FAM-XXXX}, donde las
+cuatro últimas posiciones son alfanuméricas aleatorias. Los demás miembros se
+incorporan al grupo introduciendo este código durante su propio proceso de
+registro.
 
-\paragraph{Recordatorio y Contacto.} Ambas entidades se vinculan
-directamente al grupo familiar. El recordatorio incluye fecha, hora y
-un tipo que determina el icono que se mostrará en la agenda. El
-contacto incluye un teléfono, una categoría y una nota opcional, y
-soporta la acción de llamada directa desde la interfaz del usuario
-mayor.
+\paragraph{Recordatorio y Contacto.} Ambas entidades se vinculan directamente al
+grupo familiar. El recordatorio incluye fecha, hora y un tipo que determina el
+icono que se mostrará en la agenda. El contacto incluye un teléfono, una
+categoría y una nota opcional, y permite iniciar una llamada directa desde la
+interfaz del usuario mayor.
 
-\paragraph{Mensaje.} Cada mensaje almacena un emisor, un receptor y un
-texto, junto a la fecha de envío y un indicador de lectura. La
-conversación entre dos usuarios se reconstruye consultando todos los
-mensajes en los que ambos participan.
+\paragraph{Mensaje.} Cada mensaje almacena un emisor, un receptor y un texto,
+junto con la fecha de envío y un indicador de lectura. La conversación entre dos
+usuarios se reconstruye consultando todos los mensajes en los que ambos
+participan.
 
-\paragraph{Foto y Comentario.} La fotografía se asocia al grupo
-familiar y al usuario que la subió, mientras que cada comentario apunta
-a su fotografía y a su autor. La ordenación de la galería se realiza
-por fecha descendente, replicando el patrón habitual de las redes
-sociales.
+\paragraph{Foto y Comentario.} La fotografía se asocia al grupo familiar y al
+usuario que la subió, mientras que cada comentario apunta a su fotografía y a su
+autor. La ordenación de la galería se realiza por fecha descendente, siguiendo el
+patrón habitual de las redes sociales.
 
 La organización del código en cinco aplicaciones Django independientes
-—\texttt{usuarios}, \texttt{agenda}, \texttt{contactos},
-\texttt{mensajes} y \texttt{galeria}— sigue esta misma división, lo
-que facilita el mantenimiento y la incorporación futura de nuevos
-módulos sin afectar al resto del sistema.
+—\texttt{usuarios}, \texttt{agenda}, \texttt{contactos}, \texttt{mensajes} y
+\texttt{galeria}— sigue esta misma división, lo que facilita el mantenimiento y
+la incorporación futura de nuevos módulos sin afectar al resto del sistema.
 
 
 \section{Diseño de la interfaz\label{SEC:DIS_INTERFAZ}}
 
 El diseño de la interfaz es el aspecto en el que \emph{ConectaMayor} se
-diferencia más claramente de las soluciones generalistas. Las
-decisiones aquí adoptadas afectan directamente a la experiencia de los
-usuarios mayores y son las que se evalúan en las pruebas de usabilidad
-del Capítulo~\ref{CAP:IMPLEMENTACION}.
+diferencia con mayor claridad de las soluciones generalistas. Las decisiones aquí
+adoptadas afectan directamente a la experiencia de los usuarios mayores y son las
+que se evalúan en las pruebas de usabilidad del
+Capítulo~\ref{CAP:IMPLEMENTACION}.
 
 \subsection{Dos interfaces para un mismo sistema\label{SUB:DIS_DOS_INTERFACES}}
 
-La aplicación implementa dos modos de interfaz claramente
-diferenciados, asociados al rol del usuario:
+La aplicación implementa dos modos de interfaz claramente diferenciados,
+asociados al rol del usuario:
 
 \begin{itemize}
   \item La \textbf{interfaz simplificada} se presenta al usuario
@@ -410,19 +396,17 @@ diferenciados, asociados al rol del usuario:
   convencional.
 \end{itemize}
 
-El aspecto clave de este diseño es que ambas interfaces se construyen
-sobre el mismo conjunto de modelos y vistas en el servidor: lo que
-cambia es la plantilla que se renderiza en cada caso. Esta
-aproximación, característica de Django, permite mantener una única
-fuente de verdad para la lógica de negocio y evita la duplicación de
-código.
+El aspecto clave de este diseño es que ambas interfaces se construyen sobre el
+mismo conjunto de modelos y vistas en el servidor: lo que cambia es la plantilla
+que se renderiza en cada caso. Esta aproximación, característica de Django,
+permite mantener una única fuente de verdad para la lógica de negocio y evita la
+duplicación de código.
 
 \subsection{Principios de accesibilidad
 aplicados\label{SUB:DIS_WCAG}}
 
-El cumplimiento de las pautas WCAG 2.1 en su nivel AA se ha abordado de
-forma transversal, aplicando los siguientes criterios a todas las
-pantallas:
+El cumplimiento de las pautas WCAG 2.1 en su nivel AA se ha abordado de forma
+transversal, aplicando los siguientes criterios a todas las pantallas:
 
 \begin{itemize}
   \item \textbf{Tipografía generosa.} El tamaño base del cuerpo de
@@ -447,18 +431,17 @@ pantallas:
   \item \textbf{Tres temas visuales.} La aplicación ofrece un tema
   claro, un tema oscuro y un tema de alto contraste, que el usuario
   puede alternar desde la barra superior. Esta funcionalidad atiende a
-  los usuarios con sensibilidad a la luz o con dificultades visuales
+  usuarios con sensibilidad a la luz o con dificultades visuales
   específicas.
 \end{itemize}
 
 \subsection{Prototipo de las pantallas
 principales\label{SUB:DIS_PROTOTIPO}}
 
-Antes de comenzar el desarrollo se elaboraron prototipos de baja
-fidelidad de las pantallas más representativas. El propósito de estos
-prototipos no era definir el aspecto gráfico final, sino fijar la
-disposición de los elementos, la jerarquía visual y los flujos de
-navegación entre módulos.
+Antes de comenzar el desarrollo se elaboraron prototipos de baja fidelidad de las
+pantallas más representativas. El propósito de estos prototipos no era definir el
+aspecto gráfico final, sino fijar la disposición de los elementos, la jerarquía
+visual y los flujos de navegación entre módulos.
 
 % NOTA PARA YAGO: añadir aquí capturas de pantalla del prototipo o de la
 % aplicación final usando la sintaxis de la plantilla:
@@ -476,8 +459,7 @@ navegación entre módulos.
 %  - Galería en mosaico
 %  - Selector de tema visual
 
-Las pantallas que estructuran la experiencia del usuario mayor son
-cuatro:
+Las pantallas que estructuran la experiencia del usuario mayor son cuatro:
 
 \begin{itemize}
   \item La \textbf{pantalla principal}, que muestra un saludo
@@ -494,16 +476,14 @@ cuatro:
   ampliar cada fotografía y consultar los comentarios asociados.
 \end{itemize}
 
-El módulo de mensajería emplea una pantalla adicional con el patrón
-habitual de conversación: lista de contactos del grupo a la izquierda
-en pantallas anchas, y conversación abierta a la derecha, con las
-burbujas de los mensajes propios alineadas a la derecha y las de los
-recibidos a la izquierda. Cuando la aplicación se visualiza en un
-dispositivo móvil, este patrón se adapta a dos pantallas consecutivas
-en lugar de mostrarse simultáneamente.
+El módulo de mensajería emplea una pantalla adicional con el patrón habitual de
+conversación: lista de contactos del grupo a la izquierda en pantallas anchas y
+conversación abierta a la derecha, con las burbujas de los mensajes propios
+alineadas a la derecha y las de los recibidos a la izquierda. Cuando la
+aplicación se visualiza en un dispositivo móvil, este patrón se adapta a dos
+pantallas consecutivas en lugar de mostrarse simultáneamente.
 
-El conjunto de las decisiones de interfaz aquí descritas se traduce en
-una experiencia que, según se discute en el
-Capítulo~\ref{CAP:IMPLEMENTACION}, resulta accesible para los
-participantes de las pruebas de usabilidad sin que estos requieran
-formación previa para utilizar la aplicación.
+El conjunto de las decisiones de interfaz aquí descritas da lugar a una
+experiencia que, según se discute en el Capítulo~\ref{CAP:IMPLEMENTACION},
+resulta accesible para los participantes de las pruebas de usabilidad sin que
+estos requieran formación previa para utilizar la aplicación.
