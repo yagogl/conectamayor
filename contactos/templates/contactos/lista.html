@@ -15,6 +15,21 @@
 <div class="container mt-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 style="color: var(--color-principal);">📞 Contactos</h2>
+        {% if mayores|length > 1 %}
+        <div class="mb-3">
+            <label class="form-label fw-bold">Viendo contactos de:</label>
+            <div class="d-flex gap-2 flex-wrap">
+                {% for m in mayores %}
+                <a href="?mayor={{ m.pk }}"
+                    class="btn {% if mayor.pk == m.pk %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    {{ m.get_full_name|default:m.username }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% elif mayor and not user.es_mayor %}
+        <p class="text-muted">Viendo contactos de <strong>{{ mayor.get_full_name|default:mayor.username }}</strong></p>
+        {% endif %}
         {% if user.es_mayor or user.es_editor %}
         <a href="{% url 'contactos:nuevo' %}" class="btn text-white"
             style="background-color: var(--color-principal);">

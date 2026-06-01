@@ -13,18 +13,32 @@ def lista(request):
     if user.es_mayor:
         mayor = user
     elif user.grupo_familiar:
-        mayor = Usuario.objects.filter(
-            grupo_familiar=user.grupo_familiar,
-            rol='mayor'
-        ).first()
+        mayor_id = request.GET.get('mayor')
+        if mayor_id:
+            mayor = Usuario.objects.filter(
+                pk=mayor_id,
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
+        else:
+            mayor = Usuario.objects.filter(
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
     else:
         mayor = None
+
+    mayores = []
+    if not user.es_mayor and user.grupo_familiar:
+        mayores = Usuario.objects.filter(
+            grupo_familiar=user.grupo_familiar,
+            rol='mayor'
+        )
 
     contactos = []
     if mayor:
         contactos = Contacto.objects.filter(usuario_mayor=mayor)
 
-    # Agrupar por categoría
     categorias = {}
     for c in contactos:
         cat = c.get_categoria_display()
@@ -32,7 +46,6 @@ def lista(request):
             categorias[cat] = []
         categorias[cat].append(c)
 
-    # Miembros del grupo familiar
     miembros = []
     if user.grupo_familiar:
         miembros = Usuario.objects.filter(
@@ -42,6 +55,7 @@ def lista(request):
     return render(request, 'contactos/lista.html', {
         'categorias': categorias,
         'mayor': mayor,
+        'mayores': mayores,
         'miembros': miembros,
     })
 

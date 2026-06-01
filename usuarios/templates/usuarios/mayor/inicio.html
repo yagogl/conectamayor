@@ -30,25 +30,51 @@
     </div>
     {% endif %}
 
-    <div class="row g-3 mt-2">
+    <div class="row g-3 mt-1">
         <div class="col-6">
-            <a href="{% url 'agenda:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
-                <span class="icono-mayor">📅</span> Agenda
+            <a href="{% url 'agenda:lista' %}"
+                class="btn btn-light border btn-mayor w-100 text-center position-relative">
+                <span class="icono-mayor">📅</span>
+                Agenda
+                {% if recordatorios_hoy %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.9rem;">
+                    {{ recordatorios_hoy }}
+                </span>
+                {% endif %}
             </a>
         </div>
         <div class="col-6">
-            <a href="{% url 'mensajes:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
-                <span class="icono-mayor">💬</span> Mensajes
+            <a href="{% url 'mensajes:lista' %}"
+                class="btn btn-light border btn-mayor w-100 text-center position-relative">
+                <span class="icono-mayor">💬</span>
+                Mensajes
+                {% if mensajes_nuevos %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.9rem;">
+                    {{ mensajes_nuevos }}
+                </span>
+                {% endif %}
             </a>
         </div>
         <div class="col-6">
-            <a href="{% url 'galeria:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
-                <span class="icono-mayor">🖼️</span> Fotos
+            <a href="{% url 'galeria:lista' %}"
+                class="btn btn-light border btn-mayor w-100 text-center position-relative">
+                <span class="icono-mayor">🖼️</span>
+                Fotos
+                {% if fotos_nuevas %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.9rem;">
+                    {{ fotos_nuevas }}
+                </span>
+                {% endif %}
             </a>
         </div>
         <div class="col-6">
-            <a href="{% url 'contactos:lista' %}" class="btn btn-light border btn-mayor w-100 text-center">
-                <span class="icono-mayor">📞</span> Contactos
+            <a href="{% url 'contactos:lista' %}"
+                class="btn btn-light border btn-mayor w-100 text-center">
+                <span class="icono-mayor">📞</span>
+                Contactos
             </a>
         </div>
     </div>

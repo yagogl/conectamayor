@@ -13,18 +13,31 @@ def lista(request):
     """Vista principal de agenda — muestra hoy + 6 días."""
     user = request.user
 
-    # Determinar qué mayor mostrar
     if user.es_mayor:
         mayor = user
     elif user.grupo_familiar:
-        mayor = Usuario.objects.filter(
-            grupo_familiar=user.grupo_familiar,
-            rol='mayor'
-        ).first()
+        mayor_id = request.GET.get('mayor')
+        if mayor_id:
+            mayor = Usuario.objects.filter(
+                pk=mayor_id,
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
+        else:
+            mayor = Usuario.objects.filter(
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
     else:
         mayor = None
 
-    # Generar los 7 días
+    mayores = []
+    if not user.es_mayor and user.grupo_familiar:
+        mayores = Usuario.objects.filter(
+            grupo_familiar=user.grupo_familiar,
+            rol='mayor'
+        )
+
     hoy = timezone.localdate()
     dias = []
     for i in range(7):
@@ -44,6 +57,7 @@ def lista(request):
     return render(request, 'agenda/lista.html', {
         'dias': dias,
         'mayor': mayor,
+        'mayores': mayores,
         'hoy': hoy,
     })
 
@@ -58,10 +72,18 @@ def nuevo_recordatorio(request):
         FormClass = RecordatorioMayorForm
         template = 'agenda/mayor/nuevo.html'
     elif user.es_editor and user.grupo_familiar:
-        mayor = Usuario.objects.filter(
-            grupo_familiar=user.grupo_familiar,
-            rol='mayor'
-        ).first()
+        mayor_id = request.GET.get('mayor')
+        if mayor_id:
+            mayor = Usuario.objects.filter(
+                pk=mayor_id,
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
+        else:
+            mayor = Usuario.objects.filter(
+                grupo_familiar=user.grupo_familiar,
+                rol='mayor'
+            ).first()
         if not mayor:
             messages.error(request, 'No hay ninguna persona mayor en tu grupo todavía.')
             return redirect('agenda:lista')

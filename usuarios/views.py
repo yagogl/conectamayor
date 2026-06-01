@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 from .models import Usuario, GrupoFamiliar
 from .forms import RegistroForm
+from agenda.models import Recordatorio
+from mensajes.models import Mensaje
+from galeria.models import Foto
 
 
 def inicio(request):
@@ -108,11 +113,46 @@ def unirse_grupo(request):
 def inicio_mayor(request):
     if not request.user.es_mayor:
         return redirect('inicio_familiar')
-    return render(request, 'usuarios/mayor/inicio.html')
+
+    hoy = timezone.localdate()
+    recordatorios_hoy = Recordatorio.objects.filter(
+        usuario_mayor=request.user,
+        fecha=hoy,
+        hecho=False
+    ).count()
+
+    mensajes_nuevos = Mensaje.objects.filter(
+        destinatario=request.user,
+        leido=False
+    ).count()
+
+    fotos_nuevas = 0
+    if request.user.grupo_familiar:
+        hace_24h = timezone.now() - timedelta(hours=24)
+        fotos_nuevas = Foto.objects.filter(
+            grupo_familiar=request.user.grupo_familiar,
+            subida_en__gte=hace_24h
+        ).count()
+
+    return render(request, 'usuarios/mayor/inicio.html', {
+        'recordatorios_hoy': recordatorios_hoy,
+        'mensajes_nuevos': mensajes_nuevos,
+        'fotos_nuevas': fotos_nuevas,
+    })
 
 
 @login_required
 def inicio_familiar(request):
     if request.user.es_mayor:
         return redirect('inicio_mayor')
-    return render(request, 'usuarios/familiar/inicio.html')
+
+    mayores = []
+    if request.user.grupo_familiar:
+        mayores = Usuario.objects.filter(
+            grupo_familiar=request.user.grupo_familiar,
+            rol='mayor'
+        )
+
+    return render(request, 'usuarios/familiar/inicio.html', {
+        'mayores': mayores,
+    })
