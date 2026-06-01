@@ -31,7 +31,9 @@ class RegistroForm(UserCreationForm):
         )
     )
     first_name = forms.CharField(max_length=50, label='Nombre')
-    last_name = forms.CharField(max_length=50, label='Apellidos', required=False)
+    last_name = forms.CharField(
+        max_length=50, label='Apellidos', required=False
+    )
     telefono = forms.CharField(
         max_length=20,
         required=False,
@@ -41,7 +43,10 @@ class RegistroForm(UserCreationForm):
 
     class Meta:
         model = Usuario
-        fields = ['username', 'first_name', 'last_name', 'telefono', 'password1', 'password2']
+        fields = [
+            'username', 'first_name', 'last_name',
+            'telefono', 'password1', 'password2',
+        ]
         labels = {
             'username': (
                 'Nombre de usuario (este nombre usarás para entrar en la app)'
@@ -62,3 +67,15 @@ class RegistroForm(UserCreationForm):
                 f'Prueba con: {username}1, {username}2 o añade tu apellido.'
             )
         return username
+
+
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['first_name', 'last_name', 'telefono', 'foto_perfil']
+        labels = {
+            'first_name': 'Nombre',
+            'last_name': 'Apellidos',
+            'telefono': 'Teléfono',
+            'foto_perfil': 'Foto de perfil',
+        }

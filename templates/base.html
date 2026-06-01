@@ -8,6 +8,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{% static 'css/temas.css' %}" rel="stylesheet">
+    <style>
+        .btn-ayuda {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            background-color: var(--color-acento);
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .btn-ayuda:hover { transform: scale(1.1); }
+        .ayuda-panel {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            padding: 20px;
+            z-index: 1001;
+        }
+        .ayuda-panel.visible { display: block; }
+        .ayuda-panel h5 { color: var(--color-principal); }
+    </style>
     {% block estilos_extra %}{% endblock %}
 </head>
 <body>
@@ -43,9 +77,13 @@
                     </ul>
                 </div>
 
-                <span class="navbar-text text-white">
+                <span class="navbar-text text-white me-2">
                     Hola, {{ user.first_name|default:user.username }}
                 </span>
+                <a href="{% url 'perfil' %}" class="btn btn-outline-light btn-sm"
+                    style="font-weight: bold;">
+                    👤 Mi perfil
+                </a>
                 <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Salir</a>
             </div>
         </div>
@@ -75,6 +113,18 @@
         {% block contenido %}{% endblock %}
     </main>
 
+    {% if user.is_authenticated %}
+    <button class="btn-ayuda" onclick="document.getElementById('panel-ayuda').classList.toggle('visible')"
+        aria-label="Ayuda">❓ Ayuda</button>
+
+    <div id="panel-ayuda" class="ayuda-panel">
+        <h5>❓ Ayuda</h5>
+        <div id="ayuda-contenido"></div>
+        <hr>
+        <p class="text-muted small">Pulsa de nuevo el botón ? para cerrar.</p>
+    </div>
+    {% endif %}
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -99,6 +149,58 @@
             const tamanos = { 'pequeno': '14px', 'normal': '18px', 'grande': '22px' };
             document.documentElement.style.fontSize = tamanos[tamano];
             localStorage.setItem('tamano', tamano);
+        }
+
+        // Ayuda contextual según la página actual
+        const ayudas = {
+            '/inicio/mayor/': `
+                <p><strong>Esta es tu pantalla principal.</strong></p>
+                <p>📅 <strong>Agenda</strong> — Mira tus citas y recordatorios.</p>
+                <p>💬 <strong>Mensajes</strong> — Habla con tu familia.</p>
+                <p>🖼️ <strong>Fotos</strong> — Mira las fotos de tu familia.</p>
+                <p>📞 <strong>Contactos</strong> — Llama a tus contactos.</p>
+                <p>Un número rojo en un botón significa que tienes novedades.</p>
+            `,
+            '/agenda/': `
+                <p><strong>Aquí ves tu agenda de la semana.</strong></p>
+                <p>🟢 <strong>Verde</strong> = ya lo has hecho.</p>
+                <p>🔴 <strong>Rojo</strong> = pendiente de hacer.</p>
+                <p>Pulsa <strong>✓ Hecho</strong> cuando termines algo.</p>
+                <p>Pulsa <strong>✏️ Cambiar recordatorio</strong> para cambiar la fecha o el título.</p>
+                <p>Pulsa <strong>➕ Añadir recordatorio</strong> para crear uno nuevo.</p>
+            `,
+            '/contactos/': `
+                <p><strong>Aquí están tus contactos.</strong></p>
+                <p>Pulsa <strong>📞 Llamar</strong> para llamar directamente.</p>
+                <p>Los contactos están organizados por tipo: familia, médico, farmacia...</p>
+                <p>Arriba verás a los miembros de tu grupo familiar.</p>
+            `,
+            '/mensajes/': `
+                <p><strong>Aquí puedes hablar con tu familia.</strong></p>
+                <p>Pulsa el nombre de la persona para abrir la conversación.</p>
+                <p>Un número rojo significa que tienes mensajes sin leer.</p>
+                <p>Escribe tu mensaje abajo y pulsa <strong>Enviar</strong>.</p>
+            `,
+            '/galeria/': `
+                <p><strong>Aquí están las fotos de tu familia.</strong></p>
+                <p>Pulsa una foto para verla más grande.</p>
+                <p>Pulsa la foto grande para verla en pantalla completa.</p>
+                <p>Puedes escribir comentarios debajo de cada foto.</p>
+                <p>Pulsa <strong>📷 Subir foto</strong> para compartir una foto.</p>
+            `,
+        };
+
+        const ayudaContenido = document.getElementById('ayuda-contenido');
+        if (ayudaContenido) {
+            const ruta = window.location.pathname;
+            let textoAyuda = '<p>Pulsa los botones de la pantalla para navegar por la aplicación. Si necesitas ayuda, pregunta a tu familiar.</p>';
+            for (const [clave, valor] of Object.entries(ayudas)) {
+                if (ruta.startsWith(clave)) {
+                    textoAyuda = valor;
+                    break;
+                }
+            }
+            ayudaContenido.innerHTML = textoAyuda;
         }
 
         // Cargar tamaño guardado o predeterminado según rol

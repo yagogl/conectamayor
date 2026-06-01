@@ -9,4 +9,5 @@ urlpatterns = [
     path('unirse/', views.unirse_grupo, name='unirse_grupo'),
     path('inicio/mayor/', views.inicio_mayor, name='inicio_mayor'),
     path('inicio/familiar/', views.inicio_familiar, name='inicio_familiar'),
+    path('perfil/', views.perfil, name='perfil'),
 ]

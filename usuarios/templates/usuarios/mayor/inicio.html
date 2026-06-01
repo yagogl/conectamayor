@@ -30,6 +30,42 @@
     </div>
     {% endif %}
 
+    {% if recordatorios_hoy_lista %}
+    <div class="mb-4">
+        <h4 style="color: var(--color-acento);">
+            📌 Hoy tienes {{ recordatorios_hoy_lista|length }}
+            recordatorio{{ recordatorios_hoy_lista|length|pluralize }} pendiente{{ recordatorios_hoy_lista|length|pluralize }}:
+        </h4>
+        {% for rec in recordatorios_hoy_lista %}
+        <div class="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
+            style="background-color: #f8d7da; border-left: 5px solid #dc3545;">
+            <div>
+                <span class="me-2">
+                    {% if rec.tipo == 'pastilla' %}💊
+                    {% elif rec.tipo == 'medico' %}🏥
+                    {% elif rec.tipo == 'llamada' %}📞
+                    {% elif rec.tipo == 'cumple' %}🎂
+                    {% else %}📌{% endif %}
+                </span>
+                <strong>{{ rec.titulo }}</strong>
+                {% if rec.hora %}
+                <span class="text-muted ms-2">a las {{ rec.hora|time:"H:i" }}</span>
+                {% endif %}
+            </div>
+            <a href="{% url 'agenda:hecho' rec.pk %}"
+                class="btn btn-sm btn-success"
+                style="background-color: #198754; color: white;">
+                ✓ Hecho
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-success mb-4">
+        ✅ No tienes recordatorios pendientes para hoy. ¡Buen día!
+    </div>
+    {% endif %}
+
     <div class="row g-3 mt-1">
         <div class="col-6">
             <a href="{% url 'agenda:lista' %}"
