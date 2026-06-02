@@ -1,0 +1,178 @@
+================================================================================
+  ESCENARIO DE DEMOSTRACIÓN — Familia González-Pérez
+  Para las capturas de la memoria TFG y la defensa
+================================================================================
+
+GRUPO FAMILIAR
+--------------
+Código:    FAM-A3K9
+Nombre:    Familia González-Pérez
+
+
+CUENTAS DE USUARIO
+------------------
+
+  +---------------------------------------------------------------------+
+  | USUARIO   | CONTRASEÑA      | ROL                | NOMBRE COMPLETO  |
+  +---------------------------------------------------------------------+
+  | carmen    | Carmen2026      | mayor              | Carmen Pérez Ruiz|
+  | antonio   | Antonio2026     | mayor              | Antonio González |
+  | laura     | Laura2026       | familiar-editor    | Laura González P.|
+  | miguel    | Miguel2026      | familiar-amigo     | Miguel González P|
+  +---------------------------------------------------------------------+
+
+NOTA: 'familiar-amigo' es el rol de solo lectura. Asegúrate de que el
+nombre exacto del rol coincide con el que has definido en tu modelo
+Usuario (en el script lo puse así porque vi que ese era el nombre en
+los sprints; si lo cambiaste, ajústalo en seed_demo.py antes de
+ejecutarlo).
+
+
+HISTORIA DE LA FAMILIA
+----------------------
+
+Carmen (76) y Antonio (79) son un matrimonio jubilado que vive solo
+en su casa. Tienen dos hijos:
+
+  - Laura (42), que vive en otra ciudad por trabajo, y es la encargada
+    de gestionar los recordatorios médicos y los contactos de ambos
+    padres a través de la aplicación.
+
+  - Miguel (38), que también vive lejos pero participa en el grupo
+    como familiar de solo lectura: lee los mensajes, las fotos y los
+    eventos, pero no edita la agenda ni los contactos.
+
+Este escenario permite mostrar:
+
+  - Multi-mayor en un mismo grupo (Carmen y Antonio).
+  - Multi-editor potencial (aunque en este caso solo hay uno).
+  - Selector de mayor de destino en los formularios del editor.
+  - Notificaciones en la pantalla principal (Carmen y Antonio tienen
+    recordatorios de hoy y mensajes nuevos sin leer).
+
+
+CÓMO EJECUTAR EL SCRIPT
+-----------------------
+
+  1) Copia seed_demo.py a la raíz del proyecto Django (la carpeta
+     donde está manage.py).
+
+  2) Activa el entorno virtual:
+       source venv/bin/activate
+
+  3) Ejecuta el script:
+       python manage.py shell < seed_demo.py
+
+  4) Inicia el servidor y entra con cualquier cuenta:
+       python manage.py runserver
+
+
+ANTES DE HACER LAS CAPTURAS
+---------------------------
+
+1. SUBIR ALGUNAS FOTOS A LA GALERÍA
+
+   El script no crea fotos automáticamente (requieren archivos reales).
+   Entra con la cuenta de Laura y sube 5-6 fotos desde la propia app.
+   Pueden ser de cualquier cosa (paisajes, familia, etc.).
+
+   IMPORTANTE: sube al menos 1-2 fotos en las últimas 24 horas con la
+   cuenta de Laura o Miguel, para que cuando Carmen o Antonio entren
+   a la app aparezca la notificación en el icono de la galería.
+
+   Si quieres añadir algún comentario a las fotos, hazlo también desde
+   las cuentas (que sean comentarios cariñosos y realistas, no "test
+   1234").
+
+
+2. RESETEAR EL ESTADO DE LECTURA SI HACES VARIAS RONDAS
+
+   Si entras con Carmen y abres sus mensajes, estos pasan a "leídos" y
+   desaparece la notificación. Para volver a tener el badge para una
+   captura nueva:
+
+     python manage.py shell
+
+     >>> from mensajes.models import Mensaje
+     >>> from django.utils import timezone
+     >>> from datetime import timedelta
+     >>> Mensaje.objects.filter(
+     ...     destinatario__username='carmen',
+     ...     enviado_en__gte=timezone.now() - timedelta(hours=3)
+     ... ).update(leido=False)
+
+
+CAPTURAS A REALIZAR (orden recomendado)
+---------------------------------------
+Modo ipad = 768 x 1150
+  1. Pantalla principal de Carmen (mayor)
+       - Login con carmen / Carmen2026
+       - Captura la pantalla con los 4 iconos y los badges de
+         notificación (debería tener: 2 en agenda, 2 en mensajes,
+         y un número en galería si subiste fotos hoy)
+       - Nombre del archivo:  app_mayor_inicio.png
+
+  2. Pantalla principal de Laura (editor)
+       - Login con laura / Laura2026
+       - Captura la pantalla principal del rol editor
+       - Nombre del archivo:  app_editor_inicio.png
+
+  3. Agenda de Carmen
+       - Con Carmen, navega a Agenda
+       - Captura la vista de 7 días con los iconos por tipo
+       - Nombre del archivo:  app_agenda_mayor.png
+
+  4. Formulario de agenda del editor (CRÍTICA — muestra el selector
+     de mayor de destino, que es la nueva funcionalidad multi-mayor)
+       - Con Laura, ve a la agenda
+       - Pulsa "Añadir recordatorio"
+       - Asegúrate de que el selector "Mayor de destino" está visible
+         con Carmen y Antonio como opciones
+       - Nombre del archivo:  app_agenda_editor_selector.png
+
+  5. Lista de contactos de Carmen
+       - Con Carmen, navega a Contactos
+       - Captura mostrando las 3 categorías con sus contactos
+       - Nombre del archivo:  app_contactos.png
+
+  6. Conversación de mensajes
+       - Con Carmen, abre la conversación con Laura
+       - Captura la conversación con las burbujas
+       - Nombre del archivo:  app_mensajes.png
+
+  7. Galería en mosaico
+       - Con cualquier cuenta, ve a Galería
+       - Captura la vista en mosaico con todas las fotos
+       - Nombre del archivo:  app_galeria.png
+
+  8. Selector de tema visual
+       - Captura el panel con los 3 temas (claro / oscuro / alto
+         contraste)
+       - Nombre del archivo:  app_temas.png
+
+
+CONSEJOS PARA LAS CAPTURAS
+--------------------------
+
+- Resolución: tira las capturas en una pantalla grande (1366x768
+  como mínimo, idealmente 1920x1080). Cuanto más grandes, más nítidas
+  salen en el PDF.
+
+- Formato: GUARDA EN PNG, no en JPG. El JPG comprime con pérdida y
+  hace el texto borroso.
+
+- Captura solo la ventana del navegador, no toda la pantalla. En
+  Ubuntu: Mayúsculas+Imprimir Pantalla, y luego seleccionas el área.
+
+- Antes de capturar la pantalla principal del mayor, espera unos
+  segundos a que se carguen bien los badges de notificación.
+
+- Cierra cualquier notificación del navegador, pestañas extra o
+  marcadores molestos. La barra del navegador idealmente debe ser
+  limpia.
+
+- Si se ve la URL en la barra, asegúrate de que es localhost:8000 y
+  no algo extraño.
+
+
+================================================================================
