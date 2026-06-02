@@ -38,12 +38,9 @@
 
 {% block contenido %}
 <div class="container mt-3">
-    <div class="d-flex align-items-center mb-3 gap-2">
-        <a href="{% url 'mensajes:lista' %}" class="btn btn-outline-secondary btn-sm">← Volver</a>
-        <h4 class="mb-0" style="color: var(--color-principal);">
-            {{ otro.first_name|default:otro.username }}
-        </h4>
-    </div>
+    <h4 class="mb-3" style="color: var(--color-principal);">
+    {{ otro.first_name|default:otro.username }}
+</h4>
 
     <div id="caja-mensajes">
         {% for mensaje in mensajes %}
