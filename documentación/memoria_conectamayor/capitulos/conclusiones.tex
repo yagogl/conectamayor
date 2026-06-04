@@ -1,4 +1,199 @@
-% Capítulo 5: Conclusiones
-% TODO: completar este capítulo
+%!TEX root = ../memoria.tex
+% =============================================================================
+%  CAPÍTULO 5 — CONCLUSIONES
+%  Cierre del trabajo. 5 secciones cortas.
+% =============================================================================
 
-Este capítulo presenta las conclusiones del trabajo y las líneas de trabajo futuro.
+Este capítulo recoge la valoración global del trabajo realizado. Se revisa el
+grado de cumplimiento de los objetivos planteados en el
+Capítulo~\ref{CAP:INTRODUCCION}, se exponen los principales aprendizajes
+obtenidos durante el desarrollo, se reconocen las limitaciones del trabajo
+presentado y se proponen posibles líneas de continuación.
+
+
+\section{Cumplimiento de los
+objetivos\label{SEC:CONC_OBJETIVOS}}
+
+El objetivo general del proyecto era diseñar, desarrollar y evaluar una
+aplicación web accesible para facilitar la comunicación entre personas mayores y
+sus familiares, aplicando los principios del diseño centrado en el usuario a lo
+largo de todo el proceso. El resultado obtenido —\emph{ConectaMayor}, una
+aplicación funcional y evaluada con usuarios— permite afirmar que este objetivo
+se ha cumplido en lo esencial. A continuación se valora el grado de cumplimiento
+de cada uno de los objetivos específicos:
+
+\begin{enumerate}
+  \item El análisis del estado del arte ha permitido situar
+  \emph{ConectaMayor} en el panorama actual de las soluciones digitales
+  orientadas a personas mayores y justificar las decisiones de diseño adoptadas,
+  especialmente el carácter privado, accesible y acotado de la aplicación frente
+  a las plataformas generalistas.
+
+  \item La arquitectura modular se ha implementado en cinco aplicaciones Django
+  independientes —usuarios, agenda, contactos, mensajes y galería— acompañadas
+  del subsistema transversal de notificaciones. El sistema de tres roles
+  diferencia con claridad a la persona mayor, el familiar editor y el familiar
+  de solo lectura, ajustando los permisos y la interfaz a las necesidades de
+  cada perfil.
+
+  \item La interfaz simplificada del rol \emph{mayor} se ha materializado en una
+  pantalla principal con cuatro accesos directos a los módulos, tipografía
+  ampliada, indicadores numéricos de novedades y botones de gran tamaño. En
+  paralelo, la interfaz del rol \emph{familiar editor} mantiene las funciones de
+  gestión necesarias sin comprometer la simplicidad de la experiencia diseñada
+  para la persona mayor.
+
+  \item El cumplimiento de las pautas WCAG 2.1 nivel AA se ha abordado de forma
+  transversal mediante contraste mínimo 4{,}5:1, áreas de interacción de al
+  menos 44~$\times$~44 píxeles, indicadores de foco visibles, lenguaje sencillo
+  y soporte de tres temas visuales alternativos.
+
+  \item La privacidad se ha garantizado mediante el aislamiento de los grupos
+  familiares en las consultas a la base de datos. Ningún usuario puede acceder a
+  información perteneciente a un grupo familiar distinto del suyo, y la
+  aplicación no integra servicios externos ni publicidad.
+
+  \item La evaluación de usabilidad con dos personas mayores, conducida conforme
+  a las recomendaciones de la Asociación Interacción Persona-Ordenador, ha
+  permitido detectar doce mejoras concretas que se han incorporado a la versión
+  final del sistema. Además, una limitación de diseño identificada durante la
+  reflexión posterior a las pruebas —la asunción inicial de un único usuario
+  mayor por grupo familiar— motivó un rediseño del modelo de datos y de la
+  interfaz del editor.
+
+  \item La presente memoria documenta de forma estructurada el proceso completo:
+  desde el análisis del problema hasta la evaluación con usuarios, incluyendo
+  las decisiones técnicas intermedias y su justificación. Esta documentación
+  sirve tanto como registro del trabajo realizado como base para las posibles
+  ampliaciones futuras descritas más adelante.
+\end{enumerate}
+
+
+\section{Aprendizajes obtenidos\label{SEC:CONC_APRENDIZAJES}}
+
+Más allá del producto entregado, el desarrollo del proyecto ha generado
+aprendizajes significativos. Entre ellos, destacan especialmente tres.
+
+El primero, de carácter técnico, ha sido la consolidación práctica del
+\emph{stack} Django en un proyecto de tamaño medio. Aunque durante el grado se
+han tratado distintos aspectos del desarrollo web, no es lo mismo trabajar con
+ejemplos guiados que enfrentarse a las decisiones reales de un proyecto iniciado
+desde cero: estructura de aplicaciones, modelo de usuario personalizado, gestión
+de migraciones, configuración del servidor y organización del código. La
+experiencia ha mostrado el valor de tomar ciertas decisiones desde las primeras
+fases —como la definición de \texttt{AUTH\_USER\_MODEL} antes de la primera
+migración— y el coste que puede tener posponerlas.
+
+El segundo aprendizaje, de carácter metodológico, ha sido la importancia de
+evaluar el sistema con usuarios. Las sesiones de usabilidad han revelado
+problemas que no se manifestaban durante el desarrollo, porque el propio
+diseñador acaba interiorizando la lógica de su aplicación y deja de percibir
+algunos puntos de fricción. Observar a una persona mayor utilizar la aplicación
+durante una sesión de prueba proporciona información cualitativa que ninguna
+prueba automatizada puede ofrecer. De hecho, varias de las mejoras incorporadas
+en la versión final habrían pasado desapercibidas sin esta etapa.
+
+El tercer aprendizaje, de carácter personal, ha sido constatar que la
+accesibilidad no debe entenderse como un añadido cosmético al final del
+desarrollo, sino como una decisión estructural que condiciona desde la
+organización de la interfaz hasta la elección de palabras de cada botón. Aplicar
+las pautas WCAG 2.1 ha exigido revisar componentes que en otro contexto podrían
+haberse dado por válidos, y ha enseñado a analizar las interfaces digitales con
+un nivel de atención mayor.
+
+
+\section{Limitaciones\label{SEC:CONC_LIMITACIONES}}
+
+El trabajo presentado tiene limitaciones que conviene reconocer explícitamente,
+tanto por honestidad académica como porque marcan el punto de partida natural de
+las líneas de continuación.
+
+La primera y más evidente es que la aplicación no se ha desplegado en un entorno
+de producción real. Todas las pruebas —incluidas las sesiones de evaluación con
+usuarios— se han realizado sobre un servidor local accesible mediante la red
+WiFi doméstica del matrimonio participante. Aunque esta configuración ha sido
+suficiente para validar el comportamiento funcional del sistema, quedan fuera
+del alcance del proyecto aspectos importantes como el rendimiento bajo
+concurrencia, la configuración de HTTPS, la administración de un servidor público
+o la gestión de copias de seguridad.
+
+La segunda limitación afecta a la evaluación de usabilidad. El número de
+participantes (n=2) es reducido para extraer conclusiones cuantitativas
+generalizables, y ambos participantes comparten un perfil demográfico homogéneo:
+edades cercanas, mismo nivel formativo e idéntico entorno tecnológico. Aunque
+los hallazgos son útiles dentro de una evaluación cualitativa orientada a la
+detección de problemas de uso, una validación más amplia requeriría diversificar
+los perfiles y aumentar el número de sesiones.
+
+La tercera limitación es técnica. SQLite, elegida como base de datos por su
+simplicidad y por ser la opción por defecto de Django, resulta adecuada para el
+desarrollo y para un escenario de demostración, pero no sería la opción más
+conveniente para un despliegue en producción con múltiples familias accediendo
+simultáneamente. Asimismo, el conjunto de pruebas automatizadas del proyecto se
+limita a las funcionalidades críticas y no constituye una \emph{suite} completa,
+lo que reduce la confianza ante futuras modificaciones del código sin
+verificación manual.
+
+
+\section{Trabajo futuro\label{SEC:CONC_FUTURO}}
+
+A partir de las limitaciones anteriores y de las observaciones recogidas durante
+la evaluación, se identifican varias líneas naturales de continuación para el
+proyecto.
+
+\paragraph{Despliegue en producción.}
+La línea de trabajo futuro más inmediata sería llevar \emph{ConectaMayor} a un
+servidor accesible públicamente. Esto implicaría migrar la base de datos a
+PostgreSQL, configurar un servidor de aplicaciones como Gunicorn detrás de un
+\emph{proxy} inverso, habilitar HTTPS mediante certificados de Let's Encrypt y
+adquirir un dominio. Un despliegue real permitiría ampliar la evaluación con
+familias diversas, no necesariamente cercanas al autor.
+
+\paragraph{Notificaciones externas.}
+El subsistema de notificaciones implementado actualmente se limita a indicadores
+visibles dentro de la propia aplicación. Una ampliación útil sería incorporar
+notificaciones por correo electrónico —para los familiares— y notificaciones
+\emph{push} a través del navegador, de modo que los usuarios puedan recibir
+avisos de recordatorios próximos o mensajes nuevos sin necesidad de tener la
+aplicación abierta.
+
+\paragraph{Integración con calendarios externos.}
+Permitir la sincronización del módulo de agenda con servicios como Google
+Calendar facilitaría que un familiar registrase una cita en su agenda personal y
+esta apareciese automáticamente como recordatorio en la aplicación del mayor,
+reduciendo así la duplicación de información entre sistemas.
+
+\paragraph{Evaluación ampliada.}
+Una nueva ronda de pruebas AIPO con un número mayor de participantes y con
+perfiles más diversos —en edad, formación, autonomía tecnológica y contexto
+familiar— permitiría comprobar hasta qué punto los hallazgos actuales se
+mantienen en otros casos de uso y, posiblemente, identificar nuevos puntos de
+mejora que no han emergido con el matrimonio participante.
+
+\paragraph{Mejoras adicionales de accesibilidad.}
+La accesibilidad puede llevarse más allá del nivel AA mediante la incorporación
+de lectura por síntesis de voz para los textos de la interfaz, dictado por voz
+para los mensajes y recordatorios, y adaptaciones específicas para usuarios con
+dificultades motrices. La API \texttt{SpeechSynthesis} del navegador, ya
+estandarizada, permitiría abordar la primera de estas mejoras con un esfuerzo de
+implementación reducido.
+
+
+\section{Reflexión final\label{SEC:CONC_REFLEXION}}
+
+Las dos sesiones de evaluación con personas mayores han sido una de las
+experiencias más valiosas del proyecto. Observar cómo una persona interactúa con
+una interfaz diseñada por uno mismo —y detectar, en tiempo real, los puntos en
+los que el diseño no resulta tan claro como se esperaba— proporciona un
+aprendizaje difícil de obtener únicamente mediante documentación técnica o
+pruebas automatizadas. También ha confirmado que el trabajo tiene sentido más
+allá del marco académico: las dos personas que participaron en las pruebas
+valoraron positivamente la idea y manifestaron interés en seguir utilizándola.
+
+La brecha digital que afecta a las personas mayores no se resolverá con una sola
+aplicación, pero sí puede reducirse mediante una forma distinta de diseñar
+tecnología: una forma que sitúe a los usuarios reales —con sus limitaciones, su
+experiencia y sus expectativas— en el centro del proceso. Si este Trabajo Fin de
+Grado contribuye, aunque sea modestamente, a reforzar esa perspectiva, su valor
+no estará únicamente en el código desarrollado, sino también en la manera de
+entender el diseño tecnológico que ha ayudado a formar.

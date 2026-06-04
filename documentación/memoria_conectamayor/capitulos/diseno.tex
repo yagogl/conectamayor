@@ -259,6 +259,7 @@ cliente--servidor de \emph{ConectaMayor}.}
 
 \end{tikzpicture}
 \end{figure}
+\FloatBarrier
 
 \subsection{Justificación del \emph{stack} tecnológico\label{SUB:DIS_STACK}}
 
@@ -384,6 +385,7 @@ entidad--relación de \emph{ConectaMayor}.}
 
 \end{tikzpicture}
 \end{figure}
+\FloatBarrier
 
 A continuación se describen las entidades principales y los atributos
 más relevantes de cada una. Los nombres de los modelos se corresponden
@@ -528,25 +530,26 @@ pantallas:
 aplicación\label{SUB:DIS_PROTOTIPO}}
 
 A continuación se presentan capturas reales de las pantallas más
-representativas de \emph{ConectaMayor}, acompañadas de los comentarios
-que justifican cada decisión de diseño. Las imágenes se han tomado con
-datos de demostración —el grupo familiar González-Pérez, formado por
-Carmen y Antonio como mayores y Laura como familiar editora— y reflejan
-el aspecto que verá un usuario real durante el uso cotidiano de la
-aplicación.
+representativas de \emph{ConectaMayor}, acompañadas de una explicación
+de las decisiones de diseño aplicadas en cada caso. Las imágenes se han
+tomado con datos de demostración —el grupo familiar González-Pérez,
+formado por Carmen y Antonio como usuarios mayores y Laura como familiar
+editora— y reflejan el aspecto que tendría la aplicación durante un uso
+cotidiano.
 
 % -----------------------------------------------------------------------------
 \paragraph{Pantalla principal del usuario mayor.}
 
-La pantalla de inicio del rol \emph{mayor} concentra todo lo que la
-persona necesita en su día a día sin obligarla a buscar entre menús.
-Como muestra la Figura~\ref{FIG:DIS_MAYOR_INICIO}, el saludo
-personalizado encabeza la pantalla, seguido del listado de
-recordatorios pendientes para hoy. Bajo este panel, los cuatro accesos
-directos a los módulos principales aparecen como una cuadrícula con
-iconos grandes y rótulos amplios. Sobre los iconos que tienen novedades
-se superpone un contador numérico en rojo, conforme al subsistema de
-notificaciones descrito en la Sección~\ref{SUB:REQ_NOTIFICACIONES}.
+La pantalla de inicio del rol \emph{mayor} reúne las funciones
+esenciales para el uso diario de la aplicación sin obligar al usuario a
+navegar por menús complejos. Como muestra la
+Figura~\ref{FIG:DIS_MAYOR_INICIO}, el saludo personalizado encabeza la
+pantalla, seguido del listado de recordatorios pendientes para el día en
+curso. Bajo este panel, los cuatro accesos directos a los módulos
+principales se presentan como una cuadrícula de iconos grandes y rótulos
+amplios. Sobre los iconos que tienen novedades se superpone un contador
+numérico en rojo, conforme al subsistema de notificaciones descrito en
+la Sección~\ref{SUB:REQ_NOTIFICACIONES}.
 
 \begin{figure}[pantalla principal del mayor]{FIG:DIS_MAYOR_INICIO}{Pantalla
 principal del rol \emph{mayor} con los recordatorios del día y los
@@ -555,26 +558,26 @@ indicadores numéricos de novedades.}
 \end{figure}
 \FloatBarrier
 
-En la captura, Carmen tiene dos recordatorios pendientes para hoy
-—la pastilla de la tensión y la llamada al fisioterapeuta—, dos
-mensajes sin leer en la conversación con su hija Laura y cinco
-fotografías recientes en la galería compartida. El botón flotante de
-\emph{Ayuda}, visible en la esquina inferior derecha, está disponible
-en todas las pantallas y constituye uno de los mecanismos de apoyo
-previstos para usuarios que se sientan perdidos durante el uso de la
-aplicación.
+En la captura se observa cómo la pantalla resume de forma inmediata las
+tareas pendientes del día, los mensajes no leídos y las fotografías
+recientes de la galería compartida. De este modo, el usuario obtiene una
+visión global de la actividad relevante sin necesidad de acceder
+manualmente a cada módulo. El botón flotante de \emph{Ayuda}, visible
+en la esquina inferior derecha, está disponible en todas las pantallas y
+constituye uno de los mecanismos de apoyo previstos para usuarios que
+puedan sentirse desorientados durante el uso de la aplicación.
 
 % -----------------------------------------------------------------------------
 \paragraph{Pantalla principal del familiar editor.}
 
 La pantalla de inicio del \emph{familiar editor}, recogida en la
-Figura~\ref{FIG:DIS_EDITOR_INICIO}, contrasta deliberadamente con la
-del usuario mayor: prioriza la densidad de información sobre la
-simplicidad visual, dado que su público objetivo es una persona con
-plena familiaridad con interfaces digitales. Incluye, junto a los
-accesos a los cuatro módulos, una zona destacada con el código del
+Figura~\ref{FIG:DIS_EDITOR_INICIO}, presenta una organización
+deliberadamente distinta a la del usuario mayor. En este caso, se
+prioriza una mayor densidad de información, dado que está dirigida a una
+persona con mayor familiaridad con interfaces digitales. Incluye, junto
+a los accesos a los cuatro módulos, una zona destacada con el código del
 grupo familiar (\texttt{FAM-A3K9}), que el editor debe compartir con
-los demás miembros para que se incorporen al grupo.
+los demás miembros para que puedan incorporarse al grupo.
 
 \begin{figure}[pantalla principal del editor]{FIG:DIS_EDITOR_INICIO}{Pantalla
 principal del rol \emph{familiar editor}, con el código del grupo
@@ -584,9 +587,10 @@ familiar destacado.}
 \FloatBarrier
 
 Junto al nombre del usuario aparece una etiqueta que recuerda su rol
-(\emph{familiar-editor}), pequeño detalle que evita confusiones cuando
-una misma persona alterna entre cuentas o cuando varios editores
-conviven en el mismo grupo.
+(\emph{familiar-editor}). Este elemento facilita la identificación del
+perfil activo y evita posibles confusiones cuando una misma persona
+alterna entre cuentas o cuando varios editores conviven en el mismo
+grupo.
 
 % -----------------------------------------------------------------------------
 \paragraph{Agenda del usuario mayor.}
@@ -607,8 +611,8 @@ siguientes, acompañados de un icono distintivo por cada tipo.}
 Cada tipo de recordatorio se acompaña de un icono distintivo
 —una pastilla para la medicación, un teléfono para las llamadas, un
 hospital para las citas médicas o una tarta para los cumpleaños— que
-permite identificar el contenido de cada evento sin necesidad de leer
-el título completo. El botón \emph{Hecho}, en verde y de gran tamaño,
+permite identificar rápidamente la naturaleza de cada evento sin
+necesidad de leer el título completo. El botón \emph{Hecho}, en verde y de gran tamaño,
 permite marcar el recordatorio como completado con un único toque,
 manteniendo la coherencia con el principio de simplicidad de uso
 (RNF4).
@@ -616,14 +620,14 @@ manteniendo la coherencia con el principio de simplicidad de uso
 % -----------------------------------------------------------------------------
 \paragraph{Agenda del editor: el selector de mayor de destino.}
 
-La diferencia más importante entre la interfaz del mayor y la del
-editor se manifiesta en la pantalla de gestión de la agenda. Cuando un
-grupo familiar contiene varios usuarios con rol \emph{mayor} —como
+La diferencia más importante entre la interfaz del usuario mayor y la
+del editor se manifiesta en la pantalla de gestión de la agenda. Cuando
+un grupo familiar contiene varios usuarios con rol \emph{mayor} —como
 es el caso del matrimonio formado por Carmen y Antonio—, el editor
-necesita poder elegir sobre cuál de ellos está actuando en cada
-momento. La Figura~\ref{FIG:DIS_AGENDA_EDITOR} muestra esta solución:
-un selector en la parte superior con un botón por cada mayor del
-grupo, en el que el botón activo se resalta con relleno azul.
+necesita seleccionar sobre cuál de ellos está actuando en cada momento.
+La Figura~\ref{FIG:DIS_AGENDA_EDITOR} muestra esta solución: un selector
+situado en la parte superior, con un botón por cada mayor del grupo, en
+el que el botón activo se resalta mediante relleno azul.
 
 \begin{figure}[agenda del editor con selector]{FIG:DIS_AGENDA_EDITOR}{Vista
 de agenda desde el rol \emph{familiar editor}: el selector superior
@@ -632,16 +636,16 @@ permite elegir sobre qué mayor del grupo se está actuando.}
 \end{figure}
 \FloatBarrier
 
-En la captura, Laura está gestionando los recordatorios de Carmen
-—como indica el botón resaltado y el contenido renderizado debajo—,
-pero puede cambiar a la agenda de Antonio con un solo clic en su
-nombre. Junto a cada recordatorio aparecen los botones de gestión
-(\emph{Hecho}, \emph{Cambiar recordatorio} y el icono de papelera para
-eliminarlo) que la interfaz del mayor no incluye, reservados aquí al
-rol con permisos de edición.
+En la captura, Laura está gestionando los recordatorios de Carmen, como
+indican el botón resaltado y el contenido mostrado debajo. No obstante,
+puede cambiar a la agenda de Antonio con un solo clic sobre su nombre.
+Junto a cada recordatorio aparecen, además del botón \emph{Hecho}
+—también disponible en la interfaz del mayor—, los botones de gestión
+\emph{Cambiar recordatorio} y el icono de papelera para eliminarlo,
+reservados al rol con permisos de edición.
 
-Cuando el editor pulsa el botón \emph{Añadir recordatorio} accede al
-formulario de creación, recogido en la Figura~\ref{FIG:DIS_AGENDA_FORM}.
+Cuando el editor pulsa el botón \emph{Añadir recordatorio}, accede al
+formulario de creación recogido en la Figura~\ref{FIG:DIS_AGENDA_FORM}.
 El encabezado del formulario indica explícitamente para qué mayor se
 está creando el recordatorio (\emph{``Nuevo recordatorio para Carmen
 Pérez Ruiz''}), eliminando cualquier ambigüedad sobre el destinatario.
@@ -657,7 +661,7 @@ qué usuario mayor se está creando el evento.}
 \paragraph{Listado de contactos.}
 
 La pantalla de contactos sustituye a la agenda telefónica del
-dispositivo en un formato más accesible. La
+dispositivo mediante una organización más accesible y controlada. La
 Figura~\ref{FIG:DIS_CONTACTOS} muestra la vista correspondiente a
 Carmen, organizada en categorías mediante secciones diferenciadas.
 
@@ -667,21 +671,21 @@ contactos del usuario mayor, agrupados por categorías.}
 \end{figure}
 \FloatBarrier
 
-La parte superior recoge a los miembros del grupo familiar
-—identificados con su rol mediante una etiqueta gris—, mientras que
-debajo aparecen los contactos personales agrupados en categorías
-como \emph{Familia}, \emph{Farmacia}, \emph{Médico}, \emph{Otro} y
-\emph{Vecino}. Cada contacto incluye un botón de llamada directa
-(\emph{Llamar}, en verde y de gran tamaño) que inicia una llamada
-telefónica desde el dispositivo del usuario, y un botón de edición
-(\emph{Editar}) que permite modificar la información del contacto.
+La parte superior recoge a los miembros del grupo familiar,
+identificados con su rol mediante una etiqueta gris. Debajo aparecen
+los contactos personales agrupados en categorías como \emph{Familia},
+\emph{Farmacia}, \emph{Médico}, \emph{Otro} y \emph{Vecino}. Cada
+contacto incluye un botón de llamada directa (\emph{Llamar}, en verde y
+de gran tamaño), que inicia una llamada telefónica desde el dispositivo
+del usuario, y un botón de edición (\emph{Editar}) para modificar su
+información.
 
 % -----------------------------------------------------------------------------
 \paragraph{Conversación de mensajes.}
 
 El módulo de mensajería sigue el patrón habitual de las aplicaciones
-de chat, reconocible por los usuarios mayores que han tenido contacto
-previo con otras plataformas. La Figura~\ref{FIG:DIS_MENSAJES} recoge
+de chat, reconocible para usuarios que hayan tenido contacto previo con
+otras plataformas de comunicación. La Figura~\ref{FIG:DIS_MENSAJES} recoge
 una conversación entre Carmen y su hija Laura.
 
 \begin{figure}[conversación de mensajes]{FIG:DIS_MENSAJES}{Pantalla de
@@ -692,8 +696,8 @@ propios y los recibidos.}
 \FloatBarrier
 
 Los mensajes recibidos se muestran alineados a la izquierda con fondo
-claro, mientras que los mensajes propios aparecen a la derecha con
-fondo del color principal de la aplicación. Cada mensaje incluye la
+claro, mientras que los mensajes propios aparecen a la derecha con el
+color principal de la aplicación. Cada mensaje incluye la
 hora de envío. La conversación se actualiza automáticamente mediante
 sondeo AJAX, según se justificó en la
 Sección~\ref{SUB:DIS_STACK}, sin requerir que el usuario refresque la
@@ -705,7 +709,7 @@ página para ver los mensajes nuevos.
 La galería presenta las fotografías del grupo familiar en formato
 mosaico, ordenadas por fecha de subida descendente. La
 Figura~\ref{FIG:DIS_GALERIA} muestra el aspecto de la galería con
-algunas fotografías de ejemplo del grupo González-Pérez.
+fotografías de ejemplo del grupo González-Pérez.
 
 \begin{figure}[galería compartida]{FIG:DIS_GALERIA}{Galería
 compartida del grupo familiar en formato mosaico.}
@@ -713,15 +717,15 @@ compartida del grupo familiar en formato mosaico.}
 \end{figure}
 \FloatBarrier
 
-Las fotografías que llevan título y autor lo muestran bajo la imagen.
-El botón \emph{Subir foto}, situado en la parte superior derecha,
-permite a cualquier miembro del grupo añadir una fotografía a la
-galería compartida.
+Las fotografías que incluyen título y autor muestran esta información
+bajo la imagen. El botón \emph{Subir foto}, situado en la parte superior
+derecha, permite a cualquier miembro del grupo añadir una nueva
+fotografía a la galería compartida.
 
 % -----------------------------------------------------------------------------
 \paragraph{Selector de tema visual.}
 
-Como parte del cumplimiento de las pautas WCAG 2.1 nivel AA
+Como parte del cumplimiento de las pautas WCAG 2.1 nivel AA,
 discutidas en la Sección~\ref{SUB:DIS_WCAG}, la aplicación ofrece tres
 temas visuales seleccionables desde la barra superior. La
 Figura~\ref{FIG:DIS_TEMAS} muestra el selector desplegado.
@@ -733,9 +737,9 @@ oscuro y de alto contraste.}
 \end{figure}
 \FloatBarrier
 
-El tema seleccionado se persiste en el almacenamiento local del
+El tema seleccionado se conserva en el almacenamiento local del
 navegador, de modo que la preferencia se mantiene entre sesiones sin
-necesidad de reconfigurarla en cada acceso. El tema de alto contraste
+necesidad de configurarla de nuevo en cada acceso. El tema de alto contraste
 está dirigido específicamente a usuarios con dificultades visuales,
 mientras que el tema oscuro reduce la fatiga visual en condiciones de
 poca luz ambiental.
@@ -743,8 +747,8 @@ poca luz ambiental.
 % -----------------------------------------------------------------------------
 % Párrafo de cierre del capítulo
 
-El conjunto de las decisiones de interfaz aquí descritas se traduce en
-una experiencia que, según se discute en el
+El conjunto de las decisiones de interfaz aquí descritas da lugar a una
+experiencia que, según se discute en el
 Capítulo~\ref{CAP:IMPLEMENTACION}, resulta accesible para los
 participantes de las pruebas de usabilidad sin que estos requieran
 formación previa para utilizar la aplicación.

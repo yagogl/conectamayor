@@ -64,6 +64,57 @@
 \usetikzlibrary{positioning,fit,arrows.meta,calc,shapes.geometric}
 \graphicspath{{img/}}
 \usepackage{placeins}                 % Para \FloatBarrier: impide que las figuras floten lejos del texto
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Definiciones de lenguajes que listings no incluye por defecto
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do,
+             else, false, finally, for, function, if, in, instanceof, new,
+             null, return, switch, this, throw, true, try, typeof, var,
+             void, while, with, let, const, async, await, of},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`,
+  sensitive=true
+}
+
+\lstdefinelanguage{CSS}{
+  keywords={background, background-color, background-image, border,
+             border-color, border-style, border-width, bottom, color,
+             content, display, float, font, font-family, font-size,
+             font-style, font-weight, height, left, letter-spacing,
+             line-height, margin, margin-bottom, margin-left, margin-right,
+             margin-top, max-height, max-width, min-height, min-width,
+             opacity, outline, overflow, padding, padding-bottom,
+             padding-left, padding-right, padding-top, position, right,
+             text-align, text-decoration, text-transform, top,
+             vertical-align, visibility, white-space, width, z-index},
+  sensitive=true,
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+% Estilo de los bloques de código fuente
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!50},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    commentstyle=\color{gray!70!black}\itshape,
+    stringstyle=\color{orange!80!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    showstringspaces=false,
+    captionpos=b,
+    abovecaptionskip=4pt,
+    belowcaptionskip=4pt,
+}
 
 % =============================================================================
 \begin{document}
