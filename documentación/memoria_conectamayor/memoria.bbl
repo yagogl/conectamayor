@@ -1,16 +1,16 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{ine_hogares}
 {Instituto Nacional de Estadística}, ``Encuesta continua de hogares.'' \url{https://www.ine.es/prensa/ech_2020.pdf}, 2020.
 \newblock Consultado el 12 de diciembre de 2025.
 
 \bibitem{rsi_soledad}
-C.~Gala~Serra and A.~Candela~Mollá, ``Intervenciones sobre la soledad en el anciano: revisión sistemática,'' {\em Revista Sanitaria de Investigación}, 12 2021.
-\newblock Consultado el 15 de diciembre de 2025.
+C.~Gala~Serra and A.~Candela~Mollá, ``Intervenciones sobre la soledad en el anciano: revisión sistemática.'' \url{https://revistasanitariadeinvestigacion.com/intervenciones-sobre-la-soledad-en-el-anciano-revision-sistematica/}, 12 2021.
+\newblock Revista Sanitaria de Investigación. Consultado el 15 de diciembre de 2025.
 
 \bibitem{soledad_cerebro}
-M.~A. Parra~Rizo, ``Cómo afecta la soledad al cerebro de las personas mayores.'' The Objective, 12 2023.
-\newblock Consultado el 18 de diciembre de 2025.
+M.~A. Parra~Rizo, ``Cómo afecta la soledad al cerebro de las personas mayores.'' \url{https://theobjective.com/sociedad/2023-12-17/afecta-soledad-cerebro-personas-mayores/}, 12 2023.
+\newblock The Objective. Consultado el 18 de diciembre de 2025.
 
 \bibitem{whatsapp}
 {WhatsApp LLC}, ``Whatsapp messenger.'' \url{https://www.whatsapp.com}.
@@ -29,11 +29,19 @@ M.~A. Parra~Rizo, ``Cómo afecta la soledad al cerebro de las personas mayores.'
 \newblock Consultado el 28 de enero de 2026.
 
 \bibitem{mayoresconectados}
-J.~Scaramuzzo and A.~Di~Biase, ``Mayores conectados.'' EXO S.A.
-\newblock Consultado el 30 de enero de 2026.
+J.~Scaramuzzo and A.~Di~Biase, ``Mayores conectados.'' \url{https://mayoresconectados.com.ar/nosotros/}.
+\newblock EXO S.A. Consultado el 30 de enero de 2026.
 
 \bibitem{instagram}
 {Meta Platforms, Inc.}, ``Instagram.'' \url{https://www.instagram.com}.
 \newblock Consultado el 5 de febrero de 2026.
+
+\bibitem{wcag21}
+{World Wide Web Consortium (W3C)}, ``Web content accessibility guidelines (wcag) 2.1.'' W3C Recommendation. \url{https://www.w3.org/TR/WCAG21/}, 2018.
+\newblock Consultado el 12 de febrero de 2026.
+
+\bibitem{nielsen_severidad}
+J.~Nielsen, ``Severity ratings for usability problems.'' Nielsen Norman Group. \url{https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/}, 1994.
+\newblock Consultado el 22 de abril de 2026.
 
 \end{thebibliography}

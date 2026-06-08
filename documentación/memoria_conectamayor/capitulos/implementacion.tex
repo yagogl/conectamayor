@@ -272,6 +272,46 @@ grupos con el mismo código. Aunque teóricamente podrían producirse
 colisiones, el espacio de combinaciones disponible —36$^4$, más de un
 millón— resulta muy superior al volumen previsto de grupos.
 
+% -----------------------------------------------------------------------------
+%  Figura: pantalla de inicio de sesión
+% -----------------------------------------------------------------------------
+La pantalla de inicio de sesión constituye la puerta de entrada al
+sistema y se recoge en la Figura~\ref{FIG:IMP_LOGIN}. Su diseño es simple: presenta únicamente los dos campos
+imprescindibles —usuario y contraseña— y un enlace al formulario de
+registro para quienes todavía no disponen de cuenta. Al tratarse de la
+primera interacción del usuario con la aplicación, se ha evitado incluir
+elementos accesorios que pudieran distraer, sobrecargar la pantalla o
+generar dudas.
+
+\begin{figure}[pantalla de inicio de sesión]{FIG:IMP_LOGIN}{Pantalla de
+inicio de sesión, con los campos de usuario y contraseña y el enlace al
+formulario de registro.}
+\includegraphics[width=0.40\linewidth, keepaspectratio]{app_login.png}
+\end{figure}
+\FloatBarrier
+
+% -----------------------------------------------------------------------------
+%  Figura: formulario de registro
+% -----------------------------------------------------------------------------
+El formulario de registro, mostrado en la Figura~\ref{FIG:IMP_REGISTRO},
+materializa el mecanismo de vinculación familiar. Además de los datos
+personales básicos, incorpora los dos elementos que articulan el sistema
+de roles: el selector \emph{«¿Quién eres?»}, mediante el cual el nuevo
+usuario indica el rol que le corresponde, y el campo del \emph{código del
+grupo familiar} (\texttt{FAM-XXXX}), que permite a los usuarios mayores y
+a los familiares de solo lectura incorporarse a un grupo ya existente. El
+texto de ayuda situado junto al campo de usuario aclara su significado
+mediante ejemplos de nombres sencillos y fáciles de recordar. Esta
+aclaración constituye una de las mejoras introducidas a raíz de la
+evaluación de usabilidad descrita en la Sección~\ref{SEC:IMP_AIPO}.
+
+\begin{figure}[formulario de registro]{FIG:IMP_REGISTRO}{Formulario de
+registro, con el selector de rol y el campo del código del grupo
+familiar.}
+\includegraphics[width=0.75\linewidth, keepaspectratio]{app_registro.png}
+\end{figure}
+\FloatBarrier
+
 La doble interfaz descrita en el Capítulo~\ref{CAP:DISENO} se
 materializa en una vista de redirección que dirige a cada usuario, al
 iniciar sesión, a la pantalla correspondiente según su rol. La vista
