@@ -16,7 +16,7 @@
 % arara: pdflatex: {shell: yes}
 
 
-\documentclass[epsbased,copyright,final,printable,covers,extendedindex,firstnumbered,tfg]{tfgtfmthesisuam}
+\documentclass[epsbased,copyright,final,printable,covers,extendedindex,lof,lot,loc,firstnumbered,tfg]{tfgtfmthesisuam}
 
 % -----------------------------------------------------------------------------
 %  DATOS DE PORTADA
@@ -33,14 +33,14 @@
 % -----------------------------------------------------------------------------
 \dedication{}
 \famouscite{}
-\prefacefile{inicio/prefacio}
+%\prefacefile{inicio/prefacio}
 \ackfile{inicio/agradecimientos}
 \resumenfile{inicio/resumen}
 \abstractfile{inicio/abstract}
 
 % Palabras clave (separadas por comas)
-\palabrasclave{Aplicación web, accesibilidad, personas mayores, brecha digital, inclusión digital, Django, WCAG 2.1, usabilidad, diseño centrado en el usuario, AIPO}
-\keywords{Web application, accessibility, elderly people, digital divide, digital inclusion, Django, WCAG 2.1, usability, user-centered design, AIPO}
+\palabrasclave{Aplicación web, accesibilidad, personas mayores, brecha digital, inclusión digital, Django, WCAG 2.1, usabilidad, diseño centrado en el usuario, interacción persona-ordenador, IPO}
+\keywords{Web application, accessibility, elderly people, digital divide, digital inclusion, Django, WCAG 2.1, usability, user-centered design, human-computer interaction, HCI}
 
 % Datos institucionales para la portada
 \coverdata
@@ -128,6 +128,8 @@
 \chapter{Estado del arte\label{CAP:ESTADOARTE}}{capitulos/estado_arte}
 
 \chapter{Diseño\label{CAP:DISENO}}{capitulos/diseno}
+
+\addtocontents{toc}{\protect\newpage}
 
 \chapter{Implementación\label{CAP:IMPLEMENTACION}}{capitulos/implementacion}
 

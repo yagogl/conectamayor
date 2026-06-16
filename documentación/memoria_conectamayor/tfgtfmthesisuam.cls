@@ -1054,8 +1054,18 @@
 \renewcommand{\cfttabnumwidth}{5.5\myex}
 \cftsetpnumwidth{6\myex}
 
-\renewcommand*\l@figure{\@dottedtocline{1}{4\myex}{2.8\myem}}
-\let\l@table\l@figure
+\renewcommand*\l@figure[2]{%
+  \begingroup
+  \def\numberline##1{Figura~\hb@xt@0.85cm{##1\hfil}:\nobreakspace}%
+  \@dottedtocline{1}{0pt}{1.95cm}{#1}{#2}%
+  \endgroup
+}
+\renewcommand*\l@table[2]{%
+  \begingroup
+  \def\numberline##1{Tabla~\hb@xt@0.85cm{##1\hfil}:\nobreakspace}%
+  \@dottedtocline{1}{0pt}{1.95cm}{#1}{#2}%
+  \endgroup
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2384,7 +2394,7 @@
 					\ifx\@speaker\empty\else
 						Ponente del trabajo fin de grado: \\ \@speaker \\[1\myem]
 					\fi
-					Tutor del trabajo fin de grado: \\ \@advisor \\ \mbox{}
+					Tutora del trabajo fin de grado: \\ \@advisor \\ \mbox{}
 					\if@coadvisorbool Cotutor del trabajo fin de grado: \\ \@coadvisor \\ \mbox{}\fi
 				\end{small}
 			\end{center}
@@ -3092,7 +3102,12 @@ coordinates {(#1,0) (#2,0)};
 				\if@cfttocbibind
 					\@cftdobiblof
 				\fi
-				\@namedef{l@lstlisting}{\@dottedtocline{1}{4\myex}{2.8\myem}}
+				\@namedef{l@lstlisting}##1##2{%
+					\begingroup
+					\def\numberline####1{C\'odigo~\hb@xt@0.85cm{####1\hfil}:\nobreakspace}%
+					\@dottedtocline{1}{0pt}{1.95cm}{##1}{##2}%
+					\endgroup
+				}
 				\@starttoc{#2}
 			\endgroup
 		\@cfttocfinish
@@ -3447,7 +3462,7 @@ coordinates {(#1,0) (#2,0)};
 		\vfill
 		\begin{center}
 			Autor: \@author \\ \mbox{}
-			Tutor: \@advisor \\ \mbox{}
+			Tutora: \@advisor \\ \mbox{}
 			\if@coadvisorbool Cotutor: \@coadvisor \\ \mbox{}\fi
 			\ifx\@speaker\empty\else
 				Ponente: \@speaker \\[1\myem]

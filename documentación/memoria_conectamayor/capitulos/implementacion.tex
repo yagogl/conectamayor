@@ -11,8 +11,8 @@ la evolución del proyecto organizada en \emph{sprints}; posteriormente,
 se presentan las funcionalidades concretas de cada módulo, acompañadas
 de fragmentos de código representativos; y, por último, se recoge la
 evaluación de usabilidad realizada con personas mayores siguiendo la
-metodología propuesta por la Asociación Interacción Persona-Ordenador
-(AIPO).
+metodología propia de la disciplina de Interacción Persona-Ordenador
+(IPO).
 
 
 \section{Tecnologías y entorno de desarrollo\label{SEC:IMP_TECNOLOGIAS}}
@@ -40,7 +40,7 @@ El proyecto Django se organiza en cinco aplicaciones independientes
 \emph{framework} y reforzando la separación de responsabilidades
 discutida en la Sección~\ref{SEC:DIS_DATOS}. El árbol simplificado de
 directorios es el siguiente:
-
+\vspace{1cm}
 \begin{verbatim}
     conectamayor/
         usuarios/       # Autenticación, roles, grupo familiar
@@ -266,7 +266,7 @@ class GrupoFamiliar(models.Model):
     nombre = models.CharField(max_length=100, blank=True)
     creado_en = models.DateTimeField(auto_now_add=True)
 \end{lstlisting}
-
+\vspace{1cm}
 La restricción \texttt{unique=True} garantiza que no puedan existir dos
 grupos con el mismo código. Aunque teóricamente podrían producirse
 colisiones, el espacio de combinaciones disponible —36$^4$, más de un
@@ -293,15 +293,14 @@ formulario de registro.}
 % -----------------------------------------------------------------------------
 %  Figura: formulario de registro
 % -----------------------------------------------------------------------------
-El formulario de registro, mostrado en la Figura~\ref{FIG:IMP_REGISTRO},
-materializa el mecanismo de vinculación familiar. Además de los datos
+El formulario de registro, mostrado en la Figura~\ref{FIG:IMP_REGISTRO}, vincula datos
 personales básicos, incorpora los dos elementos que articulan el sistema
 de roles: el selector \emph{«¿Quién eres?»}, mediante el cual el nuevo
 usuario indica el rol que le corresponde, y el campo del \emph{código del
 grupo familiar} (\texttt{FAM-XXXX}), que permite a los usuarios mayores y
 a los familiares de solo lectura incorporarse a un grupo ya existente. El
 texto de ayuda situado junto al campo de usuario aclara su significado
-mediante ejemplos de nombres sencillos y fáciles de recordar. Esta
+mediante ejemplos sencillos y fáciles de recordar. Esta
 aclaración constituye una de las mejoras introducidas a raíz de la
 evaluación de usabilidad descrita en la Sección~\ref{SEC:IMP_AIPO}.
 
@@ -516,8 +515,8 @@ mayores\label{SEC:IMP_AIPO}}
 La evaluación con usuarios constituye uno de los elementos
 diferenciales de este proyecto y responde a la indicación expresa de la
 tutora académica. Para llevarla a cabo se ha aplicado una metodología
-basada en las recomendaciones de la Asociación Interacción
-Persona-Ordenador (AIPO), centrada en la observación directa y en la
+basada en los principios de la Interacción Persona-Ordenador
+(IPO), centrada en la observación directa y en la
 verbalización del pensamiento durante la interacción con el sistema.
 
 \subsection{Metodología\label{SUB:AIPO_METODOLOGIA}}
@@ -531,7 +530,7 @@ sino también el razonamiento del participante y los puntos concretos en
 los que surgen dudas.
 
 Se realizaron dos sesiones independientes durante la semana del 20 de
-abril de 2026, coincidiendo con la Semana Santa. Ambas sesiones se
+abril de 2026. Ambas sesiones se
 desarrollaron en el domicilio del matrimonio participante, en un entorno
 tranquilo y familiar, con el fin de minimizar el efecto de la presión
 externa sobre los resultados. Cada sesión tuvo una duración aproximada
@@ -576,7 +575,7 @@ familiares activos. La
 Tabla~\ref{TAB:AIPO_PERFILES} recoge sus características más
 relevantes.
 
-\begin{table}[perfiles AIPO]{TAB:AIPO_PERFILES}{Perfil de los
+\begin{table}[Perfiles de los participantes]{TAB:AIPO_PERFILES}{Perfil de los
 participantes de las pruebas de usabilidad.}
 \begin{center}
 \begin{tabular}{lll}
@@ -659,10 +658,12 @@ apreciable. P1 invirtió aproximadamente tres minutos y P2 algo más de
 cuatro. El principal punto de fricción fue el formulario de creación: en
 la versión original, el campo de fecha aparecía después del título y del
 tipo, lo que provocaba dudas sobre si se encontraban en la pantalla
-correcta. Asimismo, el campo de hora figuraba como obligatorio, cuando
-varios de los recordatorios habituales mencionados por los participantes
-—\emph{``tomar la medicación''}, \emph{``llamar a la hija''}— no tienen
-necesariamente una hora exacta asociada.
+correcta. Asimismo, el formulario original no contemplaba un campo de hora
+para el recordatorio, lo que resultó extraño a los participantes
+cuando quisieron asignar una hora concreta a algunas de sus citas;
+posteriormente se incorporó este campo con carácter opcional, dado
+que recordatorios habituales como \emph{``tomar la medicación''} o
+\emph{``llamar a la hija''} no siempre tienen una hora exacta asociada.
 
 P1, además, manifestó al inicio dudas sobre el propio concepto de
 \emph{nombre de usuario}, identificándolo inicialmente con su nombre
@@ -729,7 +730,7 @@ en función de su gravedad y de su coste de implementación. La Tabla~\ref{TAB:A
 aplicadas con posterioridad a las pruebas, todas ellas integradas
 en la versión actual del sistema.
 
-\begin{table}[mejoras AIPO]{TAB:AIPO_MEJORAS}{Mejoras incorporadas
+\begin{table}[Mejoras incorporadas]{TAB:AIPO_MEJORAS}{Mejoras incorporadas
 a la aplicación a partir de los hallazgos de las pruebas de
 usabilidad.}
 \begin{center}
@@ -755,8 +756,7 @@ Validación del formato del teléfono mediante
 expresión regular                                       & T3 \\
 Miembros del grupo familiar visibles automáticamente
 en la lista de contactos                                & T3 \\
-Visualización de fotografías a pantalla completa
-mediante \texttt{requestFullscreen()}                   & T5 \\
+Visualización de fotografías a pantalla completa                   & T5 \\
 Texto del selector de archivos sustituido por uno
 más claro                                               & T5 \\
 \bottomrule
