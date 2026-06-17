@@ -1,0 +1,54 @@
+%!TEX root = ../memoria.tex
+% =============================================================================
+%  APÉNDICE B — Entorno y dependencias del proyecto
+% =============================================================================
+
+El código fuente completo de la aplicación se encuentra disponible en un
+repositorio público, accesible en la siguiente dirección:
+
+\begin{center}
+\url{https://github.com/yagogl/conectamayor-TFG}
+\end{center}
+
+El repositorio incluye, además del código, un fichero \texttt{README} con
+las instrucciones detalladas de instalación y puesta en marcha, así como
+los datos de acceso de un escenario de demostración que permite explorar
+la aplicación con contenido de ejemplo.
+
+\section{Entorno de ejecución\label{SEC:APP_ENTORNO}}
+
+La aplicación se ha desarrollado y probado sobre el siguiente entorno:
+
+\begin{itemize}
+  \item Sistema operativo: Ubuntu 24.04 LTS.
+  \item Lenguaje: Python 3.12.3.
+  \item Framework web: Django 6.0.4.
+  \item Base de datos: SQLite, motor incluido por defecto en Django.
+  \item Capa de presentación: Bootstrap 5 y JavaScript estándar.
+\end{itemize}
+
+\section{Dependencias\label{SEC:APP_DEPENDENCIAS}}
+
+Las dependencias del proyecto se gestionan mediante el fichero
+\texttt{requirements.txt}, que permite reconstruir el entorno en cualquier
+sistema compatible con una única orden:
+
+\begin{center}
+\texttt{pip install -r requirements.txt}
+\end{center}
+
+El contenido de dicho fichero es el siguiente:
+
+\begin{lstlisting}[language={},basicstyle=\ttfamily\small,frame=single,numbers=none]
+asgiref==3.11.1
+Django==6.0.4
+pillow==12.2.0
+sqlparse==0.5.5
+\end{lstlisting}
+
+El reducido número de dependencias refleja una de las decisiones de diseño
+del proyecto: minimizar las librerías externas y apoyarse en las
+herramientas que el propio framework Django proporciona. Las instrucciones
+completas para clonar el repositorio, instalar las dependencias y ejecutar
+la aplicación —incluida la carga opcional de los datos de demostración— se
+encuentran detalladas en el fichero \texttt{README} del repositorio.
