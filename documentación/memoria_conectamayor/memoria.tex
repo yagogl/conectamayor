@@ -64,6 +64,13 @@
 \usetikzlibrary{positioning,fit,arrows.meta,calc,shapes.geometric}
 \graphicspath{{img/}}
 \usepackage{placeins}                 % Para \FloatBarrier: impide que las figuras floten lejos del texto
+\makeatletter
+\setlength{\@fptop}{0pt}             % Figuras solas en su página: pegadas arriba en lugar de centradas
+\makeatother
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
 \usepackage{listings}
 \usepackage{xcolor}
 

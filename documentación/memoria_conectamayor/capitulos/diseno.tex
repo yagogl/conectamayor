@@ -513,160 +513,108 @@ pantallas:
   específicas.
 \end{itemize}
 
-%!TEX root = ../memoria.tex
 % =============================================================================
-%  SECCIÓN 3.4.3 — Pantallas principales de la aplicación (v4 FINAL)
-%
-%  Cambios respecto a v3:
-%   - Todas las capturas verticales tienen ahora ratio 1.50 (han sido
-%     procesadas para uniformidad visual). Se usa el mismo tamaño para
-%     todas ellas: height=0.6\textheight.
-%
-%  REQUIERE en el preámbulo de memoria.tex:
-%        \usepackage{placeins}
+%  SECCIÓN 3.4.3 — Pantallas principales (v6)
+%  Tamaños ajustados a las dimensiones REALES de las imágenes recortadas.
+%  - PAREJAS: controladas por width (0.48\textwidth c/u) para que quepan
+%    lado a lado sin desbordar, independientemente de su proporción.
+%  - SOLAS: controladas por height (0.45\textheight).
+%  Para alinear verticalmente las parejas se usa \begin{minipage}[t].
 % =============================================================================
 
 \subsection{Pantallas principales de la
 aplicación\label{SUB:DIS_PROTOTIPO}}
 
-A continuación se presentan capturas reales de las pantallas más
-representativas de \emph{ConectaMayor}, acompañadas de una explicación
-de las decisiones de diseño aplicadas en cada caso. Las imágenes se han
-tomado con datos de demostración —el grupo familiar González-Pérez,
-formado por Carmen y Antonio como usuarios mayores y Laura como familiar
-editora— y reflejan el aspecto que tendría la aplicación durante un uso
-cotidiano. Todas las capturas se han realizado sobre un dispositivo en
-formato vertical de tableta, que constituye el escenario de uso principal
-previsto para la aplicación. Por este motivo, las imágenes conservan las
-proporciones propias de este tipo de pantalla. En algunas de ellas puede
-apreciarse el botón flotante de \emph{Ayuda}, situado en la esquina
-inferior derecha y presente de forma permanente en todas las vistas de la
-aplicación.
+A continuación se muestran capturas reales de las pantallas más
+representativas de \emph{ConectaMayor}, con la explicación de las
+decisiones de diseño de cada una. Las imágenes usan los datos de
+demostración —el grupo González-Pérez, con Carmen y Antonio como
+usuarios mayores y Laura como familiar editora— y reflejan el aspecto
+real de la aplicación en uso. Todas se han tomado sobre una tableta en
+formato vertical, que es el escenario de uso principal previsto. En
+varias de ellas se ve el botón flotante de \emph{Ayuda}, en la esquina
+inferior derecha, presente en todas las vistas.
 
 % -----------------------------------------------------------------------------
-\paragraph{Pantalla principal del usuario mayor.}
+\paragraph{Pantallas principales: mayor y editor.}
 
-La pantalla de inicio del rol \emph{mayor} reúne las funciones
-esenciales para el uso diario de la aplicación sin obligar al usuario a
-navegar por menús complejos. Como muestra la
-Figura~\ref{FIG:DIS_MAYOR_INICIO}, el saludo personalizado encabeza la
-pantalla, seguido del listado de recordatorios pendientes para el día en
-curso. Bajo este panel, los cuatro accesos directos a los módulos
-principales se presentan como una cuadrícula de iconos grandes y rótulos
-amplios. Sobre los iconos que tienen novedades se superpone un contador
-numérico en rojo, conforme al subsistema de notificaciones descrito en
-la Sección~\ref{SUB:REQ_NOTIFICACIONES}.
+Las dos pantallas de inicio parten de criterios opuestos. La del rol
+\emph{mayor} (Figura~\ref{FIG:DIS_INICIOS}, izquierda) reúne lo
+esencial del día a día sin menús: un saludo personalizado, los
+recordatorios pendientes de la jornada y, debajo, los cuatro accesos a
+los módulos en una cuadrícula de iconos grandes. Sobre los iconos con
+novedades aparece un contador numérico en rojo, según el subsistema de
+notificaciones de la Sección~\ref{SUB:REQ_NOTIFICACIONES}. La idea es
+que la persona mayor vea de un vistazo lo que necesita su atención sin
+explorar nada más.
 
-\begin{figure}[pantalla principal del mayor]{FIG:DIS_MAYOR_INICIO}{Pantalla
-principal del rol \emph{mayor} con los recordatorios del día y los
-indicadores numéricos de novedades.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_mayor_inicio.png}
+La pantalla del \emph{familiar editor} (Figura~\ref{FIG:DIS_INICIOS},
+derecha) prioriza la densidad de información, porque la maneja alguien
+más habituado a la tecnología. Destaca el código del grupo familiar
+(\texttt{FAM-A3K9}), que el editor comparte para que los demás se
+unan, y una etiqueta junto al nombre que recuerda el rol activo.
+
+\begin{figure}[pantallas principales]{FIG:DIS_INICIOS}{Pantallas
+principales de la aplicación. A la izquierda, el rol \emph{mayor} con
+los recordatorios del día y los indicadores de novedades; a la derecha,
+el rol \emph{familiar editor} con el código del grupo destacado.}
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_mayor_inicio.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_editor_inicio.png}
+\end{minipage}
 \end{figure}
 \FloatBarrier
-
-En la captura se observa cómo la pantalla resume de forma inmediata las
-tareas pendientes del día, los mensajes no leídos y las fotografías
-recientes de la galería compartida. De este modo, el usuario obtiene una
-visión global de la actividad relevante sin necesidad de acceder
-manualmente a cada módulo. El botón flotante de \emph{Ayuda}, visible
-en la esquina inferior derecha, está disponible en todas las pantallas y
-constituye uno de los mecanismos de apoyo previstos para usuarios que
-puedan sentirse desorientados durante el uso de la aplicación. La
-disposición de los cuatro accesos en una cuadrícula de dos columnas
-responde a un equilibrio entre visibilidad y aprovechamiento del espacio:
-cada acceso mantiene un tamaño amplio sin obligar al usuario a desplazarse
-por la pantalla para alcanzarlo. Esta organización, junto con el saludo
-personalizado y el resumen de recordatorios del día, busca que la persona
-mayor obtenga, de un solo vistazo, una imagen clara de los elementos que
-requieren su atención sin necesidad de explorar el resto de la aplicación.
-
-% -----------------------------------------------------------------------------
-\paragraph{Pantalla principal del familiar editor.}
-
-La pantalla de inicio del \emph{familiar editor}, recogida en la
-Figura~\ref{FIG:DIS_EDITOR_INICIO}, presenta una organización
-deliberadamente distinta a la del usuario mayor. En este caso, se
-prioriza una mayor densidad de información, dado que está dirigida a una
-persona con mayor familiaridad con interfaces digitales. Incluye, junto
-a los accesos a los cuatro módulos, una zona destacada con el código del
-grupo familiar (\texttt{FAM-A3K9}), que el editor debe compartir con
-los demás miembros para que puedan incorporarse al grupo.
-
-\begin{figure}[pantalla principal del editor]{FIG:DIS_EDITOR_INICIO}{Pantalla
-principal del rol \emph{familiar editor}, con el código del grupo
-familiar destacado.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_editor_inicio.png}
-\end{figure}
-\FloatBarrier
-
-Junto al nombre del usuario aparece una etiqueta que recuerda su rol
-(\emph{familiar-editor}). Este elemento facilita la identificación del
-perfil activo y evita posibles confusiones cuando una misma persona
-alterna entre cuentas o cuando varios editores conviven en el mismo
-grupo.
 
 % -----------------------------------------------------------------------------
 \paragraph{Agenda del usuario mayor.}
 
-La agenda muestra los recordatorios del usuario mayor agrupados por
-días, comenzando por la jornada actual. La
-Figura~\ref{FIG:DIS_AGENDA_MAYOR} recoge esta vista para la cuenta de
-Carmen, donde se aprecian las primeras jornadas con sus respectivos
-recordatorios.
+La agenda muestra los recordatorios agrupados por días, empezando por el
+actual. La Figura~\ref{FIG:DIS_AGENDA_MAYOR} recoge la vista de Carmen.
+Cada tipo de recordatorio lleva un icono distintivo —una pastilla para
+la medicación, un teléfono para las llamadas, un hospital para las citas
+médicas o una tarta para los cumpleaños—, de forma que se reconoce el
+evento sin leer el título. El botón \emph{Hecho}, verde y grande, marca
+el recordatorio como completado de un solo toque, en línea con el
+principio de simplicidad de uso (RNF4).
 
 \begin{figure}[agenda del mayor]{FIG:DIS_AGENDA_MAYOR}{Vista de agenda
-del usuario mayor, con los recordatorios del día y de los días
-siguientes, acompañados de un icono distintivo por cada tipo.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_agenda_mayor.png}
+del usuario mayor, con los recordatorios del día y los siguientes, cada
+uno con un icono según su tipo.}
+\includegraphics[height=0.45\textheight, keepaspectratio]{app_agenda_mayor.png}
 \end{figure}
 \FloatBarrier
-
-Cada tipo de recordatorio se acompaña de un icono distintivo
-—una pastilla para la medicación, un teléfono para las llamadas, un
-hospital para las citas médicas o una tarta para los cumpleaños— que
-permite identificar rápidamente la naturaleza de cada evento sin
-necesidad de leer el título completo. El botón \emph{Hecho}, en verde y de gran tamaño,
-permite marcar el recordatorio como completado con un único toque,
-manteniendo la coherencia con el principio de simplicidad de uso
-(RNF4).
 
 % -----------------------------------------------------------------------------
-\paragraph{Agenda del editor: el selector de mayor de destino.}
+\paragraph{Agenda del editor: selector de mayor y formulario.}
 
-La diferencia más importante entre la interfaz del usuario mayor y la
-del editor se manifiesta en la pantalla de gestión de la agenda. Cuando
-un grupo familiar contiene varios usuarios con rol \emph{mayor} —como
-es el caso del matrimonio formado por Carmen y Antonio—, el editor
-necesita seleccionar sobre cuál de ellos está actuando en cada momento.
-La Figura~\ref{FIG:DIS_AGENDA_EDITOR} muestra esta solución: un selector
-situado en la parte superior, con un botón por cada mayor del grupo, en
-el que el botón activo se resalta mediante relleno azul.
+La mayor diferencia entre la interfaz del mayor y la del editor está en
+la gestión de la agenda. Cuando un grupo tiene varios mayores —como el
+matrimonio de Carmen y Antonio—, el editor necesita elegir sobre cuál
+actúa. La Figura~\ref{FIG:DIS_AGENDA_EDITOR} (izquierda) muestra la
+solución: un selector en la parte superior con un botón por cada mayor,
+y el activo resaltado en azul. En la captura, Laura gestiona la agenda
+de Carmen y puede cambiar a la de Antonio con un clic. Junto a cada
+recordatorio aparecen, además del botón \emph{Hecho}, los botones de
+gestión \emph{Cambiar recordatorio} y la papelera para eliminarlo,
+reservados al editor.
 
-\begin{figure}[agenda del editor con selector]{FIG:DIS_AGENDA_EDITOR}{Vista
-de agenda desde el rol \emph{familiar editor}: el selector superior
-permite elegir sobre qué mayor del grupo se está actuando.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_agenda_editor_selector_1.png}
-\end{figure}
-\FloatBarrier
+Al pulsar \emph{Añadir recordatorio} se abre el formulario de creación
+(Figura~\ref{FIG:DIS_AGENDA_EDITOR}, derecha). El encabezado indica para
+qué mayor se crea el recordatorio (\emph{``Nuevo recordatorio para
+Carmen Pérez Ruiz''}), sin ambigüedad sobre el destinatario.
 
-En la captura, Laura está gestionando los recordatorios de Carmen, como
-indican el botón resaltado y el contenido mostrado debajo. No obstante,
-puede cambiar a la agenda de Antonio con un solo clic sobre su nombre.
-Junto a cada recordatorio aparecen, además del botón \emph{Hecho}
-—también disponible en la interfaz del mayor—, los botones de gestión
-\emph{Cambiar recordatorio} y el icono de papelera para eliminarlo,
-reservados al rol con permisos de edición.
-
-Cuando el editor pulsa el botón \emph{Añadir recordatorio}, accede al
-formulario de creación recogido en la Figura~\ref{FIG:DIS_AGENDA_FORM}.
-El encabezado del formulario indica explícitamente para qué mayor se
-está creando el recordatorio (\emph{``Nuevo recordatorio para Carmen
-Pérez Ruiz''}), eliminando cualquier ambigüedad sobre el destinatario.
-
-\begin{figure}[formulario nuevo recordatorio]{FIG:DIS_AGENDA_FORM}{Formulario
-de creación de un recordatorio. El encabezado indica claramente para
-qué usuario mayor se está creando el evento.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_agenda_editor_selector_2.png}
+\begin{figure}[agenda del editor]{FIG:DIS_AGENDA_EDITOR}{Gestión de la
+agenda desde el rol \emph{familiar editor}. A la izquierda, el selector
+superior para elegir el mayor; a la derecha, el formulario de creación,
+que indica en su encabezado el destinatario del recordatorio.}
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_agenda_editor_selector_1.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_agenda_editor_selector_2.png}
+\end{minipage}
 \end{figure}
 \FloatBarrier
 
@@ -674,94 +622,72 @@ qué usuario mayor se está creando el evento.}
 \paragraph{Listado de contactos.}
 
 La pantalla de contactos sustituye a la agenda telefónica del
-dispositivo mediante una organización más accesible y controlada. La
-Figura~\ref{FIG:DIS_CONTACTOS} muestra la vista correspondiente a
-Carmen, organizada en categorías mediante secciones diferenciadas.
+dispositivo con una organización más accesible. La
+Figura~\ref{FIG:DIS_CONTACTOS} muestra la vista de Carmen. Arriba están
+los miembros del grupo familiar, identificados con su rol mediante una
+etiqueta gris. Debajo, los contactos personales agrupados en categorías
+—\emph{Familia}, \emph{Médico}, \emph{Farmacia}, \emph{Vecino} y
+\emph{Otro}—. Cada contacto tiene un botón \emph{Llamar} (verde y
+grande), que inicia la llamada desde el dispositivo, y un botón
+\emph{Editar} para modificar sus datos.
 
 \begin{figure}[listado de contactos]{FIG:DIS_CONTACTOS}{Listado de
-contactos del usuario mayor, agrupados por categorías.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_contactos.png}
+contactos del usuario mayor, agrupados por categorías, con botón de
+llamada directa.}
+\includegraphics[height=0.45\textheight, keepaspectratio]{app_contactos.png}
 \end{figure}
 \FloatBarrier
-
-La parte superior recoge a los miembros del grupo familiar,
-identificados con su rol mediante una etiqueta gris. Debajo aparecen
-los contactos personales agrupados en categorías como \emph{Familia},
-\emph{Farmacia}, \emph{Médico}, \emph{Otro} y \emph{Vecino}. Cada
-contacto incluye un botón de llamada directa (\emph{Llamar}, en verde y
-de gran tamaño), que inicia una llamada telefónica desde el dispositivo
-del usuario, y un botón de edición (\emph{Editar}) para modificar su
-información.
 
 % -----------------------------------------------------------------------------
 \paragraph{Conversación de mensajes.}
 
-El módulo de mensajería sigue el patrón habitual de las aplicaciones
-de chat, reconocible para usuarios que hayan tenido contacto previo con
-otras plataformas de comunicación. La Figura~\ref{FIG:DIS_MENSAJES} recoge
-una conversación entre Carmen y su hija Laura.
+El módulo de mensajería sigue el patrón habitual de las aplicaciones de
+chat, reconocible para quien haya usado otras antes. La
+Figura~\ref{FIG:DIS_MENSAJES} recoge una conversación entre Carmen y su
+hija Laura. Los mensajes recibidos van a la izquierda con fondo claro y
+los propios a la derecha con el color principal de la aplicación, cada
+uno con su hora de envío. La conversación se actualiza sola mediante
+sondeo AJAX, como se justificó en la Sección~\ref{SUB:DIS_STACK}, sin
+necesidad de refrescar la página.
 
-\begin{figure}[conversación de mensajes]{FIG:DIS_MENSAJES}{Pantalla de
-conversación uno a uno, con burbujas diferenciadas para los mensajes
-propios y los recibidos.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_mensajes.png}
+\begin{figure}[conversación de mensajes]{FIG:DIS_MENSAJES}{Conversación
+uno a uno, con burbujas diferenciadas para los mensajes propios y los
+recibidos.}
+\includegraphics[height=0.45\textheight, keepaspectratio]{app_mensajes.png}
 \end{figure}
 \FloatBarrier
 
-Los mensajes recibidos se muestran alineados a la izquierda con fondo
-claro, mientras que los mensajes propios aparecen a la derecha con el
-color principal de la aplicación. Cada mensaje incluye la
-hora de envío. La conversación se actualiza automáticamente mediante
-sondeo AJAX, según se justificó en la
-Sección~\ref{SUB:DIS_STACK}, sin requerir que el usuario refresque la
-página para ver los mensajes nuevos.
-
 % -----------------------------------------------------------------------------
-\paragraph{Galería compartida.}
+\paragraph{Galería compartida y selector de tema.}
 
-La galería presenta las fotografías del grupo familiar en formato
-mosaico, ordenadas por fecha de subida descendente. La
-Figura~\ref{FIG:DIS_GALERIA} muestra el aspecto de la galería con
-fotografías de ejemplo del grupo González-Pérez.
+La galería presenta las fotografías del grupo en mosaico, ordenadas por
+fecha de subida descendente (Figura~\ref{FIG:DIS_GALERIA_TEMAS},
+izquierda). Las fotos con título y autor muestran esa información bajo la
+imagen, y el botón \emph{Subir foto} permite a cualquier miembro añadir
+una nueva.
 
-\begin{figure}[galería compartida]{FIG:DIS_GALERIA}{Galería
-compartida del grupo familiar en formato mosaico.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_galeria.png}
+Como parte del cumplimiento de las pautas WCAG 2.1 nivel AA
+(Sección~\ref{SUB:DIS_WCAG}), la aplicación ofrece tres temas visuales
+desde la barra superior (Figura~\ref{FIG:DIS_GALERIA_TEMAS}, derecha).
+El tema elegido se guarda en el navegador y se mantiene entre sesiones.
+El de alto contraste se dirige a usuarios con dificultades visuales y el
+oscuro reduce la fatiga con poca luz.
+
+\begin{figure}[galería y temas]{FIG:DIS_GALERIA_TEMAS}{A la izquierda,
+la galería compartida del grupo en formato mosaico; a la derecha, el
+selector de tema visual desplegado con las tres opciones: claro, oscuro
+y de alto contraste.}
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_galeria.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+  \includegraphics[width=\textwidth, keepaspectratio]{app_temas.png}
+\end{minipage}
 \end{figure}
 \FloatBarrier
 
-Las fotografías que incluyen título y autor muestran esta información
-bajo la imagen. El botón \emph{Subir foto}, situado en la parte superior
-derecha, permite a cualquier miembro del grupo añadir una nueva
-fotografía a la galería compartida.
-
 % -----------------------------------------------------------------------------
-\paragraph{Selector de tema visual.}
-
-Como parte del cumplimiento de las pautas WCAG 2.1 nivel AA,
-discutidas en la Sección~\ref{SUB:DIS_WCAG}, la aplicación ofrece tres
-temas visuales seleccionables desde la barra superior. La
-Figura~\ref{FIG:DIS_TEMAS} muestra el selector desplegado.
-
-\begin{figure}[selector de tema visual]{FIG:DIS_TEMAS}{Selector de
-tema visual desplegado, con las tres opciones disponibles: claro,
-oscuro y de alto contraste.}
-\includegraphics[height=0.6\textheight, keepaspectratio]{app_temas.png}
-\end{figure}
-\FloatBarrier
-
-El tema seleccionado se conserva en el almacenamiento local del
-navegador, de modo que la preferencia se mantiene entre sesiones sin
-necesidad de configurarla de nuevo en cada acceso. El tema de alto contraste
-está dirigido específicamente a usuarios con dificultades visuales,
-mientras que el tema oscuro reduce la fatiga visual en condiciones de
-poca luz ambiental.
-
-% -----------------------------------------------------------------------------
-% Párrafo de cierre del capítulo
-
-El conjunto de las decisiones de interfaz aquí descritas da lugar a una
-experiencia que, según se discute en el
-Capítulo~\ref{CAP:IMPLEMENTACION}, resulta accesible para los
-participantes de las pruebas de usabilidad sin que estos requieran
-formación previa para utilizar la aplicación.
+El conjunto de estas decisiones de interfaz da lugar a una experiencia
+que, como se discute en el Capítulo~\ref{CAP:IMPLEMENTACION}, resultó
+accesible para los participantes de las pruebas de usabilidad sin que
+necesitaran formación previa.

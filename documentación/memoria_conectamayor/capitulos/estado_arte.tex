@@ -1,154 +1,117 @@
 %!TEX root = ../memoria.tex
 % =============================================================================
-%  CAPÍTULO 2 — ESTADO DEL ARTE
+%  CAPÍTULO 2 - ESTADO DEL ARTE (recortado, sin FaceTime/Meet, sin guiones)
 % =============================================================================
 
-El objetivo de este capítulo es situar \emph{ConectaMayor} en el contexto de las
-soluciones existentes y justificar la pertinencia del proyecto. Para ello, se
-analizan cinco aplicaciones representativas de los distintos enfoques desde los
-que se ha abordado, total o parcialmente, el problema de la comunicación familiar
-y la inclusión digital de las personas mayores. El análisis se estructura en tres
-bloques temáticos —mensajería generalista, soluciones específicas para personas
-mayores y plataformas de compartición visual—, seguidos de un análisis
-comparativo que recoge las principales conclusiones obtenidas.
+Este capítulo sitúa \emph{ConectaMayor} en el contexto actual y justifica
+la idea del proyecto. Para ello se analizan cuatro aplicaciones
+representativas, con enfoques distintos para abordar la comunicación
+familiar y la inclusión digital de las personas mayores. El análisis se
+agrupa en tres bloques: la mensajería generalista, las soluciones
+específicas para personas mayores y las plataformas de compartición
+visual. Termina con una comparativa que recoge las conclusiones
+principales.
 
 
 \section{Aplicaciones de mensajería generalista\label{SEC:EA_GENERALISTAS}}
 
 Las aplicaciones de mensajería generalista son, con diferencia, las más
-utilizadas por las personas mayores que mantienen contacto digital con sus
-familiares. Su atractivo radica en el efecto de red: están instaladas en
-prácticamente todos los dispositivos del entorno familiar, por lo que la persona
-mayor suele recurrir a ellas por necesidad antes que por idoneidad.
+utilizadas por las personas mayores que mantienen contacto digital con su
+familia, aunque suelen recurrir a ellas por necesidad más que por
+comodidad.
 
 \subsection{WhatsApp}
 
-WhatsApp \cite{whatsapp} es la aplicación de mensajería más extendida en España
-y una de las herramientas digitales más utilizadas por las personas mayores que
-se han incorporado a la comunicación a través del móvil. Permite enviar mensajes
-de texto, audios, fotografías y vídeos, realizar llamadas y videollamadas, y
-crear grupos. Esta versatilidad es, paradójicamente, su principal debilidad
-cuando se evalúa desde la perspectiva de un usuario mayor.
-
-La interfaz reúne en una misma pantalla mensajes individuales, mensajes de grupo,
-llamadas perdidas, estados, canales y comunidades, sin que el usuario pueda
-decidir con facilidad qué elementos quiere ver y cuáles no. Las actualizaciones
-frecuentes añaden funcionalidades nuevas, modifican la posición de los botones y
-alteran los iconos sin previo aviso, lo que obliga a la persona mayor a reaprender
-la aplicación con cierta periodicidad. La iconografía no siempre resulta
-autoexplicativa: el icono del clip para adjuntar archivos, el de la cámara para
-iniciar una videollamada o el de los tres puntos para acceder a opciones
-adicionales son fuentes habituales de confusión. A esto se suma la presencia de
-mensajes masivos, cadenas, contenido no solicitado y, en algunos casos, intentos
-de fraude que llegan por la misma vía que las comunicaciones familiares.
-
-WhatsApp resuelve la necesidad de comunicación, pero lo hace dentro de un entorno
-pensado para la población general y no contempla mecanismos específicos de
-adaptación al usuario mayor.
-
-\subsection{Aplicaciones de videollamada (FaceTime, Google Meet)}
-
-Las aplicaciones específicas de videollamada, como FaceTime \cite{facetime} en
-el ecosistema Apple o Google Meet \cite{googlemeet} en Android y entornos web,
-representan otra dimensión de la comunicación digital de las personas mayores. A
-diferencia de la mensajería escrita, la videollamada reproduce un patrón de
-interacción familiar para el usuario mayor —ver y oír a la otra persona— y elimina
-la necesidad de teclear, una barrera importante para quienes tienen dificultades
-de visión o de motricidad fina.
-
-Su limitación principal es el alcance. Una videollamada cubre la necesidad de
-contacto en tiempo real, pero no resuelve la organización del día a día —no hay
-agenda ni recordatorios— ni permite consultar de forma asíncrona la información
-que comparten los familiares. Además, en el caso de FaceTime, la restricción al
-ecosistema Apple deja fuera a una parte significativa de la población. En el caso
-de Google Meet, la integración con el resto del entorno Google añade una capa de
-complejidad que no resulta intuitiva para un usuario poco habituado a navegar por
-menús y configuraciones.
+WhatsApp \cite{whatsapp} es la aplicación de mensajería más extendida en
+España. Permite enviar mensajes, audios, fotografías y vídeos, hacer
+llamadas y videollamadas y crear grupos. Esa abundancia de funciones, que
+para el público general es una ventaja, se convierte en un problema para
+el usuario mayor. La interfaz reúne en una misma pantalla mensajes
+individuales, grupos, llamadas, estados, canales y comunidades, sin que el
+usuario pueda decidir con facilidad qué quiere ver y qué no. WhatsApp
+favorece la comunicación, pero dentro de un entorno pensado para la
+población general y poco adaptado al usuario mayor.
 
 
 \section{Soluciones específicas para personas mayores\label{SEC:EA_ESPECIFICAS}}
 
-Frente a las plataformas generalistas, existe un conjunto reducido de soluciones
-diseñadas específicamente para personas mayores. Son las referencias más directas
-para \emph{ConectaMayor}, ya que comparten su punto de partida: reconocer que las
-herramientas convencionales no siempre cubren las necesidades de este colectivo y
-proponer un entorno digital concebido desde el inicio para ellas.
+Frente a las plataformas generalistas existe un conjunto reducido de
+soluciones diseñadas específicamente para personas mayores. Son las
+referencias más directas para \emph{ConectaMayor}, ya que comparten su
+punto de partida: reconocer que las herramientas convencionales no cubren
+bien las necesidades de este colectivo y proponer un entorno pensado para
+ellas desde el inicio.
 
 \subsection{GrandPad}
 
-GrandPad \cite{grandpad} es probablemente la solución más conocida en este ámbito
-a nivel internacional. Se trata de una tableta de hardware específico acompañada
-de un sistema operativo y de un conjunto de aplicaciones diseñadas íntegramente
-para personas mayores. La interfaz se basa en iconos grandes, un único nivel de
-navegación y un círculo familiar predefinido, en el que solo los allegados
-autorizados pueden contactar con el usuario. Incluye llamadas, videollamadas,
-mensajes, fotografías, juegos y un asistente humano accesible mediante un botón.
+GrandPad \cite{grandpad} es probablemente la solución más conocida a nivel
+internacional. Es una tableta de hardware específico, con un sistema
+operativo y aplicaciones diseñadas íntegramente para personas mayores:
+iconos grandes, un único nivel de navegación y un círculo familiar cerrado
+en el que solo los allegados autorizados pueden contactar con el usuario.
+Incluye llamadas, videollamadas, mensajes, fotografías, juegos y un
+asistente humano accesible con un botón.
 
-El planteamiento es acertado y el producto está depurado, pero presenta dos
-limitaciones que lo alejan de la realidad de muchas familias. La primera es
-económica: GrandPad se comercializa mediante una suscripción mensual cuyo coste
-puede resultar difícil de asumir para una parte importante de los hogares en
-España. La segunda es de modelo: al ofrecerse como un dispositivo dedicado,
-requiere que la persona mayor adquiera un nuevo equipo en lugar de aprovechar uno
-que ya pueda tener.
+El planteamiento es acertado, pero tiene dos limitaciones que lo alejan de
+muchas familias. La primera es económica, ya que se comercializa por
+suscripción mensual, un coste difícil de asumir para una parte importante
+de los hogares. La segunda es de modelo, porque al ser un dispositivo
+dedicado obliga a adquirir un equipo nuevo en lugar de aprovechar uno que
+la persona ya tenga.
 
 \subsection{Mayores Conectados}
 
-Mayores Conectados \cite{mayoresconectados} es un proyecto argentino que parte
-del mismo diagnóstico que motiva este trabajo: la necesidad de fomentar la
-relación intergeneracional a través de la tecnología y la conveniencia de hacerlo
-mediante actividades reconocibles para la persona mayor. La plataforma agrupa
-juegos y actividades pensadas para que abuelos y nietos las realicen
-conjuntamente, con interfaces simplificadas y explicaciones detalladas.
+Mayores Conectados \cite{mayoresconectados} es un proyecto argentino que
+parte del mismo diagnóstico que este trabajo: fomentar la relación
+intergeneracional mediante la tecnología, a través de actividades
+reconocibles para la persona mayor. La plataforma reúne juegos y
+actividades para que abuelos y nietos las hagan juntos, con interfaces
+simplificadas.
 
-La principal diferencia con \emph{ConectaMayor} es el enfoque: Mayores Conectados
-se orienta al ocio compartido, mientras que el proyecto que aquí se presenta se
-centra en la comunicación cotidiana. Son enfoques complementarios, no excluyentes.
-Una limitación específica del proyecto argentino es que parte de sus juegos están
-alojados en plataformas externas, lo que rompe la sensación de entorno único y
-puede generar desconfianza en el usuario cuando se produce el salto entre
-dominios.
+La diferencia principal con \emph{ConectaMayor} es el enfoque. Mayores
+Conectados se orienta al ocio compartido, mientras que este proyecto se
+centra en la comunicación cotidiana, por lo que son enfoques
+complementarios. Una limitación del proyecto argentino es que parte de sus
+juegos están alojados en plataformas externas, lo que rompe la sensación
+de entorno único y puede generar desconfianza al saltar entre dominios.
+
+
 \section{Plataformas de compartición visual\label{SEC:EA_VISUALES}}
 
-El tercer bloque agrupa las aplicaciones cuya propuesta de valor principal es
-compartir contenido visual —principalmente fotografías— dentro de un entorno
-digital. \emph{ConectaMayor} incorpora un módulo de galería con esta misma
-orientación, por lo que resulta pertinente analizar el referente más evidente en
-este ámbito.
+El tercer bloque agrupa las aplicaciones cuyo valor principal es compartir
+contenido visual, sobre todo fotografías. \emph{ConectaMayor} incorpora un
+módulo de galería con esa misma orientación, por lo que conviene analizar
+el referente más evidente.
 
 \subsection{Instagram}
 
-Instagram \cite{instagram} es una de las plataformas de referencia para compartir
-fotografías y vídeos cortos, y constituye una inspiración directa para el módulo
-de galería de \emph{ConectaMayor}: la idea inicial del proyecto fue ofrecer una
-suerte de Instagram familiar y privado. Su interfaz, organizada en torno a una
-cuadrícula de imágenes con posibilidad de añadir comentarios, ha establecido un
-patrón visual que la mayoría de usuarios reconoce con facilidad, incluidas las
-personas mayores que han tenido contacto con la aplicación a través de algún
-familiar.
+Instagram \cite{instagram} es una de las plataformas de referencia para
+compartir fotografías, y fue una inspiración directa para el módulo de
+galería. La idea inicial del proyecto era ofrecer una especie de Instagram
+familiar y privado. Su cuadrícula de imágenes con comentarios ha
+establecido un patrón visual que casi todo el mundo reconoce, incluidas
+muchas personas mayores que la han visto a través de algún familiar.
 
-Sin embargo, Instagram no resulta adecuado para el uso familiar planteado en este
-proyecto por dos razones principales. La primera es la naturaleza abierta de la
-plataforma: aunque permite cuentas privadas, está diseñada para la difusión
-pública y para la interacción con desconocidos, lo que introduce una superficie de
-exposición que no encaja con el caso de uso de una familia. La segunda es la
-saturación de la interfaz, que combina en una misma aplicación cuadrícula
-personal, contenido recomendado, mensajería, vídeos cortos y compras. Para una
-persona mayor, esta acumulación de funciones puede convertir una idea sencilla
-—ver las fotografías que comparte su familia— en una experiencia confusa.
-
-\emph{ConectaMayor} retoma la idea visual de Instagram —una cuadrícula de
-fotografías con comentarios— y la traslada a un entorno privado, libre de
-contenido externo y limitado a las personas que forman parte del grupo familiar.
+Sin embargo, Instagram no encaja en el uso familiar que plantea este
+proyecto por dos motivos. El primero es su naturaleza abierta, ya que,
+aunque permite cuentas privadas, está pensada para la difusión pública y
+la interacción con desconocidos, una superficie de exposición que no
+encaja con el caso de una familia. El segundo es la saturación de su
+interfaz, que mezcla la cuadrícula personal con contenido recomendado,
+mensajería, vídeos cortos y compras. Para una persona mayor, eso convierte
+algo sencillo como ver las fotos que comparte su familia en una
+experiencia confusa. \emph{ConectaMayor} retoma la idea visual de
+Instagram y la lleva a un entorno privado, sin contenido externo y
+limitado al grupo familiar.
 
 
 \section{Análisis comparativo\label{SEC:EA_COMPARATIVA}}
 
-La Tabla~\ref{TAB:EA_COMPARATIVA} resume las características más relevantes de
-las aplicaciones analizadas frente a las que ofrece \emph{ConectaMayor}. Los
-criterios escogidos —diseño específico para personas mayores, ámbito privado de
-acceso, gratuidad, interfaz unificada y cobertura funcional— recogen los aspectos
-sobre los que se articula el resto de la memoria.
+La Tabla~\ref{TAB:EA_COMPARATIVA} resume las características más relevantes
+de las aplicaciones analizadas frente a \emph{ConectaMayor}. Los criterios
+elegidos son el diseño específico para mayores, el ámbito privado, la
+gratuidad, la interfaz unificada y la cobertura funcional, y recogen los
+aspectos sobre los que se articula el resto de la memoria.
 
 \begin{table}[Comparativa de aplicaciones]{TAB:EA_COMPARATIVA}{Comparativa de las aplicaciones analizadas frente a \emph{ConectaMayor}.}
   \small
@@ -158,7 +121,6 @@ sobre los que se articula el resto de la memoria.
                         & \textbf{para mayores} & \textbf{privado} & & \textbf{unificada} & \textbf{funcional} \\
     \midrule
     WhatsApp             & No  & Parcial & Sí  & No  & Media \\
-    FaceTime / Meet      & No  & Sí      & Sí  & Sí  & Baja \\
     GrandPad             & Sí  & Sí      & No  & Sí  & Alta \\
     Mayores Conectados   & Sí  & Sí      & Sí  & No  & Media \\
     Instagram            & No  & No      & Sí  & No  & Media \\
@@ -168,32 +130,31 @@ sobre los que se articula el resto de la memoria.
   \end{tabular}
 \end{table}
 
-Del análisis se desprenden tres conclusiones que justifican la pertinencia del
-proyecto. En primer lugar, ninguna de las soluciones gratuitas analizadas combina
-simultáneamente un diseño pensado para personas mayores, un ámbito estrictamente
-privado y una cobertura funcional amplia. WhatsApp y FaceTime son gratuitas y
-privadas, pero no están adaptadas; GrandPad está adaptado y es privado, pero
-supone un coste recurrente difícil de asumir; Mayores Conectados está adaptado y
-es gratuito, pero rompe la unidad de la interfaz al apoyarse en plataformas
-externas; Instagram es gratuito, pero ni está adaptado ni opera en un ámbito
-privado.
+Del análisis se desprenden tres conclusiones que justifican el proyecto.
+La primera es que ninguna de las soluciones gratuitas analizadas combina a
+la vez un diseño pensado para personas mayores, un ámbito estrictamente
+privado y una cobertura funcional amplia. WhatsApp es gratuita pero no
+está adaptada. GrandPad está adaptado y es privado, pero tiene un coste
+recurrente. Mayores Conectados está adaptado y es gratuito, pero se apoya
+en plataformas externas. Instagram es gratuito, pero ni está adaptado ni
+es privado.
 
-En segundo lugar, las soluciones existentes abordan dimensiones aisladas del
-problema —la mensajería, la videollamada, la compartición visual o el ocio
-intergeneracional—, pero no integran un conjunto de servicios coherente en torno
-a las necesidades cotidianas de la persona mayor. Esta fragmentación obliga al
-usuario a manejar varias aplicaciones para tareas distintas, lo que aumenta la
-carga cognitiva y la probabilidad de abandono.
+La segunda es que las soluciones existentes abordan dimensiones aisladas
+del problema, como la mensajería, la compartición visual o el ocio, pero
+no integran un conjunto coherente de servicios en torno a las necesidades
+cotidianas de la persona mayor. Esa fragmentación obliga a manejar varias
+aplicaciones para tareas distintas, lo que aumenta la carga cognitiva y la
+probabilidad de abandono.
 
-En tercer lugar, ninguna de las plataformas analizadas implementa un sistema de
-roles familiares como el que propone \emph{ConectaMayor}, en el que un familiar
-puede asumir un papel activo de gestión —dar de alta recordatorios, mantener los
-contactos o supervisar el uso— sin invadir el espacio personal de la persona
-mayor. Este es uno de los rasgos diferenciales del proyecto y se desarrolla en
-detalle en el Capítulo~\ref{CAP:DISENO}.
+La tercera es que ninguna implementa un sistema de roles familiares como
+el de \emph{ConectaMayor}, en el que un familiar puede asumir la gestión,
+creando recordatorios, manteniendo los contactos o supervisando el uso,
+sin invadir el espacio personal de la persona mayor. Este es uno de los
+rasgos diferenciales del proyecto y se desarrolla en el
+Capítulo~\ref{CAP:DISENO}.
 
-\emph{ConectaMayor} no aspira, por tanto, a reemplazar a ninguna de las
-herramientas analizadas, sino a ocupar un espacio que actualmente no está
-cubierto por ninguna de ellas: una aplicación web gratuita, adaptada a las
-personas mayores, privada por diseño, con interfaz unificada y con un sistema de
-roles que reconoce la naturaleza colaborativa del uso familiar de la tecnología.
+\emph{ConectaMayor} no pretende reemplazar a ninguna de estas
+herramientas, sino ocupar un espacio que hoy no cubre ninguna: una
+aplicación web gratuita, adaptada a las personas mayores, privada por
+diseño, con interfaz unificada y con un sistema de roles que reconoce la
+naturaleza colaborativa del uso familiar de la tecnología.

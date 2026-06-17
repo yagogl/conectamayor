@@ -5,57 +5,40 @@
 
 Este primer capítulo presenta el contexto y la motivación del proyecto, define
 los objetivos que se persiguen y describe la organización del resto de la
-memoria. El punto de partida es el problema social que da sentido al trabajo
-—la brecha digital que afecta a las personas mayores—, a partir del cual se
-enmarcan las decisiones de diseño, implementación y evaluación desarrolladas en
-los capítulos posteriores.
+memoria. El punto de partida es la brecha digital que afecta a las personas mayores. Este problema social guia cada una de las decisiones de diseño, implementación y evaluación desarrolladas en
+los capítulos siguientes.
 
 \section{Motivación\label{SEC:MOTIVACION}}
 
-La transformación digital de las últimas décadas ha redefinido profundamente las
-formas de comunicación humana. Las redes sociales, la mensajería instantánea y las
-videollamadas han reducido las distancias geográficas y han convertido el contacto
+Las redes sociales, la mensajería instantánea y las
+videollamadas han convertido el contacto
 con familiares y amigos en una cuestión de segundos. Sin embargo, este avance
-también ha puesto de manifiesto una brecha entre generaciones. Las personas mayores
-representan uno de los colectivos más afectados por este desencuentro entre
+también ha expuesto una brecha entre generaciones. Las personas mayores
+representan un gran desencuentro entre
 tecnología y usuario, y es precisamente a ellas a quienes se dirige este proyecto.
 
-El fenómeno, conocido como brecha digital, está ampliamente documentado en el
-contexto español. Los datos del Instituto Nacional de Estadística revelan que una
+El fenómeno, conocido como brecha digital, está ampliamente documentado en España. Los datos del Instituto Nacional de Estadística revelan que una
 proporción muy significativa de la población mayor de 65 años reside en hogares
-unipersonales, mientras que los estudios sobre soledad sitúan en cifras igualmente
-elevadas el porcentaje de personas en este rango de edad que han experimentado
-soledad no deseada \cite{ine_hogares,rsi_soledad}. Lejos de tratarse de una
-cuestión puramente emocional, las consecuencias de la soledad sobre la salud han
-sido ampliamente estudiadas: deterioro del descanso, aceleración del declive
+unipersonales, mientras que los estudios sobre soledad también hablan de grandes números de personas en este rango de edad que han experimentado
+soledad no deseada \cite{ine_hogares,rsi_soledad}. Las estudios sobre las consecuencias de la soledad destacan: deterioro del descanso, aceleración del declive
 cognitivo y mayor predisposición a enfermedades neurodegenerativas
 \cite{soledad_cerebro}. A ello se suman la distancia respecto a los familiares
-más cercanos y las limitaciones físicas asociadas al envejecimiento, factores que
-agravan un problema que afecta a la calidad de vida de millones de personas.
+más cercanos y las limitaciones físicas asociadas al envejecimiento.
 
 La tecnología tiene un potencial evidente para reducir esa distancia, pero solo
-si se diseña pensando en quienes van a utilizarla. Las plataformas de uso masivo,
-como WhatsApp o las grandes redes sociales, no fueron concebidas con las personas
-mayores como público objetivo: incorporan funcionalidades nuevas de forma
+si se diseña con ese pensamiento. Las plataformas de uso cotidiano,
+como WhatsApp o las grandes redes sociales, no fueron diseñadas para las personas
+mayores: incorporan funcionalidades nuevas de forma
 constante, modifican su interfaz con frecuencia, mezclan acciones distintas en una
-misma pantalla y emplean iconografía que no siempre resulta autoexplicativa. La
-consecuencia es doble. Por un lado, muchas personas mayores que se beneficiarían
-de estar conectadas terminan dependiendo de un familiar para realizar tareas
+misma pantalla y emplean iconografía dificl de entender si no estas acostumbrado a ella. Por un lado, muchas personas mayores que se beneficiarían
+de estar conectadas a la tecnología terminan dependiendo de un familiar para realizar acciones
 básicas. Por otro, otras renuncian directamente al uso de la tecnología.
 
 \emph{ConectaMayor} parte de la idea de que es posible construir una herramienta
 digital sencilla, útil y privada, capaz de facilitar el contacto cotidiano entre
-las personas mayores y su entorno familiar. La aplicación no aspira a competir
-con las plataformas generalistas; ofrece, en su lugar, un espacio digital acotado
+las personas mayores y su entorno familiar. La aplicación no tiene el objetivo de competir con el resto de plataformas. Pero ofrece, en su lugar, un espacio digital sencillo
 en el que la persona mayor puede gestionar su agenda, consultar sus contactos,
-intercambiar mensajes con un familiar o ver las fotografías compartidas, todo ello
-dentro de un único entorno adaptado a sus necesidades.
-
-La motivación de este trabajo es, por tanto, doble. En primer lugar, abordar un
-problema social de gran impacto como es la inclusión digital de las personas
-mayores. En segundo lugar, demostrar que un proyecto académico puede orientarse
-desde el inicio al diseño centrado en el usuario, integrando la evaluación con
-personas reales como una etapa más del desarrollo y no como un añadido posterior.
+intercambiar mensajes con un familiar o ver las fotografías compartidas de la familia.
 
 \section{Objetivos\label{SEC:OBJETIVOS}}
 
@@ -69,80 +52,62 @@ A partir de este objetivo general, se han establecido los siguientes objetivos
 específicos:
 
 \begin{enumerate}
-  \item Analizar el contexto del problema y revisar las soluciones existentes,
-  identificando sus limitaciones desde el punto de vista de la accesibilidad para
+  \item Analizar el contexto del problema y revisar las soluciones existentes desde el punto de vista de la accesibilidad para
   personas mayores.
 
-  \item Diseñar una arquitectura organizada en módulos funcionales bien
-  delimitados —agenda, contactos, mensajería, galería y vinculación familiar—
-  con un sistema de roles que adapte los permisos y la interfaz al perfil de cada
+  \item Diseñar una arquitectura organizada en módulos funcionales: agenda, contactos, mensajería, galería y vinculación familiar.Con un sistema de roles que adapte los permisos y la interfaz al perfil de cada
   usuario.
 
   \item Implementar una interfaz diferenciada para el rol de persona mayor, con
-  tipografía ampliada, áreas de interacción amplias, lenguaje sencillo y flujos
+  tipografía ampliada, áreas de interacción grandes, lenguaje sencillo y flujos
   de navegación reducidos al mínimo, manteniendo en paralelo una interfaz
   completa para los familiares.
 
   \item Cumplir las pautas de accesibilidad WCAG 2.1 en su nivel AA, aplicándolas
-  a colores, tamaños, contrastes, indicadores de foco y mecanismos alternativos
-  de interacción.
+  a colores, tamaños, contrastes, indicadores de foco y mecanismos de interacción.
 
   \item Garantizar la privacidad mediante un modelo de acceso restringido en el
-  que los datos de cada familia permanezcan aislados del resto, sin servicios
-  externos ni publicidad.
+  que los datos de cada familia permanezcan aislados del resto.
 
-  \item Evaluar la usabilidad con personas mayores siguiendo la metodología de la
-  disciplina de Interacción Persona-Ordenador (IPO), e incorporar al producto las
-  mejoras detectadas durante las sesiones.
+  \item Evaluar la usabilidad con personas mayores siguiendo la metodología de la disciplina de Interacción Persona-Ordenador (IPO), e incorporar a la aplicación las mejoras detectadas durante las sesiones.
 
   \item Documentar el proceso, las decisiones técnicas y los resultados de la
-  evaluación, de modo que la memoria sirva como referencia tanto del trabajo
-  realizado como de las posibles vías de continuación del proyecto.
+  evaluación.
 \end{enumerate}
-
-El objetivo no es construir una aplicación con un catálogo extenso de funciones,
-sino una herramienta enfocada y adaptada a su público. Esta orientación condiciona
-buena parte de las decisiones que se justifican a lo largo de la memoria, desde
-la elección de tecnologías hasta el alcance funcional del producto entregado.
-
 
 \section{Estructura del documento\label{SEC:ESTRUCTURA}}
 
-La memoria se organiza en cinco capítulos y dos apéndices, siguiendo una progresión
-que recorre el proyecto desde su contextualización hasta sus conclusiones.
+La memoria se organiza en cinco capítulos y dos apéndices.
 
 El \textbf{Capítulo~\ref{CAP:INTRODUCCION}} introduce el proyecto. En él se
 presenta la motivación del trabajo, centrada en la brecha digital que afecta a
-las personas mayores y en la necesidad de diseñar herramientas tecnológicas
-accesibles que favorezcan su comunicación con el entorno familiar. Además, se
+las personas mayores y en la necesidad de diseñar herramientas tecnológicas que ayuden a su comunicación con el entorno familiar. Además, se
 definen el objetivo general y los objetivos específicos del proyecto, y se
 describe la estructura seguida en la memoria.
 
 El \textbf{Capítulo~\ref{CAP:ESTADOARTE}} presenta el estado del arte. Se
 analizan las principales aplicaciones existentes que ofrecen soluciones
-relacionadas con el problema abordado y se discuten sus limitaciones desde la
-perspectiva de la accesibilidad para personas mayores. Este análisis sitúa
-\emph{ConectaMayor} en el panorama actual y justifica la pertinencia del
+relacionadas con el problema abordado y se discuten sus limitaciones relaccionadas con la accesibilidad para personas mayores. Este análisis sitúa
+\emph{ConectaMayor} en la actualidad y justifica la idea del
 proyecto.
 
 El \textbf{Capítulo~\ref{CAP:DISENO}} aborda el diseño de la aplicación. Se
 exponen los requisitos funcionales y no funcionales agrupados por subsistemas,
 se describe el modelo de datos, se presentan los prototipos de las pantallas
-principales y se justifican las decisiones arquitectónicas más relevantes.
+principales y se justifican las decisiones de arquitectura más importantes.
 
-El \textbf{Capítulo~\ref{CAP:IMPLEMENTACION}} cubre la implementación. Se
-detallan las tecnologías empleadas, se describe la arquitectura, se presentan los
+El \textbf{Capítulo~\ref{CAP:IMPLEMENTACION}} describe la implementación. Se
+detallan las tecnologías empleadas, la arquitectura elegida, se presentan los
 módulos desarrollados mediante capturas reales y fragmentos de código, y se
 incluye, como sección final, la evaluación de usabilidad realizada con personas
-mayores siguiendo la metodología IPO. Esta evaluación ocupa un lugar destacado
-en la memoria, al constituir el principal mecanismo de validación del trabajo.
+mayores siguiendo la metodología IPO.
 
 El \textbf{Capítulo~\ref{CAP:CONCLUSIONES}} presenta las conclusiones. Se valora
-el grado de cumplimiento de los objetivos, se reflexiona sobre las limitaciones
-encontradas y se proponen líneas de trabajo futuro.
+el grado de cumplimiento de los objetivos, se discute las limitaciones
+encontradas y se proponen ideas y mejoras para el futuro.
 
 El Apéndice~\ref{APP:AIPO} reúne las tablas detalladas de las pruebas de
-usabilidad, cuyo análisis sintético se ha integrado en el cuerpo del
+usabilidad, cuyo análisis se ha integrado en el cuerpo del
 Capítulo~\ref{CAP:IMPLEMENTACION}. El Apéndice~\ref{APP:ENTORNO} recoge el
 entorno de ejecución y las instrucciones de instalación necesarias para
 reproducir el proyecto.
