@@ -199,7 +199,7 @@ rol, reutilizando la misma lógica de negocio en el servidor. La
 Figura~\ref{FIG:DIS_ARQUITECTURA} muestra el esquema general.
 
 \begin{figure}[arquitectura general]{FIG:DIS_ARQUITECTURA}{Arquitectura
-cliente--servidor de \emph{ConectaMayor}.}
+cliente-servidor de \emph{ConectaMayor}.}
 \begin{tikzpicture}[
   font=\small,
   capa/.style={draw, rounded corners=3pt, minimum width=4.6cm,
@@ -276,14 +276,14 @@ proyecto sin añadir complejidad innecesaria.
 \section{Modelo de datos\label{SEC:DIS_DATOS}}
 
 El modelo de datos sigue la lógica natural del dominio. El grupo familiar
-agrupa a varios usuarios, cada uno con su rol. El contenido cómo los recordatorios y los contactos se vinculan al
+agrupa a varios usuarios, cada uno con su rol. El contenido como los recordatorios y los contactos se vincula al
 usuario \emph{mayor} concreto al que pertenecen, de modo que un mismo
 grupo puede tener varios mayores con su propia agenda y sus propios
 contactos, mientras que la galería se asocia al grupo, porque el objetivo es que sea compartida por toda la familia. La Figura~\ref{FIG:DIS_ER} muestra el diagrama
 entidad-relación simplificado.
 
 \begin{figure}[modelo entidad relación]{FIG:DIS_ER}{Modelo
-entidad--relación de \emph{ConectaMayor}.}
+entidad-relación de \emph{ConectaMayor}.}
 \begin{tikzpicture}[
   font=\footnotesize,
   ent/.style={draw, rounded corners=2pt, minimum width=2.6cm,
@@ -340,7 +340,7 @@ el modelo \texttt{AbstractUser} de Django con el rol y el grupo familiar
 al que pertenece; el rol determina su pantalla principal y sus permisos.
 \textbf{GrupoFamiliar} identifica a una familia y se crea automáticamente
 al registrarse el primer \emph{familiar editor}, generando el código de
-invitación \texttt{FAM-XXXX}.Un mismo grupo puede contener varios usuarios
+invitación \texttt{FAM-XXXX}. Un mismo grupo puede contener varios usuarios
 mayores. \textbf{Recordatorio} y \textbf{Contacto} pertenecen a un usuario
 mayor concreto mediante clave foránea, lo que permite que varios mayores
 convivan en un grupo manteniendo separadas sus agendas y sus listas.
@@ -357,7 +357,7 @@ mantenimiento y la incorporación de nuevos módulos sin afectar al resto.
 
 \section{Diseño de la interfaz\label{SEC:DIS_INTERFAZ}}
 
-El diseño de la interfaz es donde \emph{ConectaMayor} se diferencia mas con las aplicaciones generalistas.
+El diseño de la interfaz es donde \emph{ConectaMayor} se diferencia más de las aplicaciones generalistas.
 
 \subsection{Dos interfaces para un mismo sistema\label{SUB:DIS_DOS_INTERFACES}}
 
@@ -377,7 +377,7 @@ información de cada uno.
 \subsection{Principios de accesibilidad
 aplicados\label{SUB:DIS_WCAG}}
 
-El cumplimiento de las pautas WCAG 2.1 nivel AA se ha abordado para cumplir con los siguientes criterios en todas las pantallas:
+Las pautas WCAG 2.1 nivel AA se han aplicado en todas las pantallas mediante los siguientes criterios:
 
 \begin{itemize}
   \item \textbf{Tipografía generosa.} El cuerpo de texto usa 18~px, frente
@@ -424,7 +424,7 @@ del día a día sin menús: un saludo personalizado, los recordatorios
 pendientes del día y, debajo, los cuatro accesos a los módulos en
 una cuadrícula de iconos grandes. Sobre los iconos con novedades aparece
 un contador numérico en rojo, según el subsistema de notificaciones de la
-Sección~\ref{SUB:REQ_NOTIFICACIONES}. La idea es que la persona mayor vea rapidamente los módulos que necesitan su atención .
+Sección~\ref{SUB:REQ_NOTIFICACIONES}. La idea es que la persona mayor vea rápidamente los módulos que necesitan su atención.
 
 La pantalla del \emph{familiar editor} (Figura~\ref{FIG:DIS_INICIOS},
 derecha) prioriza la rapidez y eficacia. Destaca el código del grupo familiar
@@ -433,7 +433,7 @@ una etiqueta junto al nombre que recuerda el rol activo.
 
 \begin{figure}[pantallas principales]{FIG:DIS_INICIOS}{Pantallas
 principales de la aplicación. A la izquierda, el rol \emph{mayor} con
-los recordatorios del día y los indicadores de novedades.A la derecha,
+los recordatorios del día y los indicadores de novedades. A la derecha,
 el rol \emph{familiar editor} con el código del grupo destacado.}
 \begin{minipage}[t]{0.48\textwidth}\centering
   \includegraphics[width=\textwidth, keepaspectratio]{app_mayor_inicio.png}
@@ -450,7 +450,7 @@ el rol \emph{familiar editor} con el código del grupo destacado.}
 La agenda muestra los recordatorios agrupados por días, empezando por el
 actual. La Figura~\ref{FIG:DIS_AGENDA_MAYOR} recoge la vista de Carmen (persona mayor).
 Cada tipo de recordatorio lleva un icono representativo. El botón \emph{Hecho}, verde y grande, marca el
-recordatorio como completado de un solo toque,siguiendo la simplicidad de uso (RNF4).
+recordatorio como completado de un solo toque, siguiendo la simplicidad de uso (RNF4).
 
 \begin{figure}[agenda del mayor]{FIG:DIS_AGENDA_MAYOR}{Vista de agenda
 del usuario mayor, con los recordatorios del día y los siguientes.}

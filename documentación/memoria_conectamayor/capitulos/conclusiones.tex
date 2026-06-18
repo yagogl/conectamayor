@@ -5,7 +5,7 @@
 % =============================================================================
 Este capítulo recoge la valoración global del trabajo. Se revisa el grado de
 cumplimiento de los objetivos planteados en el
-Capítulo~\ref{CAP:INTRODUCCION}, se muestra los principales aprendizajes obtenidos, se reconocen las limitaciones y se proponen mejoras de trabajo futuro.
+Capítulo~\ref{CAP:INTRODUCCION}, se muestran los principales aprendizajes obtenidos, se reconocen las limitaciones y se proponen mejoras de trabajo futuro.
 
 
 \section{Cumplimiento de los
@@ -19,7 +19,7 @@ evaluada con usuarios, permite afirmar que ese objetivo se ha cumplido. El
 grado de cumplimiento de los objetivos específicos es el siguiente.
 
 \begin{enumerate}
-  \item El análisis del estado del arte situó \emph{ConectaMayor} frente a plataformas actuales pra justificar su desarrollo.
+  \item El análisis del estado del arte situó \emph{ConectaMayor} frente a plataformas actuales para justificar su desarrollo.
 
   \item La arquitectura de los módulos se implementó en cinco aplicaciones Django
   independientes, además del subsistema de notificaciones. El
@@ -43,7 +43,7 @@ grado de cumplimiento de los objetivos específicos es el siguiente.
 
   \item La evaluación de usabilidad con dos personas mayores, conforme a la
   metodología de la Interacción Persona-Ordenador (IPO), permitió detectar
-  varias mejoras que se incorporaron a la versión final. Además de una
+  varias mejoras que se incorporaron a la versión final, además de una
   limitación importante detectada tras las pruebas: la presunción inicial de un único
   usuario mayor por grupo que motivó el rediseño del modelo de datos y de la
   interfaz del editor.
@@ -59,7 +59,7 @@ grado de cumplimiento de los objetivos específicos es el siguiente.
 El desarrollo del proyecto ha dejado tres aprendizajes. En lo técnico, he
 consolidado el \emph{stack} Django en un proyecto real iniciado desde cero,
 donde decisiones tempranas como definir \texttt{AUTH\_USER\_MODEL} antes de
-la primera migración evitan problemas costosos más adelante. En cuanto a la metodología utilizada, las pruebas con usuarios revelaron puntos de de mejora y cambios que yo no percibía desde mi visión y que
+la primera migración evitan problemas costosos más adelante. En cuanto a la metodología utilizada, las pruebas con usuarios revelaron puntos de mejora y cambios que yo no percibía desde mi visión y que
 ninguna prueba automatizada habría detectado. Y en lo personal, he
 comprobado que la accesibilidad no es un añadido final, sino una decisión
 crucial que condiciona desde la organización de la interfaz hasta las
@@ -97,39 +97,30 @@ la evaluación, se identifican varias líneas de mejora y progresión para el pr
 \paragraph{Despliegue en producción.}
 La línea de trabajo futuro más inmediata sería llevar \emph{ConectaMayor} a un
 servidor accesible públicamente. Esto implicaría migrar la base de datos a
-PostgreSQL, configurar un servidor de aplicaciones como Gunicorn detrás de un
-\emph{proxy} inverso, habilitar HTTPS mediante certificados de Let's Encrypt y
-adquirir un dominio. Un despliegue real permitiría ampliar la evaluación con
-familias diversas, no necesariamente cercanas al autor.
+PostgreSQL, configurar un servidor de aplicaciones como Gunicorn, habilitar HTTPS mediante certificados de Let's Encrypt y
+adquirir un dominio.
 
 \paragraph{Notificaciones externas.}
 El subsistema de notificaciones implementado actualmente se limita a indicadores
 visibles dentro de la propia aplicación. Una ampliación útil sería incorporar
-notificaciones por correo electrónico —para los familiares— y notificaciones
+notificaciones por correo electrónico para los familiares y notificaciones
 \emph{push} a través del navegador, de modo que los usuarios puedan recibir
 avisos de recordatorios próximos o mensajes nuevos sin necesidad de tener la
 aplicación abierta.
 
-\paragraph{Integración con calendarios externos.}
-Permitir la sincronización del módulo de agenda con servicios como Google
-Calendar facilitaría que un familiar registrase una cita en su agenda personal y
-esta apareciese automáticamente como recordatorio en la aplicación del mayor,
-reduciendo así la duplicación de información entre sistemas.
-
 \paragraph{Evaluación ampliada.}
 Una nueva ronda de pruebas de usabilidad IPO con un número mayor de participantes y con
-perfiles más diversos —en edad, formación, autonomía tecnológica y contexto
-familiar— permitiría comprobar hasta qué punto los hallazgos actuales se
+perfiles más diversos permitiría comprobar hasta qué punto los cambios actuales se
 mantienen en otros casos de uso y, posiblemente, identificar nuevos puntos de
-mejora que no han emergido con el matrimonio participante.
+mejora que no han surgido con el matrimonio participante.
 
 \paragraph{Mejoras adicionales de accesibilidad.}
 La accesibilidad puede llevarse más allá del nivel AA mediante la incorporación
 de lectura por síntesis de voz para los textos de la interfaz, dictado por voz
 para los mensajes y recordatorios, y adaptaciones específicas para usuarios con
 dificultades motrices. La API \texttt{SpeechSynthesis} del navegador, ya
-estandarizada, permitiría abordar la primera de estas mejoras con un esfuerzo de
-implementación reducido.
+consolidada, permitiría abordar la primera de estas mejoras con un esfuerzo de
+implementación menor.
 
 
 \section{Reflexión final\label{SEC:CONC_REFLEXION}}
@@ -138,37 +129,28 @@ Este proyecto nació de una motivación personal antes que académica. La
 idea de \emph{ConectaMayor} no surgió de un enunciado ni de una
 asignatura, sino de una realidad cercana: observar cómo personas como
 mis propios abuelos se enfrentan cada día a herramientas digitales que
-no fueron pensadas para ellas. Esa distancia entre lo que la tecnología
-promete y lo que realmente ofrece a una persona mayor ha guiado cada
+no fueron pensadas para ellas. Esa distancia entre la tecnología y una persona mayor ha guiado cada
 decisión del trabajo, desde el tamaño de un botón hasta las palabras
 escritas en una pantalla.
 
 Las dos sesiones de evaluación con personas mayores han sido una de las
 experiencias más valiosas del proyecto. Observar cómo una persona
-interactúa con una interfaz diseñada por uno mismo —y detectar, en
+interactúa con una interfaz diseñada por uno mismo y detectar, en
 tiempo real, los puntos en los que el diseño no resulta tan claro como
-se esperaba— proporciona un aprendizaje difícil de obtener únicamente
-mediante documentación técnica o pruebas automatizadas. También ha
-confirmado que el trabajo tiene sentido más allá del marco académico:
-las dos personas que participaron en las pruebas valoraron
-positivamente la idea y manifestaron interés en seguir utilizándola.
+se esperaba proporciona un aprendizaje único. También ha
+confirmado que el trabajo tiene sentido más allá del marco académico.
 
 Más allá de lo técnico, este Trabajo Fin de Grado ha cambiado mi manera
 de entender la ingeniería. Durante la carrera es habitual valorar la
 calidad de un sistema por su eficiencia, su elegancia técnica o su
-complejidad. Sin embargo, diseñar para personas mayores obliga a
-desplazar ese criterio: un sistema es bueno cuando una persona con poca
+complejidad. Sin embargo, diseñar para personas mayores obliga a priorizar distintos criterios. Un sistema es correcto cuando una persona con poca
 experiencia tecnológica consigue, sin ayuda y sin miedo, hacer aquello
-que necesita. Esa exigencia —la de ponerse en el lugar de quien va a
-utilizar lo que uno construye— es probablemente el aprendizaje más
+que necesita. Esa exigencia y ese pensamiento son probablemente el aprendizaje más
 duradero que me llevo de este proyecto, y no aparece en ninguna línea de
 código.
 
 La brecha digital que afecta a las personas mayores no se resolverá con
 una sola aplicación, pero sí puede reducirse mediante una forma distinta
-de diseñar tecnología: una forma que sitúe a los usuarios reales —con
-sus limitaciones, su experiencia y sus expectativas— en el centro del
-proceso. Si este Trabajo Fin de Grado contribuye, aunque sea
-modestamente, a reforzar esa perspectiva, su valor no estará únicamente
-en el código desarrollado, sino también en la manera de entender el
-diseño tecnológico que ha ayudado a formar.
+de diseñar tecnología. Si este Trabajo Fin de Grado contribuye, aunque sea
+ligeramente, a reforzar esa perspectiva, el esfuerzo dedicado a su
+desarrollo habrá merecido la pena.

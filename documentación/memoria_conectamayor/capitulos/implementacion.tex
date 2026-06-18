@@ -133,7 +133,7 @@ mejoras\label{SUB:SPRINT_4}}
 El \emph{sprint} 4 incorporó dos mejoras detectadas durante el desarrollo.
 
 Una afectó al modelo de datos ya que supusimos inicialmente que cada grupo
-familiar tenía un único usuario mayor y no adaptaba para casos como un
+familiar tenía un único usuario mayor y no se adaptaba a casos como un
 matrimonio, donde conviven dos mayores en el mismo grupo. Por eso se asoció
 \texttt{Recordatorio} y \texttt{Contacto} al usuario mayor concreto en
 lugar de al grupo, y se añadió en la interfaz del editor un selector para
@@ -266,7 +266,7 @@ que el servidor solo envía los que faltan y el tráfico se mantiene mínimo.
 El módulo de galería gestiona la subida, consulta y comentario de fotos. La
 subida usa un formulario con el campo \texttt{ImageField} de Django, que
 guarda el fichero en \texttt{media/galeria/} y solo la ruta en la base de
-datos. La vista en mosaico se apoya en el sistema de cuadricula de Bootstrap.
+datos. La vista en mosaico se apoya en el sistema de cuadrícula de Bootstrap.
 
 El aislamiento entre grupos se logra filtrando la \emph{queryset}: la vista
 muestra siempre las fotos del grupo del usuario autenticado. Así, nadie
@@ -281,7 +281,7 @@ principal y los tres temas visuales disponibles.
 
 Las notificaciones se calculan en la vista \texttt{inicio\_mayor}, con tres
 consultas que cuentan los recordatorios del día, los mensajes sin leer y
-las fotos de las últimas veinticuatro horas. Los números de las notificaciones se se muestran solo
+las fotos de las últimas veinticuatro horas. Los números de las notificaciones se muestran solo
 cuando son mayores que cero, para mantener limpia la pantalla.
 
 Los temas visuales se resuelven con CSS y un poco de JavaScript que fija
@@ -328,7 +328,7 @@ el \emph{local storage} del navegador y se mantiene entre sesiones.
 mayores\label{SEC:IMP_AIPO}}
 
 La evaluación con usuarios constituye uno de los elementos diferenciales
-de este proyecto y recomendación directa de la tutora Pilar. Para llevarla a cabo se ha aplicado una metodología basada en
+de este proyecto y una recomendación directa de la tutora Pilar. Para llevarla a cabo se ha aplicado una metodología basada en
 los principios de la Interacción Persona-Ordenador (IPO).
 
 \subsection{Metodología\label{SUB:AIPO_METODOLOGIA}}
@@ -348,7 +348,7 @@ aproximadamente treinta minutos.
 Se escogió un matrimonio vecino del autor por lo que el consentimiento se obtuvo de forma
 verbal antes de cada sesión. Se informó a cada participante del propósito
 de la evaluación, del tratamiento anónimo de los datos y de la posibilidad
-de ayudar en la prueba en cualquier momento de mucha dificultad. En la memoria se hace
+de interrumpir la prueba en cualquier momento. En la memoria se hace
 referencia a ellos como \textbf{P1} y \textbf{P2}.
 
 El despliegue se realizó en local sobre el portátil del autor, conectado a
@@ -367,7 +367,7 @@ opciones disponibles y la estructura general de la aplicación.
 participantes\label{SUB:AIPO_PERFILES}}
 
 Los dos participantes forman un matrimonio jubilado que reside en el mismo
-domicilio. Estos participantes cumplían con el perfil del público al que va dirigido la aplicación:
+domicilio. Estos participantes cumplían con el perfil del público al que va dirigida la aplicación:
 personas mayores con poca experiencia tecnológica y con vínculos
 familiares activos. La Tabla~\ref{TAB:AIPO_PERFILES} recoge sus
 características más relevantes.
@@ -393,7 +393,7 @@ Dispositivos habituales    & Móvil       & Móvil \\
 \FloatBarrier
 
 Ambos participantes presentan un perfil tecnológico similar: utilizan con
-cierta soltura un móvil para tareas básicas como llamar por telefono, pero necesitan ayuda para
+cierta soltura un móvil para tareas básicas como llamar por teléfono, pero necesitan ayuda para
 acciones más elaboradas, como enviar mensajes por aplicaciones de
 mensajería o agregar nuevos contactos entre otras muchas tareas. Ninguno de los dos ha utilizado ordenador personal con
 anterioridad.
@@ -401,7 +401,7 @@ anterioridad.
 \subsection{Tareas evaluadas\label{SUB:AIPO_TAREAS}}
 
 Cada sesión lleva a cabo cinco tareas que cubren las funciones
-principales del rol \emph{mayor}.Cabe destacar que se realizaron tareas pensadas para evaluar al maximo posible la aplicación, no buscando la completitud obligatoria de cada una de ellas. Cada tarea se presentó mediante una
+principales del rol \emph{mayor}. Cabe destacar que se realizaron tareas pensadas para evaluar al máximo posible la aplicación, no buscando la completitud obligatoria de cada una de ellas. Cada tarea se presentó mediante una
 instrucción breve y contextualizada, sin pistas adicionales sobre los
 pasos a seguir.
 
