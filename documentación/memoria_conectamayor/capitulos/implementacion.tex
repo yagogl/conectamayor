@@ -130,58 +130,42 @@ fotografía y al \emph{familiar editor}.
 \subsection{\emph{Sprint} 4: iteración del diseño y
 mejoras\label{SUB:SPRINT_4}}
 
-El \emph{sprint} 4 incorporó dos modificaciones identificadas durante el
-desarrollo de los \emph{sprints} anteriores, ambas con impacto directo en
-la experiencia de uso.
+El \emph{sprint} 4 incorporó dos mejoras detectadas durante el desarrollo.
 
-La primera afectó al modelo de datos. El supuesto inicial de que un grupo
-familiar equivale a un único usuario mayor resultó insuficiente en
-escenarios habituales, como matrimonios o hermanos que conviven, en los
-que un mismo grupo puede contener a dos o más personas mayores. Por ello
-se refinó el modelo para que \texttt{Recordatorio} y \texttt{Contacto} se
-asociaran al usuario mayor concreto en lugar de al grupo, y se introdujo
-en la interfaz del editor un selector que permite alternar entre los
-mayores del grupo. El cambio afectó al modelo, a las vistas y a las
-plantillas de agenda y contactos.
+Una afectó al modelo de datos ya que supusimos inicialmente que cada grupo
+familiar tenía un único usuario mayor y no adaptaba para casos como un
+matrimonio, donde conviven dos mayores en el mismo grupo. Por eso se asoció
+\texttt{Recordatorio} y \texttt{Contacto} al usuario mayor concreto en
+lugar de al grupo, y se añadió en la interfaz del editor un selector para
+alternar entre los mayores. El cambio afectó al modelo, a las vistas y a
+las plantillas de agenda y contactos.
 
-La segunda fue el subsistema de notificaciones de la
-Sección~\ref{SUB:REQ_NOTIFICACIONES}, con indicadores numéricos que
-aparecen sobre los iconos de la pantalla principal del mayor cuando hay
-novedades, ya sean recordatorios pendientes del día, mensajes no leídos o
-fotografías recientes. Esta mejora replica un patrón visual reconocible y
-reduce la fricción para detectar actividad reciente sin entrar en cada
-módulo.
+La otra fue el subsistema de notificaciones (Sección~\ref{SUB:REQ_NOTIFICACIONES}).
 
-Ambas mejoras se validaron después en las pruebas de usabilidad de la
+Ambas se validaron después en las pruebas de usabilidad de la
 Sección~\ref{SEC:IMP_AIPO}.
 
 
 \section{Funcionalidades de la aplicación\label{SEC:IMP_FUNCIONALIDADES}}
 
 Esta sección describe la implementación de los seis módulos del sistema.
-Para cada uno se resumen las decisiones técnicas más relevantes y, cuando
-conviene, se incluye un fragmento de código representativo. El objetivo no
-es mostrar el código completo, sino los puntos donde se materializan las
-decisiones de diseño del Capítulo~\ref{CAP:DISENO}.
+De cada uno se resumen las decisiones técnicas principales y, en algunos,
+se incluye un fragmento de código. No se busca mostrar todo el código, sino
+los puntos donde se reflejan las decisiones de diseño del
+Capítulo~\ref{CAP:DISENO}.
 
 \subsection{Autenticación, roles y vinculación
 familiar\label{SUB:IMP_AUTENTICACION}}
 
-El módulo de usuarios se ha construido sobre la clase
-\texttt{AbstractUser} de Django, extendida con los campos \texttt{rol},
-con los tres valores definidos en el catálogo de requisitos, y
-\texttt{grupo\_familiar}, que apunta al modelo \texttt{GrupoFamiliar}
-mediante una clave foránea. Esta extensión conserva las funcionalidades
-estándar de Django, como la autenticación, las sesiones y el panel de
-administración, y al mismo tiempo incorpora la lógica específica del
-proyecto.
+El módulo de usuarios se ha construido sobre la clase \texttt{AbstractUser}
+de Django, extendida con los campos \texttt{rol} y \texttt{grupo\_familiar}.
+Así se conservan la autenticación, las sesiones y el panel de
+administración de Django, y se añade la lógica propia del proyecto.
 
-La pieza más característica de este módulo es la generación automática del
-código de invitación. Cada vez que un \emph{familiar editor} se registra,
-el sistema crea un \texttt{GrupoFamiliar} cuyo campo \texttt{codigo} se
-rellena con una secuencia aleatoria del tipo \texttt{FAM-XXXX}. Como
-muestra el Código~\ref{COD:IMP_FAM}, la generación se delega en una
-función sencilla que combina letras mayúsculas y dígitos:
+Lo más característico de este módulo es la generación automática del código
+de invitación. Cuando un \emph{familiar editor} se registra, el sistema
+crea un \texttt{GrupoFamiliar} con un código aleatorio del tipo
+\texttt{FAM-XXXX}, como muestra el Código~\ref{COD:IMP_FAM}:
 
 \begin{lstlisting}[language=Python, caption={Generación automática
 del código de invitación del grupo familiar.},
@@ -200,26 +184,19 @@ class GrupoFamiliar(models.Model):
     creado_en = models.DateTimeField(auto_now_add=True)
 \end{lstlisting}
 
-La restricción \texttt{unique=True} garantiza que no existan dos grupos
-con el mismo código. Aunque en teoría podrían darse colisiones, el espacio
-de combinaciones disponible, más de un millón, supera con mucho el volumen
-previsto de grupos.
+La opción \texttt{unique=True} evita códigos repetidos. Las combinaciones
+posibles superan el millón, muy por encima del número de grupos previsto.
 
-El formulario de registro recoge los datos personales básicos e incorpora
-los dos elementos que articulan el sistema de roles. El primero es el
-selector \emph{«¿Quién eres?»}, con el que el nuevo usuario indica el rol
-que le corresponde. El segundo es el campo del código del grupo familiar
-(\texttt{FAM-XXXX}), que permite a los usuarios mayores y a los familiares
-de solo lectura incorporarse a un grupo ya existente. El texto de ayuda
-situado junto al campo de usuario aclara su significado con ejemplos
-sencillos, una de las mejoras introducidas a raíz de la evaluación de
-usabilidad de la Sección~\ref{SEC:IMP_AIPO}.
+El formulario de registro recoge los datos básicos y dos elementos clave
+para los roles: el selector \emph{«¿Quién eres?»}, donde el usuario indica
+su rol, y el campo del código del grupo, que permite a los mayores y a los
+familiares de solo lectura unirse a un grupo existente. El texto de ayuda
+junto al campo de usuario lo aclara con ejemplos, una de las mejoras que
+surgieron de la evaluación de usabilidad.
 
-La doble interfaz del Capítulo~\ref{CAP:DISENO} se materializa en una
-vista de redirección que dirige a cada usuario, al iniciar sesión, a la
-pantalla correspondiente según su rol. La vista \texttt{inicio} actúa como
-punto de entrada y mantiene una lógica deliberadamente sencilla, como
-muestra el Código~\ref{COD:IMP_REDIRECCION}:
+La doble interfaz se materializa en una vista de redirección que, al
+iniciar sesión, lleva a cada usuario a la pantalla de su rol, como muestra
+el Código~\ref{COD:IMP_REDIRECCION}:
 
 \begin{lstlisting}[language=Python, caption={Redirección a la
 pantalla principal según el rol del usuario.},
@@ -233,59 +210,48 @@ def inicio(request):
     return redirect('inicio_familiar')
 \end{lstlisting}
 
-A partir de esta redirección, cada rama renderiza una plantilla distinta
-sobre el mismo conjunto de datos de sesión. Este enfoque mantiene una
-única fuente de verdad para la lógica de negocio y evita duplicar código
-entre los dos modos de interfaz.
+Cada rama renderiza una plantilla distinta sobre los mismos datos, lo que
+mantiene una única lógica de negocio y evita duplicar código.
 
 \subsection{Agenda\label{SUB:IMP_AGENDA}}
 
-El módulo de agenda gestiona los recordatorios de cada usuario \emph{mayor}
-del grupo. Sus vistas principales son la lista de siete días, desde el día
-actual hasta seis días adelante, y los formularios de creación y edición, disponibles tanto para el usuario \emph{mayor} sobre su propia agenda como para el \emph{familiar editor} sobre la de cualquier mayor del grupo. El borrado queda reservado al editor, para evitar eliminaciones accidentales.
+El módulo de agenda gestiona los recordatorios de cada usuario \emph{mayor}.
+Sus vistas son la lista de siete días y los formularios de creación y
+edición, disponibles tanto para el mayor sobre su propia agenda como para
+el \emph{familiar editor} sobre la de cualquier mayor del grupo. El borrado
+queda reservado al editor, para evitar eliminaciones accidentales.
 
-La consulta de los recordatorios se construye con el ORM de Django,
-filtrando por usuario y rango de fechas. La interfaz del mayor agrupa los
-resultados por jornada en la propia plantilla con el agrupador
-\texttt{regroup}, lo que mantiene una presentación clara sin añadir
-procesamiento innecesario en el servidor.
-
-Como consecuencia del rediseño del \emph{sprint}~4, la clave foránea
-principal de \texttt{Recordatorio} apunta al usuario mayor concreto
-(\texttt{usuario\_mayor}) y, opcionalmente, también al usuario que lo creó
-(\texttt{creado\_por}). Este segundo campo no afecta a la visibilidad del
-recordatorio, pero conserva la trazabilidad de las acciones del editor.
+Los recordatorios se consultan con el ORM de Django, filtrando por usuario
+y fechas, y se agrupan por día en la plantilla con el agrupador
+\texttt{regroup}. Tras el rediseño del \emph{sprint}~4, cada
+\texttt{Recordatorio} apunta al usuario mayor concreto (\texttt{usuario\_mayor})
+y, de forma opcional, a quien lo creó (\texttt{creado\_por}), lo que
+conserva la trazabilidad de las acciones del editor.
 
 \subsection{Contactos\label{SUB:IMP_CONTACTOS}}
 
-El módulo de contactos sigue una estructura paralela a la de agenda. Cada
-contacto se asocia a un usuario mayor concreto y se clasifica en una de
-las cinco categorías predefinidas: familia, médico, farmacia, vecino y
-otro. La presentación por categorías se resuelve en la plantilla con el
-agrupador de Django.
+El módulo de contactos sigue la misma estructura que la agenda. Cada
+contacto se asocia a un usuario mayor y se clasifica en una de cinco
+categorías: familia, médico, farmacia, vecino y otro, que se agrupan en la
+plantilla con el agrupador de Django.
 
-La llamada directa desde la interfaz del mayor se implementa con un enlace
-HTML que utiliza el esquema \texttt{tel:}, delegando la apertura de la
-aplicación de llamada en el dispositivo del usuario. Esta solución no
-requiere permisos adicionales ni librerías externas, y funciona de forma
-coherente tanto en ordenadores con \emph{softphone} configurado como en
-teléfonos y tabletas con capacidad telefónica.
+La llamada directa se implementa con un enlace HTML que usa el esquema
+\texttt{tel:}, delegando la llamada en el dispositivo del usuario. No
+requiere permisos ni librerías externas, y funciona igual en ordenadores
+con \emph{softphone} que en teléfonos y tabletas.
 
 \subsection{Mensajería\label{SUB:IMP_MENSAJES}}
 
-El módulo de mensajería implementa la comunicación uno a uno entre los
-miembros del grupo. Los mensajes se almacenan en el modelo
-\texttt{Mensaje}, que recoge el emisor, el receptor, el texto, la fecha de
-envío y un indicador de lectura. Una conversación se reconstruye con una
-consulta que devuelve todos los mensajes en los que participan ambos
-usuarios, ordenados cronológicamente.
+El módulo de mensajería implementa el chat uno a uno. Cada \texttt{Mensaje}
+guarda el emisor, el receptor, el texto, la fecha y si está leído. Una
+conversación se reconstruye con los mensajes en los que participan ambos
+usuarios, ordenados por fecha.
 
-La actualización automática se ha resuelto mediante \emph{polling} AJAX.
-La página de conversación lanza una petición cada cinco segundos al
-servidor, que devuelve únicamente los mensajes nuevos en formato JSON. El
-JavaScript del cliente los inserta dinámicamente al final del hilo y, si
-la pestaña está activa, los marca como leídos. El Código~\ref{COD:IMP_POLLING}
-recoge el corazón del mecanismo:
+La actualización automática se resuelve con \emph{polling} AJAX: la página
+pide al servidor cada cinco segundos los mensajes nuevos en JSON, y el
+JavaScript del cliente los añade al final del hilo y los marca como leídos
+si la pestaña está activa. El Código~\ref{COD:IMP_POLLING} recoge el
+mecanismo:
 
 \begin{lstlisting}[language=JavaScript, caption={Sondeo AJAX
 periódico para la actualización del chat sin recargar la página.},
@@ -300,47 +266,38 @@ setInterval(() => {
 }, 5000);
 \end{lstlisting}
 
-La función \texttt{ultimoId()} devuelve el identificador del último
-mensaje renderizado, lo que permite al servidor responder solo con los
-mensajes que faltan. Esta optimización mantiene el tráfico mínimo aunque
-la conversación se prolongue durante horas. Al apoyarse únicamente en
-tecnologías ya presentes en el proyecto, el sistema se mantiene dentro de
-una pila homogénea y ofrece una experiencia suficientemente cercana al
-tiempo real para el caso de uso planteado.
+La función \texttt{ultimoId()} devuelve el último mensaje mostrado, de modo
+que el servidor solo envía los que faltan y el tráfico se mantiene mínimo.
+Al usar solo tecnologías ya presentes en el proyecto, el sistema se queda
+en una pila homogénea y ofrece una experiencia cercana al tiempo real.
 
 \subsection{Galería\label{SUB:IMP_GALERIA}}
 
-El módulo de galería gestiona la subida, consulta y comentario de
-fotografías compartidas. La subida se realiza con un formulario que
-utiliza el campo \texttt{ImageField} de Django, que almacena los ficheros
-en el directorio \texttt{media/galeria/} y guarda en la base de datos solo
-la ruta. La vista en mosaico aprovecha el sistema de rejilla de Bootstrap,
-lo que asegura la adaptación a distintas resoluciones sin código
-adicional.
+El módulo de galería gestiona la subida, consulta y comentario de fotos. La
+subida usa un formulario con el campo \texttt{ImageField} de Django, que
+guarda el fichero en \texttt{media/galeria/} y solo la ruta en la base de
+datos. La vista en mosaico se apoya en la rejilla de Bootstrap, que se
+adapta a cualquier resolución sin código extra.
 
-El aislamiento entre grupos se materializa en el filtrado de la
-\emph{queryset}: la vista selecciona siempre las fotografías del grupo
-familiar del usuario autenticado. Por tanto, ningún usuario puede acceder
-a fotografías de otro grupo, ni siquiera modificando manualmente las URL.
+El aislamiento entre grupos se logra filtrando la \emph{queryset}: la vista
+muestra siempre las fotos del grupo del usuario autenticado. Así, nadie
+puede ver fotos de otro grupo, ni siquiera cambiando la URL a mano.
 
 \subsection{Notificaciones y accesibilidad
 visual\label{SUB:IMP_NOTIFICACIONES}}
 
-Los dos elementos transversales más característicos de la interfaz, las
-notificaciones de la pantalla principal y los tres temas visuales, se han
-implementado de forma ligera y reutilizable.
+Los dos elementos transversales de la interfaz, las notificaciones de la
+pantalla principal y los tres temas visuales, se han implementado de forma
+ligera.
 
-Las notificaciones se calculan en el servidor dentro de la vista
-\texttt{inicio\_mayor}, con tres consultas independientes que cuentan los
-recordatorios pendientes del día, los mensajes no leídos y las fotografías
-subidas en las últimas veinticuatro horas. Las cifras se pasan a la
-plantilla y se renderizan solo cuando son mayores que cero, lo que
-mantiene limpia la pantalla cuando no hay novedades.
+Las notificaciones se calculan en la vista \texttt{inicio\_mayor}, con tres
+consultas que cuentan los recordatorios del día, los mensajes sin leer y
+las fotos de las últimas veinticuatro horas. Las cifras se muestran solo
+cuando son mayores que cero, para mantener limpia la pantalla.
 
-Los temas visuales se han resuelto íntegramente con CSS, con un fragmento
-mínimo de JavaScript encargado de fijar el atributo \texttt{data-tema} en
-el elemento \texttt{<html>}. El Código~\ref{COD:IMP_TEMAS} muestra la
-estructura de variables CSS sobre la que se apoyan los tres temas:
+Los temas visuales se resuelven con CSS y un mínimo de JavaScript que fija
+el atributo \texttt{data-tema} en el elemento \texttt{<html>}. El
+Código~\ref{COD:IMP_TEMAS} muestra las variables CSS de los tres temas:
 
 \begin{lstlisting}[language=CSS, caption={Variables CSS de los tres
 temas visuales.}, label={COD:IMP_TEMAS}]
@@ -369,11 +326,9 @@ temas visuales.}, label={COD:IMP_TEMAS}]
 }
 \end{lstlisting}
 
-El resto de la hoja de estilos consume estas variables, lo que permite que
-el cambio de tema sea inmediato y consistente en toda la aplicación sin
-recargar la página. La preferencia del usuario se conserva en el
-\emph{local storage} del navegador, de modo que se mantiene entre
-sesiones.
+El resto de la hoja de estilos usa estas variables, de modo que el cambio
+de tema es inmediato y sin recargar la página. La preferencia se guarda en
+el \emph{local storage} del navegador y se mantiene entre sesiones.
 
 
 % =============================================================================
