@@ -3,114 +3,75 @@
 %  CAPÍTULO 5 — CONCLUSIONES
 %  Cierre del trabajo. 5 secciones cortas.
 % =============================================================================
-
-Este capítulo recoge la valoración global del trabajo realizado. Se revisa el
-grado de cumplimiento de los objetivos planteados en el
-Capítulo~\ref{CAP:INTRODUCCION}, se exponen los principales aprendizajes
-obtenidos durante el desarrollo, se reconocen las limitaciones del trabajo
-presentado y se proponen posibles líneas de continuación.
+Este capítulo recoge la valoración global del trabajo. Se revisa el grado de
+cumplimiento de los objetivos planteados en el
+Capítulo~\ref{CAP:INTRODUCCION}, se muestra los principales aprendizajes obtenidos, se reconocen las limitaciones y se proponen mejoras de trabajo futuro.
 
 
 \section{Cumplimiento de los
 objetivos\label{SEC:CONC_OBJETIVOS}}
 
-El objetivo general del proyecto era diseñar, desarrollar y evaluar una
-aplicación web accesible para facilitar la comunicación entre personas mayores y
-sus familiares, aplicando los principios del diseño centrado en el usuario a lo
-largo de todo el proceso. El resultado obtenido —\emph{ConectaMayor}, una
-aplicación funcional y evaluada con usuarios— permite afirmar que este objetivo
-se ha cumplido en lo esencial. A continuación se valora el grado de cumplimiento
-de cada uno de los objetivos específicos:
+El objetivo general era diseñar, desarrollar y evaluar una aplicación web
+accesible para facilitar la comunicación entre personas mayores y sus
+familiares, aplicando el diseño centrado en el usuario durante todo el
+proceso. El resultado, \emph{ConectaMayor}, una aplicación funcional y
+evaluada con usuarios, permite afirmar que ese objetivo se ha cumplido. El
+grado de cumplimiento de los objetivos específicos es el siguiente.
 
 \begin{enumerate}
-  \item El análisis del estado del arte ha permitido situar
-  \emph{ConectaMayor} en el panorama actual de las soluciones digitales
-  orientadas a personas mayores y justificar las decisiones de diseño adoptadas,
-  especialmente el carácter privado, accesible y acotado de la aplicación frente
-  a las plataformas generalistas.
+  \item El análisis del estado del arte situó \emph{ConectaMayor} frente a plataformas actuales pra justificar su desarrollo.
 
-  \item La arquitectura modular se ha implementado en cinco aplicaciones Django
-  independientes —usuarios, agenda, contactos, mensajes y galería— acompañadas
-  del subsistema transversal de notificaciones. El sistema de tres roles
-  diferencia con claridad a la persona mayor, el familiar editor y el familiar
-  de solo lectura, ajustando los permisos y la interfaz a las necesidades de
-  cada perfil.
+  \item La arquitectura de los módulos se implementó en cinco aplicaciones Django
+  independientes, además del subsistema de notificaciones. El
+  sistema de tres roles distingue con claridad a la persona mayor, al
+  familiar editor y al familiar de solo lectura, ajustando los permisos y
+  la interfaz a cada perfil.
 
-  \item La interfaz simplificada del rol \emph{mayor} se ha materializado en una
-  pantalla principal con cuatro accesos directos a los módulos, tipografía
-  ampliada, indicadores numéricos de novedades y botones de gran tamaño. En
-  paralelo, la interfaz del rol \emph{familiar editor} mantiene las funciones de
-  gestión necesarias sin comprometer la simplicidad de la experiencia diseñada
-  para la persona mayor.
+  \item La interfaz del rol \emph{mayor} se implementó en una pantalla con
+  cuatro accesos a los módulos, tipografía ampliada, indicadores de
+  novedades y botones grandes. La del \emph{familiar editor} mantiene las
+  funciones de gestión por encima de todo.
 
-  \item El cumplimiento de las pautas WCAG 2.1 nivel AA se ha abordado de forma
-  transversal mediante contraste mínimo 4{,}5:1, áreas de interacción de al
-  menos 44~$\times$~44 píxeles, indicadores de foco visibles, lenguaje sencillo
-  y soporte de tres temas visuales alternativos.
+  \item El cumplimiento de las pautas WCAG 2.1 nivel AA se abordó de forma
+  general con contraste mínimo 4{,}5:1, áreas de interacción de al
+  menos 44~$\times$~44 píxeles, indicadores de foco visibles, lenguaje
+  sencillo y tres temas visuales.
 
-  \item La privacidad se ha garantizado mediante el aislamiento de los grupos
-  familiares en las consultas a la base de datos. Ningún usuario puede acceder a
-  información perteneciente a un grupo familiar distinto del suyo, y la
-  aplicación no integra servicios externos ni publicidad.
+  \item La privacidad se garantizó aislando los grupos familiares en las
+  consultas a la base de datos. Ningún usuario accede a información de otro
+  grupo, y la aplicación no contiene servicios externos ni publicidad.
 
-  \item La evaluación de usabilidad con dos personas mayores, conducida conforme
-  a las recomendaciones de la Asociación Interacción Persona-Ordenador, ha
-  permitido detectar doce mejoras concretas que se han incorporado a la versión
-  final del sistema. Además, una limitación de diseño identificada durante la
-  reflexión posterior a las pruebas —la asunción inicial de un único usuario
-  mayor por grupo familiar— motivó un rediseño del modelo de datos y de la
+  \item La evaluación de usabilidad con dos personas mayores, conforme a la
+  metodología de la Interacción Persona-Ordenador (IPO), permitió detectar
+  varias mejoras que se incorporaron a la versión final. Además de una
+  limitación importante detectada tras las pruebas: la presunción inicial de un único
+  usuario mayor por grupo que motivó el rediseño del modelo de datos y de la
   interfaz del editor.
 
-  \item La presente memoria documenta de forma estructurada el proceso completo:
-  desde el análisis del problema hasta la evaluación con usuarios, incluyendo
-  las decisiones técnicas intermedias y su justificación. Esta documentación
-  sirve tanto como registro del trabajo realizado como base para las posibles
-  ampliaciones futuras descritas más adelante.
+  \item La memoria documenta el proceso completo, desde el análisis del
+  problema hasta la evaluación con usuarios, con las decisiones técnicas
+  intermedias y su justificación.
 \end{enumerate}
 
 
 \section{Aprendizajes obtenidos\label{SEC:CONC_APRENDIZAJES}}
 
-Más allá del producto entregado, el desarrollo del proyecto ha generado
-aprendizajes significativos. Entre ellos, destacan especialmente tres.
-
-El primero, de carácter técnico, ha sido la consolidación práctica del
-\emph{stack} Django en un proyecto de tamaño medio. Aunque durante el grado se
-han tratado distintos aspectos del desarrollo web, no es lo mismo trabajar con
-ejemplos guiados que enfrentarse a las decisiones reales de un proyecto iniciado
-desde cero: estructura de aplicaciones, modelo de usuario personalizado, gestión
-de migraciones, configuración del servidor y organización del código. La
-experiencia ha mostrado el valor de tomar ciertas decisiones desde las primeras
-fases —como la definición de \texttt{AUTH\_USER\_MODEL} antes de la primera
-migración— y el coste que puede tener posponerlas.
-
-El segundo aprendizaje, de carácter metodológico, ha sido la importancia de
-evaluar el sistema con usuarios. Las sesiones de usabilidad han revelado
-problemas que no se manifestaban durante el desarrollo, porque el propio
-diseñador acaba interiorizando la lógica de su aplicación y deja de percibir
-algunos puntos de fricción. Observar a una persona mayor utilizar la aplicación
-durante una sesión de prueba proporciona información cualitativa que ninguna
-prueba automatizada puede ofrecer. De hecho, varias de las mejoras incorporadas
-en la versión final habrían pasado desapercibidas sin esta etapa.
-
-El tercer aprendizaje, de carácter personal, ha sido constatar que la
-accesibilidad no debe entenderse como un añadido cosmético al final del
-desarrollo, sino como una decisión estructural que condiciona desde la
-organización de la interfaz hasta la elección de palabras de cada botón. Aplicar
-las pautas WCAG 2.1 ha exigido revisar componentes que en otro contexto podrían
-haberse dado por válidos, y ha enseñado a analizar las interfaces digitales con
-un nivel de atención mayor.
-
+El desarrollo del proyecto ha dejado tres aprendizajes. En lo técnico, he
+consolidado el \emph{stack} Django en un proyecto real iniciado desde cero,
+donde decisiones tempranas como definir \texttt{AUTH\_USER\_MODEL} antes de
+la primera migración evitan problemas costosos más adelante. En cuanto a la metodología utilizada, las pruebas con usuarios revelaron puntos de de mejora y cambios que yo no percibía desde mi visión y que
+ninguna prueba automatizada habría detectado. Y en lo personal, he
+comprobado que la accesibilidad no es un añadido final, sino una decisión
+crucial que condiciona desde la organización de la interfaz hasta las
+palabras de cada botón.
 
 \section{Limitaciones\label{SEC:CONC_LIMITACIONES}}
 
 El trabajo presentado tiene limitaciones que conviene reconocer explícitamente,
-tanto por honestidad académica como porque marcan el punto de partida natural de
-las líneas de continuación.
+tanto por honestidad académica como porque marcan el punto de partida de posibles cambios en el futuro.
 
 La primera y más evidente es que la aplicación no se ha desplegado en un entorno
-de producción real. Todas las pruebas —incluidas las sesiones de evaluación con
-usuarios— se han realizado sobre un servidor local accesible mediante la red
+de producción real. Todas las pruebas se han realizado sobre un servidor local accesible mediante la red
 WiFi doméstica del matrimonio participante. Aunque esta configuración ha sido
 suficiente para validar el comportamiento funcional del sistema, quedan fuera
 del alcance del proyecto aspectos importantes como el rendimiento bajo
@@ -118,28 +79,20 @@ concurrencia, la configuración de HTTPS, la administración de un servidor púb
 o la gestión de copias de seguridad.
 
 La segunda limitación afecta a la evaluación de usabilidad. El número de
-participantes (n=2) es reducido para extraer conclusiones cuantitativas
-generalizables, y ambos participantes comparten un perfil demográfico homogéneo:
-edades cercanas, mismo nivel formativo e idéntico entorno tecnológico. Aunque
-los hallazgos son útiles dentro de una evaluación cualitativa orientada a la
-detección de problemas de uso, una validación más amplia requeriría diversificar
-los perfiles y aumentar el número de sesiones.
+participantes es reducido para extraer conclusiones definitivas, y ambos participantes comparten un perfil muy similar. Aunque
+los hallazgos son útiles dentro de una evaluación orientada a la
+detección de problemas de uso, sería recomendable una validación más amplia con distintos perfiles y aumentar el número de sesiones.
 
 La tercera limitación es técnica. SQLite, elegida como base de datos por su
 simplicidad y por ser la opción por defecto de Django, resulta adecuada para el
 desarrollo y para un escenario de demostración, pero no sería la opción más
 conveniente para un despliegue en producción con múltiples familias accediendo
-simultáneamente. Asimismo, el conjunto de pruebas automatizadas del proyecto se
-limita a las funcionalidades críticas y no constituye una \emph{suite} completa,
-lo que reduce la confianza ante futuras modificaciones del código sin
-verificación manual.
-
+simultáneamente.
 
 \section{Trabajo futuro\label{SEC:CONC_FUTURO}}
 
 A partir de las limitaciones anteriores y de las observaciones recogidas durante
-la evaluación, se identifican varias líneas naturales de continuación para el
-proyecto.
+la evaluación, se identifican varias líneas de mejora y progresión para el proyecto.
 
 \paragraph{Despliegue en producción.}
 La línea de trabajo futuro más inmediata sería llevar \emph{ConectaMayor} a un

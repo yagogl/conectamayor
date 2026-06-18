@@ -190,11 +190,8 @@ posibles superan el millón, muy por encima del número de grupos previsto.
 El formulario de registro recoge los datos básicos y dos elementos clave
 para los roles: el selector \emph{«¿Quién eres?»}, donde el usuario indica
 su rol, y el campo del código del grupo, que permite a los mayores y a los
-familiares de solo lectura unirse a un grupo existente. El texto de ayuda
-junto al campo de usuario lo aclara con ejemplos, una de las mejoras que
-surgieron de la evaluación de usabilidad.
-
-La doble interfaz se materializa en una vista de redirección que, al
+familiares de solo lectura unirse a un grupo existente.
+La doble interfaz se resume en una vista de redirección que, al
 iniciar sesión, lleva a cada usuario a la pantalla de su rol, como muestra
 el Código~\ref{COD:IMP_REDIRECCION}:
 
@@ -210,8 +207,7 @@ def inicio(request):
     return redirect('inicio_familiar')
 \end{lstlisting}
 
-Cada rama renderiza una plantilla distinta sobre los mismos datos, lo que
-mantiene una única lógica de negocio y evita duplicar código.
+Cada camino muestra una plantilla distinta sobre los mismos datos.
 
 \subsection{Agenda\label{SUB:IMP_AGENDA}}
 
@@ -225,21 +221,17 @@ Los recordatorios se consultan con el ORM de Django, filtrando por usuario
 y fechas, y se agrupan por día en la plantilla con el agrupador
 \texttt{regroup}. Tras el rediseño del \emph{sprint}~4, cada
 \texttt{Recordatorio} apunta al usuario mayor concreto (\texttt{usuario\_mayor})
-y, de forma opcional, a quien lo creó (\texttt{creado\_por}), lo que
-conserva la trazabilidad de las acciones del editor.
 
 \subsection{Contactos\label{SUB:IMP_CONTACTOS}}
 
 El módulo de contactos sigue la misma estructura que la agenda. Cada
 contacto se asocia a un usuario mayor y se clasifica en una de cinco
-categorías: familia, médico, farmacia, vecino y otro, que se agrupan en la
+categorías: familia, médico, farmacia, vecino y otro. Estas se unen a la
 plantilla con el agrupador de Django.
 
 La llamada directa se implementa con un enlace HTML que usa el esquema
 \texttt{tel:}, delegando la llamada en el dispositivo del usuario. No
-requiere permisos ni librerías externas, y funciona igual en ordenadores
-con \emph{softphone} que en teléfonos y tabletas.
-
+requiere permisos ni librerías externas.
 \subsection{Mensajería\label{SUB:IMP_MENSAJES}}
 
 El módulo de mensajería implementa el chat uno a uno. Cada \texttt{Mensaje}
@@ -268,37 +260,35 @@ setInterval(() => {
 
 La función \texttt{ultimoId()} devuelve el último mensaje mostrado, de modo
 que el servidor solo envía los que faltan y el tráfico se mantiene mínimo.
-Al usar solo tecnologías ya presentes en el proyecto, el sistema se queda
-en una pila homogénea y ofrece una experiencia cercana al tiempo real.
 
 \subsection{Galería\label{SUB:IMP_GALERIA}}
 
 El módulo de galería gestiona la subida, consulta y comentario de fotos. La
 subida usa un formulario con el campo \texttt{ImageField} de Django, que
 guarda el fichero en \texttt{media/galeria/} y solo la ruta en la base de
-datos. La vista en mosaico se apoya en la rejilla de Bootstrap, que se
-adapta a cualquier resolución sin código extra.
+datos. La vista en mosaico se apoya en el sistema de cuadricula de Bootstrap.
 
 El aislamiento entre grupos se logra filtrando la \emph{queryset}: la vista
 muestra siempre las fotos del grupo del usuario autenticado. Así, nadie
-puede ver fotos de otro grupo, ni siquiera cambiando la URL a mano.
+puede ver fotos de otro grupo.
 
 \subsection{Notificaciones y accesibilidad
 visual\label{SUB:IMP_NOTIFICACIONES}}
 
-Los dos elementos transversales de la interfaz, las notificaciones de la
-pantalla principal y los tres temas visuales, se han implementado de forma
-ligera.
+Además de las pantallas de cada módulo, la interfaz incorpora dos
+elementos generales de apoyo: las notificaciones visibles en la pantalla
+principal y los tres temas visuales disponibles.
 
 Las notificaciones se calculan en la vista \texttt{inicio\_mayor}, con tres
 consultas que cuentan los recordatorios del día, los mensajes sin leer y
-las fotos de las últimas veinticuatro horas. Las cifras se muestran solo
+las fotos de las últimas veinticuatro horas. Los números de las notificaciones se se muestran solo
 cuando son mayores que cero, para mantener limpia la pantalla.
 
-Los temas visuales se resuelven con CSS y un mínimo de JavaScript que fija
+Los temas visuales se resuelven con CSS y un poco de JavaScript que fija
 el atributo \texttt{data-tema} en el elemento \texttt{<html>}. El
 Código~\ref{COD:IMP_TEMAS} muestra las variables CSS de los tres temas:
 
+\newpage
 \begin{lstlisting}[language=CSS, caption={Variables CSS de los tres
 temas visuales.}, label={COD:IMP_TEMAS}]
 /* Tema claro (predeterminado) */
@@ -326,8 +316,7 @@ temas visuales.}, label={COD:IMP_TEMAS}]
 }
 \end{lstlisting}
 
-El resto de la hoja de estilos usa estas variables, de modo que el cambio
-de tema es inmediato y sin recargar la página. La preferencia se guarda en
+El cambio de tema es inmediato y sin recargar la página. La preferencia se guarda en
 el \emph{local storage} del navegador y se mantiene entre sesiones.
 
 
@@ -339,17 +328,13 @@ el \emph{local storage} del navegador y se mantiene entre sesiones.
 mayores\label{SEC:IMP_AIPO}}
 
 La evaluación con usuarios constituye uno de los elementos diferenciales
-de este proyecto y responde a la indicación expresa de la tutora
-académica. Para llevarla a cabo se ha aplicado una metodología basada en
-los principios de la Interacción Persona-Ordenador (IPO), centrada en la
-observación directa y en la verbalización del pensamiento durante la
-interacción con el sistema.
+de este proyecto y recomendación directa de la tutora Pilar. Para llevarla a cabo se ha aplicado una metodología basada en
+los principios de la Interacción Persona-Ordenador (IPO).
 
 \subsection{Metodología\label{SUB:AIPO_METODOLOGIA}}
 
 La evaluación ha seguido el método \emph{Think Aloud}, o pensamiento en
-voz alta, mediante observación directa no participante. Esta técnica
-resulta especialmente adecuada cuando el objetivo es comprender las
+voz alta, mediante observación directa sin tratar de ayudar al participante. Esta técnica es especialmente útil cuando el objetivo es comprender las
 dificultades que encuentra un usuario mientras interactúa con la
 aplicación, ya que permite registrar no solo el resultado de cada tarea,
 sino también el razonamiento del participante y los puntos en los que
@@ -357,38 +342,33 @@ surgen dudas.
 
 Se realizaron dos sesiones independientes durante la semana del 20 de
 abril de 2026. Ambas se desarrollaron en el domicilio del matrimonio
-participante, en un entorno tranquilo y familiar, para minimizar el efecto
-de la presión externa sobre los resultados. Cada sesión duró
-aproximadamente treinta minutos y fue conducida únicamente por el autor
-del trabajo, sin acompañantes adicionales.
+participante. Cada sesión duró
+aproximadamente treinta minutos.
 
-Dada la relación de vecindad previa, el consentimiento se obtuvo de forma
+Se escogió un matrimonio vecino del autor por lo que el consentimiento se obtuvo de forma
 verbal antes de cada sesión. Se informó a cada participante del propósito
 de la evaluación, del tratamiento anónimo de los datos y de la posibilidad
-de interrumpir la prueba en cualquier momento. En la memoria se hace
+de ayudar en la prueba en cualquier momento de mucha dificultad. En la memoria se hace
 referencia a ellos como \textbf{P1} y \textbf{P2}.
 
 El despliegue se realizó en local sobre el portátil del autor, conectado a
 la red doméstica del matrimonio y accesible desde otros dispositivos
 mediante \texttt{python manage.py runserver 0.0.0.0:8000}. Como dispositivo
-de interacción se usó una \emph{tablet} Lenovo de unas diez pulgadas, lo
-que reproduce de forma razonable el escenario de uso previsto.
+de interacción se usó una \emph{tablet} Lenovo de unas diez pulgadas.
 
 Las tareas se diseñaron para cubrir los cuatro módulos principales de la
-aplicación, que son agenda, contactos, mensajería y galería, y se
-complementaron durante la sesión con preguntas exploratorias del
+aplicación y se
+complementaron durante la sesión con preguntas ocasionales del
 evaluador. El objetivo era comprobar no solo si el participante completaba
-la tarea, sino también su grado de comprensión sobre los formularios, las
+la tarea, sino también su grado de satisfacción y comprensión sobre los formularios, las
 opciones disponibles y la estructura general de la aplicación.
 
 \subsection{Perfiles de los
 participantes\label{SUB:AIPO_PERFILES}}
 
-Los dos participantes forman un matrimonio jubilado y residen en el mismo
-domicilio. La selección respondió a un criterio práctico, la
-disponibilidad y el consentimiento, y al mismo tiempo permitió realizar la
-prueba sobre un perfil próximo al público objetivo de la aplicación:
-personas mayores con experiencia tecnológica limitada y con vínculos
+Los dos participantes forman un matrimonio jubilado que reside en el mismo
+domicilio. Estos participantes cumplían con el perfil del público al que va dirigido la aplicación:
+personas mayores con poca experiencia tecnológica y con vínculos
 familiares activos. La Tabla~\ref{TAB:AIPO_PERFILES} recoge sus
 características más relevantes.
 
@@ -400,7 +380,7 @@ participantes de las pruebas de usabilidad.}
 & \textbf{P1} & \textbf{P2} \\
 \midrule
 Sexo                       & Mujer        & Hombre \\
-Edad                       & 67 años      & 69 años \\
+Edad                       & 70 años      & 72 años \\
 Estudios                   & Secundarios  & Secundarios \\
 Uso de \emph{smartphone}   & Ocasional    & Ocasional \\
 Uso de WhatsApp            & Con ayuda    & Con ayuda \\
@@ -413,17 +393,15 @@ Dispositivos habituales    & Móvil       & Móvil \\
 \FloatBarrier
 
 Ambos participantes presentan un perfil tecnológico similar: utilizan con
-cierta soltura un móvil para tareas básicas, pero necesitan ayuda para
+cierta soltura un móvil para tareas básicas como llamar por telefono, pero necesitan ayuda para
 acciones más elaboradas, como enviar mensajes por aplicaciones de
-mensajería. Ninguno de los dos ha utilizado ordenador personal con
-anterioridad. Este perfil encaja con el público objetivo de
-\emph{ConectaMayor}: usuarios con un manejo limitado de la tecnología que
-pueden beneficiarse de una interfaz simplificada.
+mensajería o agregar nuevos contactos entre otras muchas tareas. Ninguno de los dos ha utilizado ordenador personal con
+anterioridad.
 
 \subsection{Tareas evaluadas\label{SUB:AIPO_TAREAS}}
 
-El protocolo se estructuró en cinco tareas que cubren las funciones
-principales del rol \emph{mayor}. Cada tarea se presentó mediante una
+Cada sesión lleva a cabo cinco tareas que cubren las funciones
+principales del rol \emph{mayor}.Cabe destacar que se realizaron tareas pensadas para evaluar al maximo posible la aplicación, no buscando la completitud obligatoria de cada una de ellas. Cada tarea se presentó mediante una
 instrucción breve y contextualizada, sin pistas adicionales sobre los
 pasos a seguir.
 
@@ -432,7 +410,7 @@ pasos a seguir.
 Se pide al participante que registre una cita médica para una fecha
 futura. Evalúa la localización del módulo de agenda, la identificación del
 botón de creación y la comprensión del formulario, incluyendo la fecha, el
-tipo de recordatorio y la hora opcional.
+tipo de recordatorio, etc.
 
 \item[T2. Marcar y modificar un recordatorio.]
 El participante localiza el recordatorio del día y lo marca como
@@ -449,7 +427,7 @@ categorías.
 \item[T4. Enviar un mensaje a un familiar.]
 El participante envía un mensaje a un miembro del grupo y lee la respuesta.
 Evalúa la identificación del módulo de mensajería, la selección del
-destinatario y la diferenciación visual entre mensajes propios y recibidos.
+destinatario y la diferenciación entre mensajes propios y recibidos.
 
 \item[T5. Consultar la galería y subir una fotografía.]
 El participante consulta el mosaico de fotografías, abre alguna en detalle
@@ -460,45 +438,41 @@ contenido.
 
 \subsection{Resultados y observaciones\label{SUB:AIPO_RESULTADOS}}
 
-A continuación se sintetizan los resultados de las dos sesiones, agrupados
+A continuación se explican los resultados de las dos sesiones, agrupados
 por tarea. Las tablas detalladas con la valoración individual de cada
 tarea, los tiempos de ejecución y la clasificación de gravedad de cada
 incidencia se recogen en el Apéndice~\ref{APP:AIPO}.
 
 \paragraph{T1 — Añadir un recordatorio.}
-Ambos participantes completaron la tarea, aunque con dificultad apreciable.
+Ambos participantes completaron la tarea, aunque con alguna dificultad.
 P1 invirtió aproximadamente tres minutos y P2 algo más de cuatro. El
-principal punto de fricción fue el formulario de creación: en la versión
-original, el campo de fecha aparecía después del título y del tipo, lo que
-provocaba dudas sobre si se encontraban en la pantalla correcta. Además, el
-formulario original no contemplaba un campo de hora, lo que resultó extraño
-a los participantes cuando quisieron asignar una hora concreta a algunas
-citas. Posteriormente se incorporó este campo con carácter opcional, ya que
-recordatorios habituales como \emph{``tomar la medicación''} o \emph{``llamar
-a la hija''} no siempre tienen una hora exacta asociada.
+principal problema fue el formulario de creación. En la versión original,
+el campo de fecha aparecía después del título y del tipo, lo que provocaba
+dudas sobre si se encontraban en la pantalla correcta. Además, el
+formulario no contemplaba un campo de hora, lo que resultó extraño a los
+participantes. Después se incorporó este campo con carácter opcional, ya
+que recordatorios habituales como \emph{``tomar la medicación''} o
+\emph{``llamar a la hija''} no siempre tienen una hora exacta asociada.
 
-P1 manifestó al inicio dudas sobre el propio concepto de \emph{nombre de
-usuario}, identificándolo con su nombre real. Esta observación se produjo
-durante una pregunta exploratoria previa, en la que se le consultó cómo
-crearía su cuenta de usuario.
 
 \paragraph{T2 — Marcar y modificar un recordatorio.}
 La parte central de esta tarea, marcar un recordatorio como completado, fue
-la más sencilla del conjunto: ambos la resolvieron en un minuto o menos.
-Sin embargo, la pregunta sobre cómo deshacer un recordatorio marcado por
-error reveló que el botón de deshacer pasaba desapercibido. Del mismo modo,
-el botón para editar un recordatorio se confundía con el de posponerlo al
-día siguiente, ya que ambos compartían un icono similar y una posición
+la más sencilla del conjunto, ya que ambos la resolvieron en un minuto o
+menos. Sin embargo, la pregunta sobre cómo deshacer un recordatorio marcado
+por error reveló que el botón de deshacer pasaba desapercibido. Del mismo
+modo, el botón para editar un recordatorio se confundía con el de posponerlo
+al día siguiente, porque ambos compartían un icono similar y una posición
 contigua. P1 sugirió diferenciar por color los recordatorios pendientes de
 los completados, propuesta que se incorporó después.
 
 \paragraph{T3 — Llamar a un contacto y dar de alta uno nuevo.}
-La acción de llamar se resolvió sin dificultades en ambas sesiones: los dos
+La acción de llamar se resolvió sin dificultades en ambas sesiones. Los dos
 participantes comprendieron sin ayuda la agrupación por categorías e
 identificaron el botón de llamada verde. La dificultad apareció en la
-segunda parte, al dar de alta un contacto nuevo: el botón de edición de un
-contacto existente no resultaba evidente, y P1 intentó usar el botón
-\emph{atrás} del navegador para volver atrás, sin el resultado esperado.
+segunda parte, al dar de alta un contacto nuevo. Al dudar en el flujo de la
+tarea, P1 intentó usar el botón atrás del navegador para deshacer una
+acción, sin el resultado esperado. De ahí surgió la idea de añadir un botón
+de \emph{atrás} global a la barra de navegación.
 
 \paragraph{T4 — Enviar un mensaje.}
 Esta tarea fue la que requirió más ayuda. Ambos la completaron, pero con
@@ -508,31 +482,29 @@ poca altura. P1 señaló también que, en el tema oscuro, las burbujas perdían
 contraste, y sugirió aumentar el tamaño de letra del chat.
 
 \paragraph{T5 — Consultar la galería y subir una fotografía.}
-La consulta de la galería se realizó sin dificultades: ambos identificaron
-el mosaico y abrieron alguna foto en detalle. La posibilidad de pulsar una
-fotografía para verla a pantalla completa no se descubrió de forma
-espontánea y se incorporó después como mejora. La subida de una fotografía,
-planteada como extensión de la tarea, resultó confusa: el texto por defecto
-del selector de archivos, \emph{``Ningún archivo seleccionado''}, fue
-interpretado por ambos como un mensaje de error, por lo que necesitaron
-orientación para continuar.
+La consulta de la galería se realizó sin dificultades, ya que ambos
+identificaron el mosaico y abrieron alguna foto en detalle. La posibilidad
+de pulsar una fotografía para verla a pantalla completa se incorporó
+después como mejora propuesta por ambos participantes. La subida de una
+fotografía, planteada como extensión de la tarea, resultó confusa. El texto
+por defecto del selector de archivos, \emph{``Ningún archivo
+seleccionado''}, fue interpretado por ambos como un mensaje de error, por
+lo que necesitaron orientación para continuar.
 
 \paragraph{Valoración final.}
 En la entrevista final, P1 valoró la facilidad de uso general con un 5
-sobre 5 y la utilidad percibida con un 4 sobre 5. Identificó como módulos
-más sencillos los de mensajes, contactos y fotos, y como más complejo el de
+sobre 5 y la utilidad con un 4 sobre 5. Identificó como módulos más
+sencillos los de mensajes, contactos y fotos, y como más complejo el de
 agenda. A la pregunta sobre si utilizaría la aplicación en su día a día
-respondió afirmativamente. La valoración global de P2 fue equivalente, con
-una preferencia ligeramente mayor por el módulo de contactos, en
-consonancia con su uso habitual del teléfono.
+respondió afirmativamente. La valoración global de P2 fue prácticamente la
+misma, con una preferencia ligeramente mayor por el módulo de contactos,
+acorde con su uso más habitual del teléfono.
 
 \subsection{Mejoras incorporadas a partir de la
 evaluación\label{SUB:AIPO_MEJORAS}}
 
-Las observaciones recogidas se priorizaron según su gravedad y su coste de
-implementación. La Tabla~\ref{TAB:AIPO_MEJORAS} resume las mejoras
-aplicadas tras las pruebas, todas integradas en la versión actual del
-sistema.
+La Tabla~\ref{TAB:AIPO_MEJORAS} resume las mejoras aplicadas tras las
+pruebas, todas integradas en la versión actual del sistema.
 
 \begin{table}[Mejoras incorporadas]{TAB:AIPO_MEJORAS}{Mejoras incorporadas
 a la aplicación a partir de los hallazgos de las pruebas de
@@ -542,9 +514,6 @@ usabilidad.}
 \toprule
 \textbf{Mejora aplicada} & \textbf{Tarea afectada} \\
 \midrule
-Etiqueta clarificada en el campo \emph{usuario} del registro
-                                                       & Pre-T1 \\
-Campo del código familiar añadido al registro          & Pre-T1 \\
 Botón \emph{Añadir recordatorio} en color amarillo
 acento, más visible                                     & T1 \\
 Campo de fecha situado como primer campo del
@@ -560,7 +529,10 @@ Validación del formato del teléfono mediante
 expresión regular                                       & T3 \\
 Miembros del grupo familiar visibles automáticamente
 en la lista de contactos                                & T3 \\
-Visualización de fotografías a pantalla completa                   & T5 \\
+Campo de escritura del chat más visible                 & T4 \\
+Contraste de las burbujas corregido en el tema oscuro   & T4 \\
+Tamaño de letra de la conversación aumentado            & T4 \\
+Visualización de fotografías a pantalla completa        & T5 \\
 Texto del selector de archivos sustituido por uno
 más claro                                               & T5 \\
 \bottomrule
@@ -571,23 +543,23 @@ más claro                                               & T5 \\
 
 Además, durante la reflexión posterior a las sesiones, el autor identificó
 una segunda limitación. El supuesto inicial de que un grupo familiar
-equivale a un único usuario mayor resultaba inadecuado para escenarios
-como el del propio matrimonio participante, en el que un mismo grupo
-contiene a dos personas mayores cuyas agendas y contactos deben mantenerse
-separados. Este hallazgo, aunque no fue verbalizado explícitamente por los
-participantes durante la prueba, surge directamente del contexto observado
-y motivó el rediseño del modelo de datos y la introducción del selector de
-mayor descrito en el Capítulo~\ref{CAP:DISENO} y en el \emph{sprint} 4 de
-la Sección~\ref{SUB:SPRINT_4}.
+equivale a un único usuario mayor resultaba inadecuado para escenarios como
+el del matrimonio participante, en el que un mismo grupo contiene a dos
+personas mayores cuyas agendas y contactos deben mantenerse separados,
+aunque compartan la misma galería y el mismo chat familiar. Este cambio,
+aunque no fue señalado de forma explícita por los participantes durante la
+prueba, surge directamente del contexto observado y motivó el rediseño del
+modelo de datos y la introducción del selector de mayor descrito en el
+Capítulo~\ref{CAP:DISENO} y en el \emph{sprint} 4 de la
+Sección~\ref{SUB:SPRINT_4}.
 
 \subsection{Conclusiones de la
 evaluación\label{SUB:AIPO_CONCLUSIONES}}
 
 Las pruebas con usuarios han confirmado los aciertos principales del diseño
-y, al mismo tiempo, han evidenciado puntos de mejora que han condicionado
-el resultado final. La interfaz simplificada del rol \emph{mayor} resultó
-comprensible para los dos participantes sin formación previa, y las tareas
+y, al mismo tiempo, han evidenciado puntos de mejora. La interfaz simplificada del rol \emph{mayor} resultó
+comprensible para los dos participantes, y las tareas
 de consulta, como ver recordatorios, abrir conversaciones o navegar por la
 galería, se completaron con fluidez. Las dificultades se concentraron, como
 cabía esperar, en las tareas de creación o modificación, donde los
-formularios y la disposición de los campos adquieren mayor importancia.
+formularios y la disposición de los campos adquieren mayor importancia. Por ello existe el rol de \emph{familiar editor}.
