@@ -11,31 +11,31 @@ los capítulos siguientes.
 \section{Motivación\label{SEC:MOTIVACION}}
 
 Las redes sociales, la mensajería instantánea y las
-videollamadas han convertido el contacto
+videollamadas han convertido el contacto digital
 con familiares y amigos en una cuestión de segundos. Sin embargo, este avance
 también ha expuesto una brecha entre generaciones. Las personas mayores
 representan un gran desencuentro entre
-tecnología y usuario, y es precisamente a ellas a quienes se dirige este proyecto.
+tecnología y usuario, y es a ellas a quienes se dirige este proyecto.
 
 El fenómeno, conocido como brecha digital, está ampliamente documentado en España. Los datos del Instituto Nacional de Estadística revelan que una
 proporción muy significativa de la población mayor de 65 años reside en hogares
 unipersonales, mientras que los estudios sobre soledad también hablan de grandes números de personas en este rango de edad que han experimentado
-soledad no deseada \cite{ine_hogares,rsi_soledad}. Las estudios sobre las consecuencias de la soledad destacan: deterioro del descanso, aceleración del declive
+soledad no deseada \cite{ine_hogares,rsi_soledad}. Los estudios sobre las consecuencias de la soledad destacan el deterioro del descanso, aceleración del declive
 cognitivo y mayor predisposición a enfermedades neurodegenerativas
-\cite{soledad_cerebro}. A ello se suman la distancia respecto a los familiares
+\cite{soledad_cerebro}. A ello se suman la distancia con los familiares
 más cercanos y las limitaciones físicas asociadas al envejecimiento.
 
 La tecnología tiene un potencial evidente para reducir esa distancia, pero solo
 si se diseña con ese pensamiento. Las plataformas de uso cotidiano,
 como WhatsApp o las grandes redes sociales, no fueron diseñadas para las personas
-mayores: incorporan funcionalidades nuevas de forma
+mayores ya que incorporan funcionalidades nuevas de forma
 constante, modifican su interfaz con frecuencia, mezclan acciones distintas en una
-misma pantalla y emplean iconografía dificl de entender si no estas acostumbrado a ella. Por un lado, muchas personas mayores que se beneficiarían
+misma pantalla y emplean iconos dificl de entender si no estas acostumbrado a ellos. Es una evidencia que muchas personas mayores que se beneficiarían
 de estar conectadas a la tecnología terminan dependiendo de un familiar para realizar acciones
-básicas. Por otro, otras renuncian directamente al uso de la tecnología.
+básicas. Mientras que otras renuncian directamente al uso de la tecnología debido a su dificultad.
 
 \emph{ConectaMayor} parte de la idea de que es posible construir una herramienta
-digital sencilla, útil y privada, capaz de facilitar el contacto cotidiano entre
+digital sencilla, útil y privada, capaz de facilitar el contacto entre
 las personas mayores y su entorno familiar. La aplicación no tiene el objetivo de competir con el resto de plataformas. Pero ofrece, en su lugar, un espacio digital sencillo
 en el que la persona mayor puede gestionar su agenda, consultar sus contactos,
 intercambiar mensajes con un familiar o ver las fotografías compartidas de la familia.
@@ -52,13 +52,13 @@ A partir de este objetivo general, se han establecido los siguientes objetivos
 específicos:
 
 \begin{enumerate}
-  \item Analizar el contexto del problema y revisar las soluciones existentes desde el punto de vista de la accesibilidad para
+  \item Analizar el contexto del problema y encontrar las mejores soluciones posibles desde el punto de vista de la accesibilidad para
   personas mayores.
 
   \item Diseñar una arquitectura organizada en módulos funcionales: agenda, contactos, mensajería, galería y vinculación familiar.Con un sistema de roles que adapte los permisos y la interfaz al perfil de cada
   usuario.
 
-  \item Implementar una interfaz diferenciada para el rol de persona mayor, con
+  \item Implementar una interfaz única para el rol de persona mayor, con
   tipografía ampliada, áreas de interacción grandes, lenguaje sencillo y flujos
   de navegación reducidos al mínimo, manteniendo en paralelo una interfaz
   completa para los familiares.
@@ -66,8 +66,7 @@ específicos:
   \item Cumplir las pautas de accesibilidad WCAG 2.1 en su nivel AA, aplicándolas
   a colores, tamaños, contrastes, indicadores de foco y mecanismos de interacción.
 
-  \item Garantizar la privacidad mediante un modelo de acceso restringido en el
-  que los datos de cada familia permanezcan aislados del resto.
+  \item Garantizar la privacidad de los datos de cada familia.
 
   \item Evaluar la usabilidad con personas mayores siguiendo la metodología de la disciplina de Interacción Persona-Ordenador (IPO), e incorporar a la aplicación las mejoras detectadas durante las sesiones.
 
@@ -87,23 +86,22 @@ describe la estructura seguida en la memoria.
 
 El \textbf{Capítulo~\ref{CAP:ESTADOARTE}} presenta el estado del arte. Se
 analizan las principales aplicaciones existentes que ofrecen soluciones
-relacionadas con el problema abordado y se discuten sus limitaciones relaccionadas con la accesibilidad para personas mayores. Este análisis sitúa
+relacionadas con el problema abordado y se discuten sus limitaciones relacionadas con la accesibilidad para personas mayores. Este análisis sitúa
 \emph{ConectaMayor} en la actualidad y justifica la idea del
 proyecto.
 
 El \textbf{Capítulo~\ref{CAP:DISENO}} aborda el diseño de la aplicación. Se
 exponen los requisitos funcionales y no funcionales agrupados por subsistemas,
-se describe el modelo de datos, se presentan los prototipos de las pantallas
-principales y se justifican las decisiones de arquitectura más importantes.
+se describe el modelo de datos, se presentan las pantallas principales de la aplicación y se justifican las decisiones de arquitectura más importantes.
 
 El \textbf{Capítulo~\ref{CAP:IMPLEMENTACION}} describe la implementación. Se
 detallan las tecnologías empleadas, la arquitectura elegida, se presentan los
-módulos desarrollados mediante capturas reales y fragmentos de código, y se
+módulos desarrollados mediante fragmentos de código representativos y se
 incluye, como sección final, la evaluación de usabilidad realizada con personas
 mayores siguiendo la metodología IPO.
 
 El \textbf{Capítulo~\ref{CAP:CONCLUSIONES}} presenta las conclusiones. Se valora
-el grado de cumplimiento de los objetivos, se discute las limitaciones
+el grado de cumplimiento de los objetivos, se discuten las limitaciones
 encontradas y se proponen ideas y mejoras para el futuro.
 
 El Apéndice~\ref{APP:AIPO} reúne las tablas detalladas de las pruebas de

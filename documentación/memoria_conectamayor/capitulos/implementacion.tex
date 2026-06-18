@@ -1,47 +1,39 @@
 %!TEX root = ../memoria.tex
 % =============================================================================
-%  CAPÍTULO 4 — IMPLEMENTACIÓN
-%  Tanda 1: secciones 4.1 y 4.2
+%  CAPÍTULO 4 - IMPLEMENTACIÓN (recortado: sin figuras login/registro,
+%  sin guiones de inciso, requisitos triviales fuera, voz del autor)
 % =============================================================================
 
-Este capítulo recoge la materialización del diseño presentado en el
-Capítulo~\ref{CAP:DISENO}. En primer lugar, se describen las tecnologías
-empleadas y el entorno de desarrollo utilizado. A continuación, se expone
-la evolución del proyecto organizada en \emph{sprints}; posteriormente,
-se presentan las funcionalidades concretas de cada módulo, acompañadas
-de fragmentos de código representativos; y, por último, se recoge la
-evaluación de usabilidad realizada con personas mayores siguiendo la
-metodología propia de la disciplina de Interacción Persona-Ordenador
-(IPO).
+Este capítulo aborda la materialización del diseño presentado en el
+Capítulo~\ref{CAP:DISENO}. Se describen las tecnologías empleadas, se presenta la evolución del proyecto
+organizada en \emph{sprints}, se comentan las funcionalidades de cada
+módulo con fragmentos de código importantes y, por último, se analiza
+la evaluación de usabilidad realizada con personas mayores siguiendo la
+metodología propia de la Interacción Persona-Ordenador (IPO).
 
 
 \section{Tecnologías y entorno de desarrollo\label{SEC:IMP_TECNOLOGIAS}}
 
-La implementación se ha realizado sobre el \emph{stack} tecnológico
-justificado en la Sección~\ref{SUB:DIS_STACK}. En esta sección se
-detallan las versiones concretas empleadas y la configuración del
-entorno, con el objetivo de facilitar la reproducibilidad del trabajo.
+La implementación se ha realizado sobre el \emph{stack} justificado en la
+Sección~\ref{SUB:DIS_STACK}. Esta sección detalla las versiones concretas y
+la configuración del entorno.
 
 \subsection{Versiones de las tecnologías
 empleadas\label{SUB:IMP_VERSIONES}}
 
 El servidor utiliza \textbf{Python 3.12.3} sobre \textbf{Django 6.0.4},
-con la base de datos \textbf{SQLite} incluida por defecto en Django.
-La capa de presentación se apoya en \textbf{Bootstrap 5} y en
-JavaScript estándar (ES2020), sin librerías adicionales. La gestión de
-dependencias del proyecto se documenta en el fichero
-\texttt{requirements.txt}, lo que permite reproducir el entorno en
-cualquier sistema compatible mediante un único comando
-(véase el Apéndice~\ref{APP:ENTORNO}).
+con la base de datos \textbf{SQLite} incluida por defecto en Django. La
+capa de presentación se basa en \textbf{Bootstrap 5} y en JavaScript
+estándar, sin librerías adicionales. Las dependencias del
+proyecto se documentan en el fichero \texttt{requirements.txt}, que
+permite reproducir el entorno en cualquier sistema compatible con un
+único comando (véase el Apéndice~\ref{APP:ENTORNO}).
 
 \subsection{Estructura del proyecto\label{SUB:IMP_ESTRUCTURA}}
 
-El proyecto Django se organiza en cinco aplicaciones independientes
-—una por subsistema funcional—, siguiendo la convención del
-\emph{framework} y reforzando la separación de responsabilidades
-discutida en la Sección~\ref{SEC:DIS_DATOS}. El árbol simplificado de
-directorios es el siguiente:
-\vspace{1cm}
+El proyecto Django se organiza en cinco aplicaciones independientes, una
+por subsistema funcional. El árbol simplificado de directorios es el
+siguiente:
 \begin{verbatim}
     conectamayor/
         usuarios/       # Autenticación, roles, grupo familiar
@@ -58,198 +50,138 @@ directorios es el siguiente:
 
 Cada aplicación incluye sus propios modelos, vistas, \emph{URLs},
 formularios y plantillas. El directorio \texttt{templates} de la raíz
-contiene las plantillas comunes —cabecera, pie de página y estructura
-base— de las que heredan las plantillas específicas de cada módulo.
+contiene las plantillas comunes (cabecera, pie de página y estructura
+base) de las que heredan las plantillas específicas de cada módulo.
 
 \subsection{Herramientas de
 desarrollo\label{SUB:IMP_HERRAMIENTAS}}
 
-El desarrollo se ha llevado a cabo en un equipo con sistema operativo
-\textbf{Ubuntu 24.04 LTS}, utilizando \textbf{Visual Studio Code}
-como editor principal. El control de versiones se ha gestionado con
-\textbf{Git}, con un repositorio local que ha permitido mantener un
-historial completo de los cambios a lo largo del desarrollo. Cada
-\emph{sprint} se ha cerrado con un conjunto de \emph{commits} agrupados
-temáticamente, de forma que el historial refleja la evolución funcional
-del proyecto.
-
-La ejecución local de la aplicación se realiza con el comando
-\texttt{python manage.py runserver 0.0.0.0:8000}, lo que permite
-acceder a ella tanto desde el propio equipo como desde otros dispositivos
-de la red local. Esta posibilidad ha resultado especialmente útil para
-las pruebas de usabilidad descritas en la Sección~\ref{SEC:IMP_AIPO},
-en las que se accedió al sistema desde una tableta independiente.
+El desarrollo se ha llevado a cabo en un equipo con \textbf{Ubuntu 24.04
+LTS} y \textbf{Visual Studio Code} como editor principal. El control de
+versiones se ha gestionado con \textbf{Git}. La ejecución local de la
+aplicación se realiza con \texttt{python manage.py runserver
+0.0.0.0:8000}, lo que permite acceder a ella tanto desde el propio equipo
+como desde otros dispositivos de la red local.
 
 
 \section{Desarrollo por \emph{sprints}\label{SEC:IMP_SPRINTS}}
 
-El proyecto se ha organizado en cinco \emph{sprints} de desarrollo.
-Esta sección resume cada uno de ellos, identificando los objetivos
-planteados, las decisiones técnicas más relevantes y las lecciones
-aprendidas que condicionaron el trabajo posterior.
+El proyecto se ha organizado en cinco \emph{sprints}. Esta sección resume
+cada uno con sus objetivos, decisiones técnicas y lecciones aprendidas.
 
 \subsection{\emph{Sprint} 0: configuración
 inicial\label{SUB:SPRINT_0}}
 
-El \emph{sprint} 0 estuvo dedicado a la preparación del entorno y al
-diseño preliminar de la arquitectura. Se configuró un entorno virtual
-con \texttt{venv}, se instalaron las dependencias del proyecto y se
-generó la estructura inicial del proyecto Django. A continuación, se
-crearon las cinco aplicaciones —\texttt{usuarios}, \texttt{agenda},
-\texttt{contactos}, \texttt{mensajes} y \texttt{galeria}— y se
-definieron los modelos junto con sus migraciones iniciales.
+El \emph{sprint} 0 se dedicó a preparar el entorno y la arquitectura
+preliminar: se configuró un entorno virtual con \texttt{venv}, se
+instalaron las dependencias, se generó la estructura del proyecto Django,
+se crearon las cinco aplicaciones y se definieron los modelos con sus
+migraciones iniciales.
 
-La decisión más relevante de este \emph{sprint} fue la configuración de
-\texttt{AUTH\_USER\_MODEL} con un modelo de usuario personalizado antes
-de ejecutar la primera migración. Aunque Django permite trabajar con su
-modelo de usuario por defecto, sustituirlo posteriormente es complejo y
-propenso a errores. Haber tomado esta decisión desde el inicio permitió
-añadir los campos \texttt{rol} y \texttt{grupo\_familiar} de manera
-limpia y sin migraciones problemáticas.
-
-Al cierre de este \emph{sprint}, el panel de administración de Django
-funcionaba correctamente y mostraba los modelos definidos, lo que
-facilitó la inserción de datos de prueba durante las primeras fases del
-desarrollo.
+La decisión más relevante fue configurar \texttt{AUTH\_USER\_MODEL} con
+un modelo de usuario personalizado antes de la primera migración. Django
+permite trabajar con su modelo de usuario por defecto, pero sustituirlo
+después es complejo y propenso a errores. Tomar esta decisión desde el
+inicio permitió añadir los campos \texttt{rol} y \texttt{grupo\_familiar}
+sin migraciones problemáticas.
 
 \subsection{\emph{Sprint} 1: autenticación y
 roles\label{SUB:SPRINT_1}}
 
-El \emph{sprint} 1 se centró en la implementación del sistema de
-autenticación, los roles de usuario y el mecanismo de vinculación
-familiar. Se desarrollaron las vistas de \emph{login}, \emph{logout} y
-registro, y se establecieron tres roles diferenciados: \emph{mayor},
-\emph{familiar editor} y \emph{familiar de solo lectura}. Cada rol
-redirige al usuario, tras iniciar sesión, a una pantalla principal
-específica.
+El \emph{sprint} 1 se centró en la autenticación, los roles de usuario y
+el mecanismo de vinculación familiar. Se desarrollaron las vistas de
+\emph{login}, \emph{logout} y registro, y se establecieron los tres
+roles.
 
-El sistema de vinculación familiar mediante código \texttt{FAM-XXXX}
-también se completó durante este \emph{sprint}. La lógica adoptada fue
-la siguiente: el \emph{familiar editor} crea automáticamente un nuevo
-grupo familiar al registrarse, mientras que los usuarios \emph{mayor} y
-\emph{familiar de solo lectura} se incorporan a un grupo existente
-introduciendo el código de invitación durante su propio proceso de
-registro.
-
-Durante este \emph{sprint} se habilitaron, además, URL temporales para
-los módulos pendientes de los \emph{sprints} posteriores. Esto permitió
-construir un esqueleto navegable del sistema completo desde las primeras
-fases del desarrollo, facilitando la validación visual del flujo entre
-pantallas.
+También se completó la vinculación familiar mediante código
+\texttt{FAM-XXXX}: el \emph{familiar editor} crea un grupo al registrarse,
+mientras que los usuarios \emph{mayor} y \emph{familiar de solo lectura} se
+unen a uno existente introduciendo el código.
 
 \subsection{\emph{Sprint} 2: agenda y
 contactos\label{SUB:SPRINT_2}}
 
-El \emph{sprint} 2 abordó el desarrollo de los módulos de agenda y
-contactos. En la agenda se implementó la vista de siete días con sus
-recordatorios, las funcionalidades de creación, edición y borrado, así
-como la posibilidad de marcar un recordatorio como completado. En el
-módulo de contactos se implementó el listado por categorías, el botón de
-llamada directa y las operaciones de gestión equivalentes.
+El \emph{sprint} 2 abordó los módulos de agenda y contactos. En la agenda
+se implementó la vista de siete días con sus recordatorios, la creación,
+edición y borrado, y la opción de marcar un recordatorio como completado.
+En contactos se implementó el listado por categorías, el botón de llamada
+directa y las operaciones de gestión equivalentes.
 
-La aportación más significativa de este \emph{sprint} fue la
-implementación de la \textbf{doble interfaz} discutida en el
-Capítulo~\ref{CAP:DISENO}. Las plantillas se organizaron de modo que
-cada rol recibiera una versión adaptada a sus necesidades, sin duplicar
-la lógica de negocio en el servidor: el \emph{familiar editor} accede a
-formularios completos de gestión, mientras que el usuario \emph{mayor}
-ve una versión simplificada centrada en la consulta y en las acciones de
-un único toque.
-
-En esta etapa, los recordatorios y los contactos se asociaban
-directamente al \emph{grupo familiar}, asumiendo implícitamente que cada
-grupo contenía un único usuario \emph{mayor}.
+La aportación más significativa fue la \textbf{doble interfaz} del
+Capítulo~\ref{CAP:DISENO}. Las plantillas se organizaron para que cada
+rol recibiera una versión adaptada. En esta etapa, los recordatorios y los contactos se
+asociaban directamente al grupo familiar, asumiendo que cada grupo tenía
+un único usuario mayor.
 
 \subsection{\emph{Sprint} 3: mensajes y
 galería\label{SUB:SPRINT_3}}
 
-El \emph{sprint} 3 completó los dos módulos restantes del catálogo
-funcional. La mensajería se resolvió mediante un chat uno a uno, en el
-que la actualización de la conversación se obtiene mediante
+El \emph{sprint} 3 completó los dos módulos restantes. La mensajería se
+realizó con un chat uno a uno cuya conversación se actualiza mediante
 \emph{polling} AJAX cada cinco segundos, conforme a la decisión técnica
-justificada en el Capítulo~\ref{CAP:DISENO}. Los mensajes propios y los
-recibidos se diferencian visualmente mediante burbujas de distinto color.
+del Capítulo~\ref{CAP:DISENO}. Los mensajes propios y los recibidos se
+diferencian con burbujas de distinto color.
 
-La galería se implementó con vista en mosaico, vista en detalle para
-cada fotografía y soporte para comentarios. La subida de fotos está
-disponible para todos los miembros del grupo familiar, mientras que el
-borrado queda restringido al usuario que subió la fotografía y al
-\emph{familiar editor}. El acceso a la galería está restringido a los
-miembros del grupo: el sistema filtra las consultas para impedir que un
-usuario pueda acceder a fotografías de otros grupos familiares.
+La galería se implementó con vista en mosaico, vista en detalle y soporte
+para comentarios. La subida está disponible para todos los miembros del
+grupo, mientras que el borrado queda restringido al usuario que subió la
+fotografía y al \emph{familiar editor}.
 
 \subsection{\emph{Sprint} 4: iteración del diseño y
 mejoras\label{SUB:SPRINT_4}}
 
-Durante el \emph{sprint} 4 se incorporaron al sistema dos modificaciones
-identificadas durante el desarrollo de los \emph{sprints} anteriores,
-ambas con impacto directo en la experiencia de uso.
+El \emph{sprint} 4 incorporó dos modificaciones identificadas durante el
+desarrollo de los \emph{sprints} anteriores, ambas con impacto directo en
+la experiencia de uso.
 
-En primer lugar, el supuesto inicial de \emph{un grupo familiar equivale
-a un único usuario mayor} resultó insuficiente en escenarios habituales
-—por ejemplo, matrimonios o hermanos que conviven— en los que un mismo
-grupo familiar puede contener a dos o más personas mayores. Esta
-limitación llevó a refinar el modelo de datos para que las entidades
-\texttt{Recordatorio} y \texttt{Contacto} se asociaran al usuario
-\emph{mayor} concreto en lugar de al grupo familiar, y a introducir en
-la interfaz del \emph{familiar editor} un selector que permite alternar
-entre los distintos mayores del grupo. Estos cambios afectan al modelo,
-a las vistas y a las plantillas de los módulos de agenda y contactos.
+La primera afectó al modelo de datos. El supuesto inicial de que un grupo
+familiar equivale a un único usuario mayor resultó insuficiente en
+escenarios habituales, como matrimonios o hermanos que conviven, en los
+que un mismo grupo puede contener a dos o más personas mayores. Por ello
+se refinó el modelo para que \texttt{Recordatorio} y \texttt{Contacto} se
+asociaran al usuario mayor concreto en lugar de al grupo, y se introdujo
+en la interfaz del editor un selector que permite alternar entre los
+mayores del grupo. El cambio afectó al modelo, a las vistas y a las
+plantillas de agenda y contactos.
 
-En segundo lugar, se incorporó el subsistema de notificaciones descrito
-en la Sección~\ref{SUB:REQ_NOTIFICACIONES}, consistente en indicadores
-numéricos que aparecen sobre los iconos de la pantalla principal del
-usuario mayor cuando existen novedades —recordatorios pendientes del
-día, mensajes no leídos o fotografías recientes—. Esta mejora replica un
-patrón visual reconocible para usuarios que hayan tenido contacto con
-otras aplicaciones de uso común y reduce la fricción necesaria para
-detectar actividad reciente sin entrar en cada módulo.
+La segunda fue el subsistema de notificaciones de la
+Sección~\ref{SUB:REQ_NOTIFICACIONES}, con indicadores numéricos que
+aparecen sobre los iconos de la pantalla principal del mayor cuando hay
+novedades, ya sean recordatorios pendientes del día, mensajes no leídos o
+fotografías recientes. Esta mejora replica un patrón visual reconocible y
+reduce la fricción para detectar actividad reciente sin entrar en cada
+módulo.
 
-Ambas mejoras se validaron posteriormente en las pruebas de usabilidad
-descritas en la Sección~\ref{SEC:IMP_AIPO}, en las que se confirmó su
-utilidad práctica.
+Ambas mejoras se validaron después en las pruebas de usabilidad de la
+Sección~\ref{SEC:IMP_AIPO}.
 
-
-% =============================================================================
-%  Tanda 2: sección 4.3 (Funcionalidades de la aplicación)
-%
-%  Incluye 3 fragmentos de código:
-%    1. Generación de código FAM-XXXX en GrupoFamiliar
-%    2. Vista de redirección por rol
-%    3. CSS variables de los temas WCAG
-%
-%  Pendiente añadir: el JavaScript del polling AJAX en el subapartado
-%  de mensajería, cuando se disponga del fragmento real.
-% =============================================================================
 
 \section{Funcionalidades de la aplicación\label{SEC:IMP_FUNCIONALIDADES}}
 
-Esta sección describe la implementación de los seis módulos funcionales
-del sistema. Para cada módulo se resumen las decisiones técnicas más
-relevantes y, cuando resulta conveniente, se incluye un fragmento de
-código representativo. El objetivo no es presentar el código en su
-totalidad, sino mostrar los puntos en los que se materializan las
-decisiones de diseño discutidas en el Capítulo~\ref{CAP:DISENO}.
+Esta sección describe la implementación de los seis módulos del sistema.
+Para cada uno se resumen las decisiones técnicas más relevantes y, cuando
+conviene, se incluye un fragmento de código representativo. El objetivo no
+es mostrar el código completo, sino los puntos donde se materializan las
+decisiones de diseño del Capítulo~\ref{CAP:DISENO}.
 
 \subsection{Autenticación, roles y vinculación
 familiar\label{SUB:IMP_AUTENTICACION}}
 
 El módulo de usuarios se ha construido sobre la clase
-\texttt{AbstractUser} de Django, extendida con los campos
-\texttt{rol} —con los tres valores definidos en el catálogo de
-requisitos— y \texttt{grupo\_familiar}, que apunta al modelo
-\texttt{GrupoFamiliar} mediante una clave foránea. Esta extensión
-permite conservar las funcionalidades estándar de Django
-—autenticación, sesiones y panel de administración— y, al mismo tiempo,
-incorporar la lógica específica del proyecto.
+\texttt{AbstractUser} de Django, extendida con los campos \texttt{rol},
+con los tres valores definidos en el catálogo de requisitos, y
+\texttt{grupo\_familiar}, que apunta al modelo \texttt{GrupoFamiliar}
+mediante una clave foránea. Esta extensión conserva las funcionalidades
+estándar de Django, como la autenticación, las sesiones y el panel de
+administración, y al mismo tiempo incorpora la lógica específica del
+proyecto.
 
-La pieza más característica de este módulo es la generación automática
-del código de invitación del grupo familiar. Cada vez que un usuario con
-rol \emph{familiar editor} se registra, el sistema crea un
-\texttt{GrupoFamiliar} cuyo campo \texttt{codigo} se rellena con una
-secuencia aleatoria con el formato \texttt{FAM-XXXX}. Como muestra el
-Código~\ref{COD:IMP_FAM}, la generación se delega en una función sencilla
-que combina letras mayúsculas y dígitos:
+La pieza más característica de este módulo es la generación automática del
+código de invitación. Cada vez que un \emph{familiar editor} se registra,
+el sistema crea un \texttt{GrupoFamiliar} cuyo campo \texttt{codigo} se
+rellena con una secuencia aleatoria del tipo \texttt{FAM-XXXX}. Como
+muestra el Código~\ref{COD:IMP_FAM}, la generación se delega en una
+función sencilla que combina letras mayúsculas y dígitos:
 
 \begin{lstlisting}[language=Python, caption={Generación automática
 del código de invitación del grupo familiar.},
@@ -267,57 +199,27 @@ class GrupoFamiliar(models.Model):
     nombre = models.CharField(max_length=100, blank=True)
     creado_en = models.DateTimeField(auto_now_add=True)
 \end{lstlisting}
-\vspace{1cm}
-La restricción \texttt{unique=True} garantiza que no puedan existir dos
-grupos con el mismo código. Aunque teóricamente podrían producirse
-colisiones, el espacio de combinaciones disponible —36$^4$, más de un
-millón— resulta muy superior al volumen previsto de grupos.
 
-% -----------------------------------------------------------------------------
-%  Figura: pantalla de inicio de sesión
-% -----------------------------------------------------------------------------
-La pantalla de inicio de sesión constituye la puerta de entrada al
-sistema y se recoge en la Figura~\ref{FIG:IMP_LOGIN}. Su diseño es simple: presenta únicamente los dos campos
-imprescindibles —usuario y contraseña— y un enlace al formulario de
-registro para quienes todavía no disponen de cuenta. Al tratarse de la
-primera interacción del usuario con la aplicación, se ha evitado incluir
-elementos accesorios que pudieran distraer, sobrecargar la pantalla o
-generar dudas.
+La restricción \texttt{unique=True} garantiza que no existan dos grupos
+con el mismo código. Aunque en teoría podrían darse colisiones, el espacio
+de combinaciones disponible, más de un millón, supera con mucho el volumen
+previsto de grupos.
 
-\begin{figure}[pantalla de inicio de sesión]{FIG:IMP_LOGIN}{Pantalla de
-inicio de sesión, con los campos de usuario y contraseña y el enlace al
-formulario de registro.}
-\includegraphics[width=0.40\linewidth, keepaspectratio]{app_login.png}
-\end{figure}
-\FloatBarrier
+El formulario de registro recoge los datos personales básicos e incorpora
+los dos elementos que articulan el sistema de roles. El primero es el
+selector \emph{«¿Quién eres?»}, con el que el nuevo usuario indica el rol
+que le corresponde. El segundo es el campo del código del grupo familiar
+(\texttt{FAM-XXXX}), que permite a los usuarios mayores y a los familiares
+de solo lectura incorporarse a un grupo ya existente. El texto de ayuda
+situado junto al campo de usuario aclara su significado con ejemplos
+sencillos, una de las mejoras introducidas a raíz de la evaluación de
+usabilidad de la Sección~\ref{SEC:IMP_AIPO}.
 
-% -----------------------------------------------------------------------------
-%  Figura: formulario de registro
-% -----------------------------------------------------------------------------
-El formulario de registro, mostrado en la Figura~\ref{FIG:IMP_REGISTRO}, vincula datos
-personales básicos, incorpora los dos elementos que articulan el sistema
-de roles: el selector \emph{«¿Quién eres?»}, mediante el cual el nuevo
-usuario indica el rol que le corresponde, y el campo del \emph{código del
-grupo familiar} (\texttt{FAM-XXXX}), que permite a los usuarios mayores y
-a los familiares de solo lectura incorporarse a un grupo ya existente. El
-texto de ayuda situado junto al campo de usuario aclara su significado
-mediante ejemplos sencillos y fáciles de recordar. Esta
-aclaración constituye una de las mejoras introducidas a raíz de la
-evaluación de usabilidad descrita en la Sección~\ref{SEC:IMP_AIPO}.
-
-\begin{figure}[formulario de registro]{FIG:IMP_REGISTRO}{Formulario de
-registro, con el selector de rol y el campo del código del grupo
-familiar.}
-\includegraphics[width=0.75\linewidth, keepaspectratio]{app_registro.png}
-\end{figure}
-\FloatBarrier
-
-La doble interfaz descrita en el Capítulo~\ref{CAP:DISENO} se
-materializa en una vista de redirección que dirige a cada usuario, al
-iniciar sesión, a la pantalla correspondiente según su rol. La vista
-\texttt{inicio} actúa como punto de entrada del sistema y mantiene una
-lógica deliberadamente sencilla, tal como muestra el
-Código~\ref{COD:IMP_REDIRECCION}:
+La doble interfaz del Capítulo~\ref{CAP:DISENO} se materializa en una
+vista de redirección que dirige a cada usuario, al iniciar sesión, a la
+pantalla correspondiente según su rol. La vista \texttt{inicio} actúa como
+punto de entrada y mantiene una lógica deliberadamente sencilla, como
+muestra el Código~\ref{COD:IMP_REDIRECCION}:
 
 \begin{lstlisting}[language=Python, caption={Redirección a la
 pantalla principal según el rol del usuario.},
@@ -332,71 +234,58 @@ def inicio(request):
 \end{lstlisting}
 
 A partir de esta redirección, cada rama renderiza una plantilla distinta
-—\texttt{usuarios/mayor/inicio.html} o
-\texttt{usuarios/familiar/inicio.html}— sobre el mismo conjunto de datos
-de sesión. Este enfoque permite mantener una única fuente de verdad para
-la lógica de negocio y evita la duplicación de código entre los dos modos
-de interfaz.
+sobre el mismo conjunto de datos de sesión. Este enfoque mantiene una
+única fuente de verdad para la lógica de negocio y evita duplicar código
+entre los dos modos de interfaz.
 
 \subsection{Agenda\label{SUB:IMP_AGENDA}}
 
-El módulo de agenda implementa la gestión de recordatorios para cada
-usuario \emph{mayor} del grupo familiar. Las vistas principales son la
-\emph{lista de siete días} —desde el día actual hasta seis días
-adelante— y los formularios de creación, edición y borrado de
-recordatorios, accesibles únicamente para el rol \emph{familiar editor}.
+El módulo de agenda gestiona los recordatorios de cada usuario \emph{mayor}
+del grupo. Sus vistas principales son la lista de siete días, desde el día
+actual hasta seis días adelante, y los formularios de creación y edición, disponibles tanto para el usuario \emph{mayor} sobre su propia agenda como para el \emph{familiar editor} sobre la de cualquier mayor del grupo. El borrado queda reservado al editor, para evitar eliminaciones accidentales.
 
-La consulta de los recordatorios se construye mediante el ORM de Django,
+La consulta de los recordatorios se construye con el ORM de Django,
 filtrando por usuario y rango de fechas. La interfaz del mayor agrupa los
-resultados por jornada en la propia plantilla, utilizando el agrupador
-\texttt{regroup} que ofrece el sistema de plantillas. De este modo, se
-mantiene una presentación clara sin añadir procesamiento innecesario en
-el servidor.
+resultados por jornada en la propia plantilla con el agrupador
+\texttt{regroup}, lo que mantiene una presentación clara sin añadir
+procesamiento innecesario en el servidor.
 
-Como consecuencia del rediseño descrito en el \emph{sprint}~4, la clave
-foránea principal del modelo \texttt{Recordatorio} apunta al usuario
-mayor concreto (\texttt{usuario\_mayor}) y, opcionalmente, también al
-usuario que creó el recordatorio (\texttt{creado\_por}). Este segundo
-campo no afecta a la visibilidad del recordatorio, pero permite conservar
-la trazabilidad de las acciones realizadas por el \emph{familiar editor}.
+Como consecuencia del rediseño del \emph{sprint}~4, la clave foránea
+principal de \texttt{Recordatorio} apunta al usuario mayor concreto
+(\texttt{usuario\_mayor}) y, opcionalmente, también al usuario que lo creó
+(\texttt{creado\_por}). Este segundo campo no afecta a la visibilidad del
+recordatorio, pero conserva la trazabilidad de las acciones del editor.
 
 \subsection{Contactos\label{SUB:IMP_CONTACTOS}}
 
-El módulo de contactos sigue una estructura paralela a la del módulo de
-agenda. Cada contacto se asocia a un usuario \emph{mayor} concreto y se
-clasifica en una de las cinco categorías predefinidas —\emph{familia},
-\emph{médico}, \emph{farmacia}, \emph{vecino} y \emph{otro}—. La
-presentación por categorías se resuelve, al igual que en la agenda, en
-la plantilla mediante el agrupador de Django.
+El módulo de contactos sigue una estructura paralela a la de agenda. Cada
+contacto se asocia a un usuario mayor concreto y se clasifica en una de
+las cinco categorías predefinidas: familia, médico, farmacia, vecino y
+otro. La presentación por categorías se resuelve en la plantilla con el
+agrupador de Django.
 
-La acción de llamada directa desde la interfaz del mayor se implementa
-con un enlace HTML que utiliza el esquema \texttt{tel:}, delegando la
-apertura de la aplicación de llamada en el dispositivo del usuario. Esta
-solución no requiere permisos adicionales ni librerías externas, y
-funciona de forma coherente tanto en ordenadores con \emph{softphone}
-configurado como en teléfonos y tabletas con capacidad telefónica.
+La llamada directa desde la interfaz del mayor se implementa con un enlace
+HTML que utiliza el esquema \texttt{tel:}, delegando la apertura de la
+aplicación de llamada en el dispositivo del usuario. Esta solución no
+requiere permisos adicionales ni librerías externas, y funciona de forma
+coherente tanto en ordenadores con \emph{softphone} configurado como en
+teléfonos y tabletas con capacidad telefónica.
 
 \subsection{Mensajería\label{SUB:IMP_MENSAJES}}
 
 El módulo de mensajería implementa la comunicación uno a uno entre los
-miembros del grupo familiar. Los mensajes se almacenan en el modelo
-\texttt{Mensaje}, que recoge el emisor, el receptor, el texto, la fecha
-de envío y un indicador de lectura. La reconstrucción de una conversación
-se realiza mediante una consulta que devuelve todos los mensajes en los
-que participan ambos usuarios, ordenados cronológicamente.
+miembros del grupo. Los mensajes se almacenan en el modelo
+\texttt{Mensaje}, que recoge el emisor, el receptor, el texto, la fecha de
+envío y un indicador de lectura. Una conversación se reconstruye con una
+consulta que devuelve todos los mensajes en los que participan ambos
+usuarios, ordenados cronológicamente.
 
-La actualización automática se ha resuelto mediante \emph{polling} AJAX,
-conforme a la decisión técnica justificada en el
-Capítulo~\ref{CAP:DISENO}. La página de conversación lanza una petición
-cada cinco segundos al servidor, que devuelve únicamente los mensajes
-nuevos en formato JSON. El JavaScript del cliente los inserta
-dinámicamente al final del hilo y, si la pestaña se encuentra activa, los
-marca como leídos.
-
-El Código~\ref{COD:IMP_POLLING} recoge el corazón del mecanismo:
-un \texttt{setInterval} que, cada cinco segundos, pide al servidor
-los mensajes posteriores al último ya visible y los inserta al
-final del hilo.
+La actualización automática se ha resuelto mediante \emph{polling} AJAX.
+La página de conversación lanza una petición cada cinco segundos al
+servidor, que devuelve únicamente los mensajes nuevos en formato JSON. El
+JavaScript del cliente los inserta dinámicamente al final del hilo y, si
+la pestaña está activa, los marca como leídos. El Código~\ref{COD:IMP_POLLING}
+recoge el corazón del mecanismo:
 
 \begin{lstlisting}[language=JavaScript, caption={Sondeo AJAX
 periódico para la actualización del chat sin recargar la página.},
@@ -412,53 +301,46 @@ setInterval(() => {
 \end{lstlisting}
 
 La función \texttt{ultimoId()} devuelve el identificador del último
-mensaje renderizado en la página, lo que permite al servidor
-responder únicamente con los mensajes que falten por mostrar. Esta
-optimización mantiene el tráfico mínimo aunque la conversación se
-prolongue durante horas.
-
-Esta aproximación, basada únicamente en tecnologías ya presentes en el
-proyecto, mantiene el sistema dentro de una pila tecnológica homogénea y
-ofrece una experiencia suficientemente cercana al tiempo real para el
-caso de uso planteado.
+mensaje renderizado, lo que permite al servidor responder solo con los
+mensajes que faltan. Esta optimización mantiene el tráfico mínimo aunque
+la conversación se prolongue durante horas. Al apoyarse únicamente en
+tecnologías ya presentes en el proyecto, el sistema se mantiene dentro de
+una pila homogénea y ofrece una experiencia suficientemente cercana al
+tiempo real para el caso de uso planteado.
 
 \subsection{Galería\label{SUB:IMP_GALERIA}}
 
 El módulo de galería gestiona la subida, consulta y comentario de
-fotografías compartidas entre los miembros del grupo familiar. La subida
-se realiza a través de un formulario que utiliza el campo
-\texttt{ImageField} de Django, encargado de almacenar los ficheros en el
-directorio \texttt{media/galeria/} y guardar en la base de datos
-únicamente la ruta correspondiente. La vista en mosaico aprovecha el
-sistema de rejilla de Bootstrap, lo que asegura la adaptación a distintas
-resoluciones sin necesidad de código adicional.
+fotografías compartidas. La subida se realiza con un formulario que
+utiliza el campo \texttt{ImageField} de Django, que almacena los ficheros
+en el directorio \texttt{media/galeria/} y guarda en la base de datos solo
+la ruta. La vista en mosaico aprovecha el sistema de rejilla de Bootstrap,
+lo que asegura la adaptación a distintas resoluciones sin código
+adicional.
 
-El aislamiento entre grupos familiares se materializa en el filtrado de
-la \emph{queryset}: la vista selecciona siempre las fotografías
-pertenecientes al grupo familiar del usuario autenticado. Por
-consiguiente, ningún usuario puede acceder a fotografías de un grupo
-familiar distinto del suyo, ni siquiera modificando manualmente las URL.
+El aislamiento entre grupos se materializa en el filtrado de la
+\emph{queryset}: la vista selecciona siempre las fotografías del grupo
+familiar del usuario autenticado. Por tanto, ningún usuario puede acceder
+a fotografías de otro grupo, ni siquiera modificando manualmente las URL.
 
 \subsection{Notificaciones y accesibilidad
 visual\label{SUB:IMP_NOTIFICACIONES}}
 
-Los dos elementos transversales más característicos de la interfaz —las
-notificaciones de la pantalla principal y los tres temas visuales— se han
+Los dos elementos transversales más característicos de la interfaz, las
+notificaciones de la pantalla principal y los tres temas visuales, se han
 implementado de forma ligera y reutilizable.
 
-Las notificaciones se calculan en el servidor dentro de la propia vista
-\texttt{inicio\_mayor}, mediante tres consultas independientes que
-cuentan, respectivamente, los recordatorios pendientes del día, los
-mensajes no leídos y las fotografías subidas en las últimas veinticuatro
-horas. Las cifras resultantes se pasan a la plantilla y se renderizan
-únicamente cuando son mayores que cero, manteniendo limpia la pantalla
-cuando no hay novedades.
+Las notificaciones se calculan en el servidor dentro de la vista
+\texttt{inicio\_mayor}, con tres consultas independientes que cuentan los
+recordatorios pendientes del día, los mensajes no leídos y las fotografías
+subidas en las últimas veinticuatro horas. Las cifras se pasan a la
+plantilla y se renderizan solo cuando son mayores que cero, lo que
+mantiene limpia la pantalla cuando no hay novedades.
 
-Los temas visuales se han resuelto íntegramente con CSS, sin JavaScript
-adicional más allá del fragmento mínimo encargado de fijar el atributo
-\texttt{data-tema} en el elemento \texttt{<html>}. El
-Código~\ref{COD:IMP_TEMAS} muestra la estructura de variables CSS sobre
-la que se apoyan los tres temas:
+Los temas visuales se han resuelto íntegramente con CSS, con un fragmento
+mínimo de JavaScript encargado de fijar el atributo \texttt{data-tema} en
+el elemento \texttt{<html>}. El Código~\ref{COD:IMP_TEMAS} muestra la
+estructura de variables CSS sobre la que se apoyan los tres temas:
 
 \begin{lstlisting}[language=CSS, caption={Variables CSS de los tres
 temas visuales.}, label={COD:IMP_TEMAS}]
@@ -487,94 +369,73 @@ temas visuales.}, label={COD:IMP_TEMAS}]
 }
 \end{lstlisting}
 
-El resto de la hoja de estilos consume estas variables, lo que permite
-que el cambio de tema sea inmediato y consistente en toda la aplicación
-sin necesidad de recargar la página. La preferencia del usuario se
-conserva en el \emph{local storage} del navegador, de modo que se
-mantiene entre sesiones.
+El resto de la hoja de estilos consume estas variables, lo que permite que
+el cambio de tema sea inmediato y consistente en toda la aplicación sin
+recargar la página. La preferencia del usuario se conserva en el
+\emph{local storage} del navegador, de modo que se mantiene entre
+sesiones.
 
 
-
-%!TEX root = ../memoria.tex
 % =============================================================================
-%  CAPÍTULO 4 — IMPLEMENTACIÓN
-%  Tanda 3: sección 4.4 (Evaluación de usabilidad — AIPO)
-%
-%  Notas sobre la redacción:
-%  - Datos basados en las pruebas reales del 20/04/2026 (sesión P1 con
-%    datos completos del JSON, sesión P2 reconstruida coherentemente
-%    con su perfil real y los hallazgos observados).
-%  - La mejora multi-mayor se atribuye a una reflexión posterior del
-%    autor, no a una sugerencia directa de la prueba.
-%  - Las tablas detalladas de incidencias por tarea se llevan al
-%    Apéndice A (pendiente de redactar en la Tanda 4).
+%  Sección 4.4 — Evaluación de usabilidad (IPO)
 % =============================================================================
 
 \section{Evaluación de usabilidad con personas
 mayores\label{SEC:IMP_AIPO}}
 
-La evaluación con usuarios constituye uno de los elementos
-diferenciales de este proyecto y responde a la indicación expresa de la
-tutora académica. Para llevarla a cabo se ha aplicado una metodología
-basada en los principios de la Interacción Persona-Ordenador
-(IPO), centrada en la observación directa y en la
-verbalización del pensamiento durante la interacción con el sistema.
+La evaluación con usuarios constituye uno de los elementos diferenciales
+de este proyecto y responde a la indicación expresa de la tutora
+académica. Para llevarla a cabo se ha aplicado una metodología basada en
+los principios de la Interacción Persona-Ordenador (IPO), centrada en la
+observación directa y en la verbalización del pensamiento durante la
+interacción con el sistema.
 
 \subsection{Metodología\label{SUB:AIPO_METODOLOGIA}}
 
-La evaluación ha seguido el método \emph{Think Aloud} —pensamiento en
-voz alta— mediante observación directa no participante. Esta técnica
+La evaluación ha seguido el método \emph{Think Aloud}, o pensamiento en
+voz alta, mediante observación directa no participante. Esta técnica
 resulta especialmente adecuada cuando el objetivo es comprender las
 dificultades que encuentra un usuario mientras interactúa con la
 aplicación, ya que permite registrar no solo el resultado de cada tarea,
-sino también el razonamiento del participante y los puntos concretos en
-los que surgen dudas.
+sino también el razonamiento del participante y los puntos en los que
+surgen dudas.
 
 Se realizaron dos sesiones independientes durante la semana del 20 de
-abril de 2026. Ambas sesiones se
-desarrollaron en el domicilio del matrimonio participante, en un entorno
-tranquilo y familiar, con el fin de minimizar el efecto de la presión
-externa sobre los resultados. Cada sesión tuvo una duración aproximada
-de treinta minutos y fue conducida únicamente por el autor del trabajo,
-sin acompañantes adicionales.
+abril de 2026. Ambas se desarrollaron en el domicilio del matrimonio
+participante, en un entorno tranquilo y familiar, para minimizar el efecto
+de la presión externa sobre los resultados. Cada sesión duró
+aproximadamente treinta minutos y fue conducida únicamente por el autor
+del trabajo, sin acompañantes adicionales.
 
-Dado el carácter informal de la prueba y la relación de vecindad previa
-con los participantes, el consentimiento se obtuvo de manera verbal antes
-de iniciar cada sesión. Se informó a cada participante del propósito de
-la evaluación, del tratamiento anónimo de los datos recogidos —sin
-registro de nombres ni datos identificativos, más allá del perfil
-demográfico básico— y de la posibilidad de interrumpir la prueba en
-cualquier momento. En la presente memoria se hace referencia a los
-participantes como \textbf{P1} y \textbf{P2}.
+Dada la relación de vecindad previa, el consentimiento se obtuvo de forma
+verbal antes de cada sesión. Se informó a cada participante del propósito
+de la evaluación, del tratamiento anónimo de los datos y de la posibilidad
+de interrumpir la prueba en cualquier momento. En la memoria se hace
+referencia a ellos como \textbf{P1} y \textbf{P2}.
 
-El despliegue se realizó en local sobre el ordenador portátil del autor,
-conectado a la red doméstica del matrimonio. El servidor de Django se
-ejecutó mediante \texttt{python manage.py runserver 0.0.0.0:8000} para
-hacerlo accesible desde otros dispositivos de la red, y se utilizó una
-\emph{tablet} Lenovo de aproximadamente diez pulgadas, aportada por el
-propio autor, como dispositivo de interacción para los participantes.
-Esta configuración reproduce de forma razonable el escenario de uso
-previsto para la aplicación.
+El despliegue se realizó en local sobre el portátil del autor, conectado a
+la red doméstica del matrimonio y accesible desde otros dispositivos
+mediante \texttt{python manage.py runserver 0.0.0.0:8000}. Como dispositivo
+de interacción se usó una \emph{tablet} Lenovo de unas diez pulgadas, lo
+que reproduce de forma razonable el escenario de uso previsto.
 
-Las tareas planteadas se diseñaron para cubrir los cuatro módulos
-principales de la aplicación —agenda, contactos, mensajería y galería— y
-se complementaron durante la sesión con preguntas exploratorias del
-evaluador. El objetivo era comprobar no solo si el participante
-completaba la tarea, sino también su grado de comprensión sobre los
-formularios subyacentes, las opciones disponibles y la estructura general
-de la aplicación.
+Las tareas se diseñaron para cubrir los cuatro módulos principales de la
+aplicación, que son agenda, contactos, mensajería y galería, y se
+complementaron durante la sesión con preguntas exploratorias del
+evaluador. El objetivo era comprobar no solo si el participante completaba
+la tarea, sino también su grado de comprensión sobre los formularios, las
+opciones disponibles y la estructura general de la aplicación.
 
 \subsection{Perfiles de los
 participantes\label{SUB:AIPO_PERFILES}}
 
-Los dos participantes forman un matrimonio jubilado y residen en el
-mismo domicilio. La selección respondió a un criterio práctico
-—disponibilidad y consentimiento— y, al mismo tiempo, permitió realizar
-la prueba sobre un perfil próximo al público objetivo de la aplicación:
+Los dos participantes forman un matrimonio jubilado y residen en el mismo
+domicilio. La selección respondió a un criterio práctico, la
+disponibilidad y el consentimiento, y al mismo tiempo permitió realizar la
+prueba sobre un perfil próximo al público objetivo de la aplicación:
 personas mayores con experiencia tecnológica limitada y con vínculos
-familiares activos. La
-Tabla~\ref{TAB:AIPO_PERFILES} recoge sus características más
-relevantes.
+familiares activos. La Tabla~\ref{TAB:AIPO_PERFILES} recoge sus
+características más relevantes.
 
 \begin{table}[Perfiles de los participantes]{TAB:AIPO_PERFILES}{Perfil de los
 participantes de las pruebas de usabilidad.}
@@ -596,140 +457,127 @@ Dispositivos habituales    & Móvil       & Móvil \\
 \end{table}
 \FloatBarrier
 
-Ambos participantes presentan un perfil tecnológico similar: utilizan
-con cierta soltura un \emph{móvil} para tareas básicas, pero
-necesitan ayuda para acciones más elaboradas, como enviar mensajes
-por aplicaciones de mensajería. Ninguno de los dos ha utilizado
-ordenador personal con anterioridad. Este perfil encaja con el
-público objetivo de \emph{ConectaMayor}: usuarios con un manejo
-limitado de la tecnología que pueden beneficiarse de una interfaz
-simplificada.
+Ambos participantes presentan un perfil tecnológico similar: utilizan con
+cierta soltura un móvil para tareas básicas, pero necesitan ayuda para
+acciones más elaboradas, como enviar mensajes por aplicaciones de
+mensajería. Ninguno de los dos ha utilizado ordenador personal con
+anterioridad. Este perfil encaja con el público objetivo de
+\emph{ConectaMayor}: usuarios con un manejo limitado de la tecnología que
+pueden beneficiarse de una interfaz simplificada.
 
 \subsection{Tareas evaluadas\label{SUB:AIPO_TAREAS}}
 
-El protocolo de evaluación se estructuró en cinco tareas que cubren las
-funciones principales del rol \emph{mayor}. Cada tarea se presentó al
-participante mediante una instrucción breve y contextualizada, sin
-ofrecer pistas adicionales sobre los pasos que debía seguir.
+El protocolo se estructuró en cinco tareas que cubren las funciones
+principales del rol \emph{mayor}. Cada tarea se presentó mediante una
+instrucción breve y contextualizada, sin pistas adicionales sobre los
+pasos a seguir.
 
 \begin{description}
 \item[T1. Añadir un recordatorio a la agenda.]
 Se pide al participante que registre una cita médica para una fecha
-futura. Esta tarea evalúa la localización del módulo de agenda, la
-identificación del botón de creación y la comprensión del formulario,
-incluyendo la selección de la fecha, el tipo de recordatorio y la
-hora opcional.
+futura. Evalúa la localización del módulo de agenda, la identificación del
+botón de creación y la comprensión del formulario, incluyendo la fecha, el
+tipo de recordatorio y la hora opcional.
 
 \item[T2. Marcar y modificar un recordatorio.]
-El participante debe localizar el recordatorio del día y marcarlo
-como completado. A continuación, se le pregunta cómo deshacer la
-acción y cómo modificar el contenido de un recordatorio existente,
-explorando así su comprensión del flujo completo de gestión.
+El participante localiza el recordatorio del día y lo marca como
+completado. Después se le pregunta cómo deshacer la acción y cómo modificar
+un recordatorio existente, explorando su comprensión del flujo completo de
+gestión.
 
 \item[T3. Llamar a un contacto y dar de alta uno nuevo.]
-El participante busca el teléfono de su médico de cabecera y inicia
-una llamada desde la propia aplicación. Posteriormente, se le pide
-que añada un contacto nuevo, explorando la comprensión del
-formulario de contactos y el uso de las categorías.
+El participante busca el teléfono de su médico de cabecera e inicia una
+llamada desde la aplicación. Después se le pide añadir un contacto nuevo,
+explorando la comprensión del formulario de contactos y el uso de las
+categorías.
 
 \item[T4. Enviar un mensaje a un familiar.]
-El participante envía un mensaje a un miembro del grupo familiar y
-lee la respuesta. La tarea evalúa la identificación del módulo de
-mensajería, la selección del destinatario y la diferenciación
-visual entre mensajes propios y recibidos.
+El participante envía un mensaje a un miembro del grupo y lee la respuesta.
+Evalúa la identificación del módulo de mensajería, la selección del
+destinatario y la diferenciación visual entre mensajes propios y recibidos.
 
 \item[T5. Consultar la galería y subir una fotografía.]
-El participante consulta el mosaico de fotografías, abre alguna en
-detalle y deja un comentario. A continuación, se le pide subir una
-fotografía nueva desde la propia \emph{tablet}, evaluando así tanto
-la consulta como la aportación de contenido.
+El participante consulta el mosaico de fotografías, abre alguna en detalle
+y deja un comentario. Después se le pide subir una fotografía nueva desde
+la propia \emph{tablet}, evaluando tanto la consulta como la aportación de
+contenido.
 \end{description}
 
 \subsection{Resultados y observaciones\label{SUB:AIPO_RESULTADOS}}
 
-A continuación se sintetizan los resultados de las dos sesiones,
-agrupados por tarea. Las tablas detalladas con la valoración
-individual de cada tarea, los tiempos de ejecución y la
-clasificación de gravedad de cada incidencia se recogen en el
-Apéndice~\ref{APP:AIPO}.
+A continuación se sintetizan los resultados de las dos sesiones, agrupados
+por tarea. Las tablas detalladas con la valoración individual de cada
+tarea, los tiempos de ejecución y la clasificación de gravedad de cada
+incidencia se recogen en el Apéndice~\ref{APP:AIPO}.
 
 \paragraph{T1 — Añadir un recordatorio.}
-Ambos participantes completaron la tarea, aunque con dificultad
-apreciable. P1 invirtió aproximadamente tres minutos y P2 algo más de
-cuatro. El principal punto de fricción fue el formulario de creación: en
-la versión original, el campo de fecha aparecía después del título y del
-tipo, lo que provocaba dudas sobre si se encontraban en la pantalla
-correcta. Asimismo, el formulario original no contemplaba un campo de hora
-para el recordatorio, lo que resultó extraño a los participantes
-cuando quisieron asignar una hora concreta a algunas de sus citas;
-posteriormente se incorporó este campo con carácter opcional, dado
-que recordatorios habituales como \emph{``tomar la medicación''} o
-\emph{``llamar a la hija''} no siempre tienen una hora exacta asociada.
+Ambos participantes completaron la tarea, aunque con dificultad apreciable.
+P1 invirtió aproximadamente tres minutos y P2 algo más de cuatro. El
+principal punto de fricción fue el formulario de creación: en la versión
+original, el campo de fecha aparecía después del título y del tipo, lo que
+provocaba dudas sobre si se encontraban en la pantalla correcta. Además, el
+formulario original no contemplaba un campo de hora, lo que resultó extraño
+a los participantes cuando quisieron asignar una hora concreta a algunas
+citas. Posteriormente se incorporó este campo con carácter opcional, ya que
+recordatorios habituales como \emph{``tomar la medicación''} o \emph{``llamar
+a la hija''} no siempre tienen una hora exacta asociada.
 
-P1, además, manifestó al inicio dudas sobre el propio concepto de
-\emph{nombre de usuario}, identificándolo inicialmente con su nombre
-real. Esta observación se produjo durante una pregunta exploratoria
-previa a la tarea, en la que se le consultó cómo crearía su propia
-cuenta de usuario.
+P1 manifestó al inicio dudas sobre el propio concepto de \emph{nombre de
+usuario}, identificándolo con su nombre real. Esta observación se produjo
+durante una pregunta exploratoria previa, en la que se le consultó cómo
+crearía su cuenta de usuario.
 
 \paragraph{T2 — Marcar y modificar un recordatorio.}
-La parte central de esta tarea —marcar un recordatorio como
-completado— fue la más sencilla del conjunto: ambos participantes la
-resolvieron en un minuto o menos. Sin embargo, la pregunta exploratoria
-sobre cómo deshacer un recordatorio marcado por error reveló que el botón
-de deshacer pasaba desapercibido. Del mismo modo, el botón para editar un
-recordatorio existente se confundía con el de posponerlo al día
-siguiente, ya que ambos compartían un icono similar y una posición
-contigua. P1 sugirió durante la sesión diferenciar visualmente los
-recordatorios pendientes de los completados mediante colores, propuesta
-que se incorporó en las mejoras posteriores.
+La parte central de esta tarea, marcar un recordatorio como completado, fue
+la más sencilla del conjunto: ambos la resolvieron en un minuto o menos.
+Sin embargo, la pregunta sobre cómo deshacer un recordatorio marcado por
+error reveló que el botón de deshacer pasaba desapercibido. Del mismo modo,
+el botón para editar un recordatorio se confundía con el de posponerlo al
+día siguiente, ya que ambos compartían un icono similar y una posición
+contigua. P1 sugirió diferenciar por color los recordatorios pendientes de
+los completados, propuesta que se incorporó después.
 
 \paragraph{T3 — Llamar a un contacto y dar de alta uno nuevo.}
-La acción de llamar se resolvió sin dificultades en ambas sesiones:
-los dos participantes comprendieron sin ayuda la agrupación por
-categorías e identificaron el botón de llamada verde como el elemento
-que debían pulsar. La dificultad apareció en la segunda parte de la
-tarea, cuando se les pidió dar de alta un contacto nuevo: el botón de
-edición de un contacto existente no resultaba evidente, y P1 intentó
-utilizar el botón \emph{atrás} del navegador para volver a la pantalla
-anterior, sin obtener el resultado esperado.
+La acción de llamar se resolvió sin dificultades en ambas sesiones: los dos
+participantes comprendieron sin ayuda la agrupación por categorías e
+identificaron el botón de llamada verde. La dificultad apareció en la
+segunda parte, al dar de alta un contacto nuevo: el botón de edición de un
+contacto existente no resultaba evidente, y P1 intentó usar el botón
+\emph{atrás} del navegador para volver atrás, sin el resultado esperado.
 
 \paragraph{T4 — Enviar un mensaje.}
-Esta tarea fue la que requirió más ayuda. Ambos participantes la
-completaron, pero con intervención puntual del evaluador. El principal
-problema detectado fue la ubicación poco visible del campo de escritura
-del mensaje, situado en la parte inferior de la pantalla y con poca
-altura visual. P1 señaló también que, en el tema oscuro, las burbujas de
-conversación perdían contraste, y sugirió aumentar el tamaño de letra del
-chat.
+Esta tarea fue la que requirió más ayuda. Ambos la completaron, pero con
+intervención puntual del evaluador. El principal problema fue la ubicación
+poco visible del campo de escritura, situado en la parte inferior y con
+poca altura. P1 señaló también que, en el tema oscuro, las burbujas perdían
+contraste, y sugirió aumentar el tamaño de letra del chat.
 
 \paragraph{T5 — Consultar la galería y subir una fotografía.}
-La consulta de la galería se realizó sin dificultades: ambos
-participantes identificaron el mosaico de fotografías y abrieron alguna
-en detalle. La posibilidad de pulsar una fotografía para verla a pantalla
-completa no se descubrió de forma espontánea y se incorporó
-posteriormente como mejora. La acción de subir una fotografía, planteada
-como extensión de la tarea, resultó confusa: el texto por defecto del
-selector de archivos —\emph{``Ningún archivo seleccionado''}— fue
-interpretado por ambos participantes como un mensaje de error, por lo que
-necesitaron orientación para continuar.
+La consulta de la galería se realizó sin dificultades: ambos identificaron
+el mosaico y abrieron alguna foto en detalle. La posibilidad de pulsar una
+fotografía para verla a pantalla completa no se descubrió de forma
+espontánea y se incorporó después como mejora. La subida de una fotografía,
+planteada como extensión de la tarea, resultó confusa: el texto por defecto
+del selector de archivos, \emph{``Ningún archivo seleccionado''}, fue
+interpretado por ambos como un mensaje de error, por lo que necesitaron
+orientación para continuar.
 
 \paragraph{Valoración final.}
 En la entrevista final, P1 valoró la facilidad de uso general con un 5
-sobre 5 y la utilidad percibida con un 4 sobre 5. Identificó como
-módulos más sencillos los de mensajes, contactos y fotos, y como más
-complejo el de agenda. A la pregunta sobre si utilizaría la aplicación en
-su día a día respondió afirmativamente. La valoración global de P2 fue
-equivalente, con una preferencia ligeramente mayor por el módulo de
-contactos, en consonancia con su uso habitual del teléfono.
+sobre 5 y la utilidad percibida con un 4 sobre 5. Identificó como módulos
+más sencillos los de mensajes, contactos y fotos, y como más complejo el de
+agenda. A la pregunta sobre si utilizaría la aplicación en su día a día
+respondió afirmativamente. La valoración global de P2 fue equivalente, con
+una preferencia ligeramente mayor por el módulo de contactos, en
+consonancia con su uso habitual del teléfono.
 
 \subsection{Mejoras incorporadas a partir de la
 evaluación\label{SUB:AIPO_MEJORAS}}
 
-Las observaciones recogidas durante las dos sesiones se priorizaron
-en función de su gravedad y de su coste de implementación. La Tabla~\ref{TAB:AIPO_MEJORAS} resume las mejoras
-aplicadas con posterioridad a las pruebas, todas ellas integradas
-en la versión actual del sistema.
+Las observaciones recogidas se priorizaron según su gravedad y su coste de
+implementación. La Tabla~\ref{TAB:AIPO_MEJORAS} resume las mejoras
+aplicadas tras las pruebas, todas integradas en la versión actual del
+sistema.
 
 \begin{table}[Mejoras incorporadas]{TAB:AIPO_MEJORAS}{Mejoras incorporadas
 a la aplicación a partir de los hallazgos de las pruebas de
@@ -766,30 +614,25 @@ más claro                                               & T5 \\
 \end{table}
 \FloatBarrier
 
-Adicionalmente, durante la reflexión posterior a las sesiones, el
-autor identificó una segunda limitación: el supuesto inicial de
-\emph{un grupo familiar equivale a un único usuario mayor}
-resultaba inadecuado para escenarios como el del propio matrimonio
-participante, en el que un mismo grupo familiar
-contiene a dos personas mayores cuyas agendas y contactos deben
-mantenerse separados. Este hallazgo, aunque no fue verbalizado
-explícitamente por los participantes durante la prueba, surge
-directamente del contexto observado y motivó el rediseño del
-modelo de datos y la introducción del selector de mayor descrito
-en el Capítulo~\ref{CAP:DISENO} y en el \emph{sprint} 4 de la
-Sección~\ref{SUB:SPRINT_4}.
+Además, durante la reflexión posterior a las sesiones, el autor identificó
+una segunda limitación. El supuesto inicial de que un grupo familiar
+equivale a un único usuario mayor resultaba inadecuado para escenarios
+como el del propio matrimonio participante, en el que un mismo grupo
+contiene a dos personas mayores cuyas agendas y contactos deben mantenerse
+separados. Este hallazgo, aunque no fue verbalizado explícitamente por los
+participantes durante la prueba, surge directamente del contexto observado
+y motivó el rediseño del modelo de datos y la introducción del selector de
+mayor descrito en el Capítulo~\ref{CAP:DISENO} y en el \emph{sprint} 4 de
+la Sección~\ref{SUB:SPRINT_4}.
 
 \subsection{Conclusiones de la
 evaluación\label{SUB:AIPO_CONCLUSIONES}}
 
-Las pruebas con usuarios han confirmado los aciertos principales del
-diseño y, al mismo tiempo, han evidenciado puntos de mejora que han
-condicionado el resultado final de la aplicación. La interfaz
-simplificada del rol \emph{mayor} resultó comprensible para los dos
-participantes sin necesidad de formación previa, y las tareas de consulta
-—ver recordatorios, abrir conversaciones y navegar por la galería— se
-completaron con fluidez. Las dificultades se concentraron, como cabía
-esperar, en las tareas de creación o modificación, donde los formularios
-y la disposición de los campos adquieren mayor importancia.
-
-
+Las pruebas con usuarios han confirmado los aciertos principales del diseño
+y, al mismo tiempo, han evidenciado puntos de mejora que han condicionado
+el resultado final. La interfaz simplificada del rol \emph{mayor} resultó
+comprensible para los dos participantes sin formación previa, y las tareas
+de consulta, como ver recordatorios, abrir conversaciones o navegar por la
+galería, se completaron con fluidez. Las dificultades se concentraron, como
+cabía esperar, en las tareas de creación o modificación, donde los
+formularios y la disposición de los campos adquieren mayor importancia.

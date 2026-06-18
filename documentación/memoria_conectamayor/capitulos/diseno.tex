@@ -1,223 +1,202 @@
 %!TEX root = ../memoria.tex
 % =============================================================================
-%  CAPÍTULO 3 — DISEÑO
+%  CAPÍTULO 3 - DISEÑO (recortado: requisitos suave, stack/datos/interfaz
+%  condensados, sin guiones de inciso, voz del autor. Diagramas intactos.)
 % =============================================================================
 
-Este capítulo recoge las decisiones de diseño adoptadas para
-\emph{ConectaMayor}. Se parte del análisis de los requisitos del sistema,
-agrupados por subsistema funcional, y se avanza hacia la arquitectura
-elegida, el modelo de datos y, por último, el diseño de la interfaz de
-usuario. El propósito es ofrecer al lector una visión completa del proceso que
-ha conducido a la solución implementada en el
-Capítulo~\ref{CAP:IMPLEMENTACION}, justificando las decisiones técnicas
+Este capítulo recoge las decisiones de diseño de \emph{ConectaMayor}. Se
+parte del análisis de requisitos, agrupados por subsistema, y se sigue con la arquitectura, el modelo de datos y el diseño de la interfaz. El
+objetivo es mostrar el proceso que conduce a la solución implementada en
+el Capítulo~\ref{CAP:IMPLEMENTACION}, justificando las decisiones técnicas
 más relevantes.
 
 
 \section{Análisis de requisitos\label{SEC:DIS_REQUISITOS}}
 
-El sistema se ha estructurado en seis subsistemas funcionales, cada uno
-de los cuales agrupa un conjunto coherente de funcionalidades. A esta
-descomposición se añade un bloque de requisitos no funcionales, que
-recoge las propiedades transversales del sistema —accesibilidad,
-privacidad, rendimiento y usabilidad—.
+El sistema se estructura en seis subsistemas funcionales con sus diferentes requisitos. A ellos se añade un bloque de
+requisitos no funcionales con las propiedades del sistema,
+como la accesibilidad, la privacidad, el rendimiento y la usabilidad.
 
 \subsection{Subsistema de gestión de usuarios y vinculación
 familiar\label{SUB:REQ_USUARIOS}}
 
-Este subsistema gestiona el ciclo de vida de las cuentas de usuario y el
-mecanismo que permite agruparlas en unidades familiares. Su diseño
-contempla que un grupo familiar pueda incluir uno o varios usuarios con
-rol \emph{mayor} —situación habitual cuando conviven matrimonios o
-hermanos—, así como uno o varios familiares con permisos de gestión o
-de solo lectura.
+Este subsistema gestiona el ciclo de vida de las cuentas y el mecanismo
+que las agrupa en unidades familiares. Su diseño contempla que un grupo
+pueda incluir uno o varios usuarios \emph{mayor}, algo habitual en
+matrimonios o hermanos que conviven, junto a uno o varios familiares con
+permisos de gestión o de solo lectura.
 
 \begin{description}
   \item[RF1.1] El sistema permitirá registrar nuevos usuarios indicando
   nombre, apellidos, correo electrónico, contraseña y rol.
-  \item[RF1.2] El sistema permitirá iniciar y cerrar sesión.
-  \item[RF1.3] El sistema definirá tres roles diferenciados: \emph{mayor},
-  \emph{familiar editor} y \emph{familiar de solo lectura}.
-  \item[RF1.4] El sistema redirigirá al usuario, tras iniciar sesión, a
-  una pantalla principal específica para su rol.
-  \item[RF1.5] Un usuario con rol \emph{familiar editor} podrá crear un
-  grupo familiar, que se identificará mediante un código único generado
+  \item[RF1.2] El sistema definirá tres roles: \emph{mayor}, \emph{familiar
+  editor} y \emph{familiar de solo lectura}, y redirigirá a cada usuario
+  tras iniciar sesión a una pantalla principal específica de su rol.
+  \item[RF1.3] Un usuario \emph{familiar editor} podrá crear un grupo
+  familiar, identificado mediante un código único generado
   automáticamente con el formato \texttt{FAM-XXXX}.
-  \item[RF1.6] El resto de roles podrán unirse a un grupo familiar
-  existente introduciendo dicho código en el formulario de registro.
-  \item[RF1.7] El sistema garantizará que cada usuario pertenezca a un
-  único grupo familiar.
-  \item[RF1.8] Un grupo familiar podrá contener varios usuarios con rol
-  \emph{mayor}, así como varios familiares con permisos de edición o de
-  solo lectura.
-  \item[RF1.9] Los usuarios podrán editar la información de su propio
-  perfil. El usuario \emph{familiar editor} podrá editar también la
-  información del perfil de los usuarios \emph{mayores} de su grupo.
+  \item[RF1.4] El resto de roles podrán unirse a un grupo existente
+  introduciendo dicho código en el formulario de registro. Cada usuario
+  pertenecerá a un único grupo familiar.
+  \item[RF1.5] Un grupo familiar podrá contener varios usuarios \emph{mayor},
+  así como varios familiares con permisos de edición o de solo lectura.
+  \item[RF1.6] Los usuarios podrán editar su propio perfil. El
+  \emph{familiar editor} podrá editar también el perfil de los usuarios
+  \emph{mayores} de su grupo.
 \end{description}
 
 \subsection{Subsistema de agenda\label{SUB:REQ_AGENDA}}
 
-El subsistema de agenda permite registrar y consultar los eventos y
-recordatorios de cada usuario mayor de manera independiente. Se trata de
-uno de los módulos con mayor valor práctico, dado que las personas mayores
-suelen gestionar citas médicas, tomas de medicación y compromisos
-familiares.
+El subsistema de agenda registra y consulta los recordatorios de cada
+usuario mayor de forma independiente. Es uno de los módulos con mayor
+valor práctico, porque las personas mayores gestionan a menudo citas
+médicas, tareas de medicación y compromisos familiares.
 
 \begin{description}
-  \item[RF2.1] El sistema mostrará a cada usuario \emph{mayor} los
-  eventos programados para los próximos siete días, agrupados por
-  jornada.
+  \item[RF2.1] El sistema mostrará a cada usuario \emph{mayor} los eventos
+  de los próximos siete días, agrupados por jornada, y permitirá marcarlos
+  como completados.
   \item[RF2.2] Cada evento incluirá un título, una hora, una fecha y un
   tipo (cita médica, medicación, evento familiar u otros).
-  \item[RF2.3] El usuario \emph{familiar editor} podrá crear, modificar
-  y eliminar eventos en la agenda de cualquiera de los usuarios
-  \emph{mayores} de su grupo familiar, seleccionando previamente el
-  destinatario.
-  \item[RF2.4] El usuario \emph{mayor} podrá marcar un evento como
-  completado.
-  \item[RF2.5] Cada tipo de evento se representará mediante un icono
-  distintivo, de modo que la persona mayor pueda identificarlo sin
-  necesidad de leer el texto completo.
-  \item[RF2.6] Los eventos estarán asociados exclusivamente al usuario
-  \emph{mayor} al que pertenecen: ningún otro mayor del grupo podrá
-  visualizarlos.
+  \item[RF2.3] El usuario \emph{mayor} podrá crear y editar sus propios
+  recordatorios. La eliminación queda reservada al \emph{familiar editor},
+  para evitar borrados accidentales.
+  \item[RF2.4] El \emph{familiar editor} podrá crear, editar y eliminar
+  recordatorios de cualquier usuario \emph{mayor} de su grupo,
+  seleccionando previamente el destinatario.
+  \item[RF2.5] Cada tipo de evento se representará con un icono distintivo,
+  para que la persona mayor lo identifique sin leer el texto completo.
+  \item[RF2.6] Los eventos estarán asociados únicamente al usuario
+  \emph{mayor} al que pertenecen.
 \end{description}
 
 \subsection{Subsistema de contactos\label{SUB:REQ_CONTACTOS}}
 
-El subsistema de contactos sustituye, dentro del ámbito de la aplicación,
-a la agenda telefónica del dispositivo. Al igual que ocurre con la agenda,
-los contactos pertenecen de forma independiente a cada usuario mayor.
+El subsistema de contactos sustituye, dentro de la aplicación, a la agenda
+telefónica del dispositivo. Como en la agenda, los contactos pertenecen de
+forma independiente a cada usuario mayor.
 
 \begin{description}
   \item[RF3.1] El sistema mostrará los contactos de cada usuario
-  \emph{mayor} agrupados en tres categorías: \emph{familia},
-  \emph{médicos} y \emph{servicios}.
-  \item[RF3.2] Cada contacto incluirá nombre, número de teléfono,
-  categoría y, opcionalmente, una nota descriptiva.
-  \item[RF3.3] Un toque sobre un contacto iniciará automáticamente una
-  llamada telefónica desde el dispositivo del usuario.
-  \item[RF3.4] El usuario \emph{familiar editor} podrá crear, modificar
-  y eliminar contactos en la lista de cualquiera de los usuarios
-  \emph{mayores} de su grupo familiar, seleccionando previamente el
-  destinatario.
-  \item[RF3.5] Los contactos estarán asociados exclusivamente al usuario
+  \emph{mayor} agrupados en categorías.
+  \item[RF3.2] Cada contacto incluirá nombre, número de teléfono, categoría
+  y, opcionalmente, una nota descriptiva.
+  \item[RF3.3] Un toque sobre un contacto iniciará una llamada telefónica
+  desde el dispositivo del usuario.
+  \item[RF3.4] El usuario \emph{mayor} podrá crear y editar sus propios
+  contactos. La eliminación queda reservada al \emph{familiar editor}, para
+  evitar borrados accidentales.
+  \item[RF3.5] El \emph{familiar editor} podrá crear, editar y eliminar
+  contactos de cualquier usuario \emph{mayor} de su grupo, seleccionando
+  previamente el destinatario.
+  \item[RF3.6] Los contactos estarán asociados en exclusiva al usuario
   \emph{mayor} al que pertenecen.
 \end{description}
 
 \subsection{Subsistema de mensajería\label{SUB:REQ_MENSAJES}}
 
 El subsistema de mensajería habilita la comunicación uno a uno entre los
-miembros de un grupo familiar. Se ha optado deliberadamente por una
-mensajería privada y restringida al grupo, sin posibilidad de contactar
-con personas ajenas a este, como medida de protección frente a fraudes y
-contactos no solicitados.
+miembros de un grupo familiar. Se ha optado por una mensajería privada y
+restringida al grupo, sin contacto con personas ajenas, como medida de
+protección frente a fraudes y contactos desconocidos.
 
 \begin{description}
   \item[RF4.1] Los usuarios podrán enviar mensajes de texto a cualquier
   otro miembro de su grupo familiar.
-  \item[RF4.2] La conversación se presentará como un hilo cronológico,
-  diferenciando visualmente los mensajes propios de los recibidos.
+  \item[RF4.2] La conversación se presentará como un hilo cronológico, con
+  distinción visual entre los mensajes propios y los recibidos.
   \item[RF4.3] El sistema marcará los mensajes como leídos cuando el
   destinatario abra la conversación.
-  \item[RF4.4] La interfaz de mensajería actualizará la conversación de
-  forma automática para reflejar los mensajes nuevos sin requerir acción
-  del usuario.
+  \item[RF4.4] La conversación se actualizará de forma automática para
+  reflejar los mensajes nuevos sin requerir acción del usuario.
 \end{description}
 
 \subsection{Subsistema de galería\label{SUB:REQ_GALERIA}}
 
-El subsistema de galería permite que los miembros del grupo familiar
-compartan fotografías en un entorno privado, accesible únicamente para
-las personas vinculadas al grupo.
+El subsistema de galería permite a los miembros del grupo compartir
+fotografías en un entorno privado, accesible solo para las personas
+vinculadas al grupo.
 
 \begin{description}
-  \item[RF5.1] Cualquier miembro del grupo familiar podrá subir
-  fotografías a la galería compartida.
-  \item[RF5.2] La galería se presentará en forma de mosaico, ordenada
-  por fecha de subida descendente.
-  \item[RF5.3] Cada fotografía se podrá ampliar y consultar en detalle.
-  \item[RF5.4] Los usuarios podrán dejar comentarios de texto sobre las
+  \item[RF5.1] Cualquier miembro del grupo podrá subir fotografías a la
+  galería compartida.
+  \item[RF5.2] La galería se presentará en mosaico, ordenada por fecha de
+  subida descendente, y cada fotografía se podrá ampliar y consultar en
+  detalle.
+  \item[RF5.3] Los usuarios podrán dejar comentarios de texto sobre las
   fotografías.
-  \item[RF5.5] El usuario que subió una fotografía y el usuario
-  \emph{familiar editor} podrán eliminarla.
-  \item[RF5.6] El acceso a la galería estará restringido a los miembros
-  del grupo familiar.
+  \item[RF5.4] El usuario que subió una fotografía y el \emph{familiar
+  editor} podrán eliminarla.
+  \item[RF5.5] El acceso a la galería estará restringido a los miembros del
+  grupo familiar.
 \end{description}
 
 \subsection{Subsistema de notificaciones\label{SUB:REQ_NOTIFICACIONES}}
 
-El subsistema de notificaciones complementa al resto de módulos mostrando
-al usuario \emph{mayor}, desde la pantalla principal, la existencia de
-novedades sin necesidad de acceder a cada sección. Este mecanismo emplea
-un patrón reconocible para usuarios habituados a otras aplicaciones de uso
-común y reduce la fricción necesaria para detectar actividad reciente.
+El subsistema de notificaciones muestra al usuario \emph{mayor}, desde la
+pantalla principal, la existencia de novedades sin necesidad de entrar en
+cada sección.
 
 \begin{description}
   \item[RF6.1] La pantalla principal del usuario \emph{mayor} mostrará,
   junto al icono de cada módulo, un indicador numérico cuando existan
   novedades pendientes.
   \item[RF6.2] El módulo de \emph{agenda} mostrará el número de
-  recordatorios pendientes del día en curso.
-  \item[RF6.3] El módulo de \emph{mensajes} mostrará el número de
-  mensajes recibidos no leídos.
-  \item[RF6.4] El módulo de \emph{galería} mostrará el número de
-  fotografías subidas al grupo familiar en las últimas veinticuatro
-  horas.
-  \item[RF6.5] Los indicadores solo se mostrarán cuando su valor sea
-  mayor que cero, manteniendo la pantalla principal libre de elementos
-  visuales innecesarios cuando no haya novedades.
+  recordatorios pendientes del día en ese momento.
+  \item[RF6.3] El módulo de \emph{mensajes} mostrará el número de mensajes
+  recibidos no leídos.
+  \item[RF6.4] El módulo de \emph{galería} mostrará el número de fotografías
+  subidas al grupo en las últimas veinticuatro horas.
+  \item[RF6.5] Los indicadores solo se mostrarán cuando su valor sea mayor
+  que cero, para mantener la pantalla principal libre de elementos
+  innecesarios cuando no hay novedades.
 \end{description}
 
 \subsection{Requisitos no funcionales\label{SUB:REQ_NOFUNCIONALES}}
 
-Los requisitos no funcionales recogen las propiedades transversales que
-debe satisfacer el sistema con independencia de los módulos concretos.
-Su cumplimiento es especialmente relevante en este proyecto, dado que
-buena parte de su valor reside en la accesibilidad y la privacidad.
+Los requisitos no funcionales recogen las propiedades del
+sistema, con independencia de los módulos concretos. Su cumplimiento es
+especialmente importante, porque buena parte del valor del proyecto
+reside en la accesibilidad y la privacidad.
 
 \begin{description}
   \item[RNF1] \textbf{Accesibilidad.} La interfaz cumplirá las pautas
-  WCAG 2.1~\cite{wcag21} en su nivel AA: contraste mínimo 4{,}5:1 para texto normal,
-  áreas de interacción de al menos 44~$\times$~44 píxeles, indicadores
-  visibles de foco y compatibilidad con tecnologías de asistencia.
+  WCAG 2.1~\cite{wcag21} en su nivel AA: contraste mínimo 4{,}5:1 para texto
+  normal, áreas de interacción de al menos 44~$\times$~44 píxeles,
+  indicadores visibles de foco y compatibilidad con tecnologías de
+  asistencia.
   \item[RNF2] \textbf{Diseño adaptable.} La aplicación se visualizará
-  correctamente en pantallas de ordenador, tableta y teléfono móvil sin
-  requerir instalación adicional.
+  correctamente en ordenador, tableta y teléfono móvil sin instalación
+  adicional.
   \item[RNF3] \textbf{Privacidad.} Los datos de cada grupo familiar
-  estarán aislados del resto: ningún usuario podrá acceder a información
-  perteneciente a un grupo familiar distinto del suyo.
+  estarán aislados del resto, sin que ningún usuario pueda acceder a
+  información de otro grupo.
   \item[RNF4] \textbf{Simplicidad de uso.} Las acciones más frecuentes
   estarán accesibles en un único toque desde la pantalla principal del
   usuario \emph{mayor}.
   \item[RNF5] \textbf{Rendimiento.} El tiempo de respuesta de las
   operaciones interactivas no superará los dos segundos en condiciones
   normales de red local.
-  \item[RNF6] \textbf{Mantenibilidad.} El código fuente seguirá las
-  convenciones de Django, se organizará en aplicaciones independientes
-  por subsistema y dispondrá de pruebas automatizadas para las
-  funcionalidades críticas.
+  \item[RNF6] \textbf{Mantenibilidad.} El código seguirá las convenciones
+  de Django, se organizará en aplicaciones independientes por subsistema y
+  dispondrá de pruebas automatizadas para las funcionalidades críticas.
 \end{description}
 
 
 \section{Arquitectura del sistema\label{SEC:DIS_ARQUITECTURA}}
 
-La aplicación sigue una arquitectura cliente--servidor en la que el
-navegador del usuario actúa como cliente y un servidor Django gestiona
-la lógica de negocio y el acceso a los datos. Este modelo es el estándar
-de facto para aplicaciones web, se ajusta a las necesidades del proyecto
-y permite aprovechar buena parte de las funcionalidades que proporciona
-el propio \emph{framework}.
+La aplicación sigue una arquitectura cliente-servidor: el navegador del
+usuario actúa como cliente y un servidor Django gestiona la lógica de
+negocio y el acceso a los datos. Es el modelo estándar para aplicaciones
+web, se ajusta a las necesidades del proyecto y aprovecha buena parte de
+lo que ya ofrece el \emph{framework}.
 
-Internamente, Django sigue el patrón \emph{Modelo--Vista--Plantilla}
-(MVT), una variante del clásico MVC en la que las plantillas asumen el
-papel de la vista tradicional y las vistas se encargan de la lógica de
-presentación. Esta separación facilita la mantenibilidad del código y
-permite ofrecer interfaces diferenciadas según el rol de usuario,
-reutilizando la misma lógica de negocio en el servidor.
-
-La Figura~\ref{FIG:DIS_ARQUITECTURA} muestra el esquema general de la
-arquitectura, identificando las capas principales y el flujo de datos
-entre ellas.
+Internamente, Django sigue el patrón Modelo-Vista-Plantilla (MVT), una
+variante del MVC en la que las plantillas asumen el papel de la vista y
+las vistas se encargan de la lógica de presentación. Esta separación
+facilita el mantenimiento y permite ofrecer interfaces distintas según el
+rol, reutilizando la misma lógica de negocio en el servidor. La
+Figura~\ref{FIG:DIS_ARQUITECTURA} muestra el esquema general.
 
 \begin{figure}[arquitectura general]{FIG:DIS_ARQUITECTURA}{Arquitectura
 cliente--servidor de \emph{ConectaMayor}.}
@@ -263,76 +242,45 @@ cliente--servidor de \emph{ConectaMayor}.}
 
 \subsection{Justificación del \emph{stack} tecnológico\label{SUB:DIS_STACK}}
 
-La elección de las tecnologías se ha realizado priorizando la adecuación
-al proyecto y al perfil del desarrollador frente a la sofisticación
-técnica. A continuación se justifican las decisiones más relevantes.
 
-\paragraph{Django como \emph{framework} principal.} Django incorpora
-de serie buena parte de los componentes que cualquier aplicación web
-necesita: sistema de autenticación, gestión de sesiones, ORM, panel de
-administración y soporte de internacionalización. Esto reduce el código
-que es necesario escribir desde cero y permite concentrar el esfuerzo en
-las funcionalidades específicas de \emph{ConectaMayor}. A ello se suma
-que Django impone una estructura de proyecto clara, lo que facilita
-tanto el mantenimiento como la futura ampliación del sistema.
+\textbf{Django} se ha elegido como \emph{framework} principal porque
+incorpora de serie buena parte de lo que necesita cualquier aplicación
+web: autenticación, gestión de sesiones, ORM y panel de administración.
+Esto reduce el código a escribir desde cero y permite concentrar el
+esfuerzo en lo específico de \emph{ConectaMayor}. Además, impone una
+estructura de proyecto clara que facilita el mantenimiento.
 
-\paragraph{SQLite como sistema de gestión de bases de datos.} SQLite es
-la opción por defecto de Django y resulta suficiente para el volumen de
-datos previsto en un entorno familiar: una decena de usuarios por grupo,
-unos cientos de mensajes y unas pocas docenas de fotografías. Su
-principal ventaja es que no requiere la instalación de un servidor
-independiente, lo que simplifica el despliegue y la demostración del
-sistema. En un escenario de uso real con múltiples familias y mayor
-concurrencia, la migración a PostgreSQL sería recomendable; se contempla
-como línea de trabajo futuro.
+\textbf{SQLite} es la base de datos por defecto de Django y resulta
+suficiente para el volumen previsto en un entorno familiar: una decena de
+usuarios por grupo y unos cientos de registros. No requiere un servidor
+independiente, lo que simplifica el despliegue y la demostración. En un
+escenario real con muchas familias, la migración a PostgreSQL sería
+recomendable y queda como propuesta de trabajo futuro.
 
-\paragraph{Bootstrap 5 para la capa de presentación.} Bootstrap aporta
-un sistema de rejilla responsivo, componentes accesibles por defecto y
-una base estética profesional sin necesidad de diseñar una interfaz
-desde cero. Su comportamiento adaptable a distintos tamaños de pantalla
-es especialmente relevante para una aplicación cuyo público objetivo
-puede utilizar distintos dispositivos —ordenador, tableta o teléfono—.
+\textbf{Bootstrap 5} aporta componentes accesibles
+por defecto y una base estética profesional sin diseñar la interfaz desde
+cero. Su adaptación a distintos tamaños de pantalla es importante para una
+aplicación que puede usarse en ordenador, tableta o teléfono.
 
-\paragraph{JavaScript estándar con sondeo AJAX para la
-mensajería.} La actualización del chat se ha resuelto mediante peticiones
-AJAX periódicas al servidor —técnica conocida como \emph{polling}— en
-lugar de WebSockets. Esta decisión merece una justificación detallada,
-puesto que existen alternativas más sofisticadas.
-
-WebSockets ofrece comunicación bidireccional en tiempo real con menor
-latencia, pero introduce una complejidad notable: requiere un servidor
-ASGI, frente al WSGI estándar de Django, una capa adicional para
-gestionar las conexiones persistentes y una infraestructura de
-\emph{routing} que no forma parte del núcleo de Django. Para una
-aplicación de mensajería familiar, en la que la inmediatez absoluta no
-es crítica, este coste de complejidad no se compensa con beneficios
-proporcionales. Un sondeo cada cinco segundos resulta prácticamente
-equivalente al tiempo real desde la percepción del usuario y permite
-mantener el proyecto dentro de una pila tecnológica homogénea y
-manejable.
-
-\paragraph{JavaScript sin librerías de \emph{frontend}.} Se ha
-descartado el uso de \emph{frameworks} como React o Vue. Las plantillas
-de Django, combinadas con JavaScript estándar para los aspectos
-dinámicos puntuales, cubren las necesidades del proyecto sin introducir
-el coste de aprender y mantener una pila adicional. Esta decisión
-resulta también prudente dado el nivel de experiencia previa en
-desarrollo \emph{frontend}, y permite explicar con seguridad cada
-componente del sistema durante la defensa del trabajo.
+Para la mensajería se ha usado \textbf{JavaScript estándar con sondeo
+AJAX} en lugar de WebSockets. WebSockets ofrece tiempo
+real con menor latencia, pero exige un servidor ASGI en lugar del WSGI
+estándar de Django y una capa adicional para gestionar conexiones
+persistentes. Para una mensajería familiar, donde la inmediatez absoluta
+no es crítica, es un coste que no compensa. Por el mismo motivo se han descartado
+\emph{frameworks} de \emph{frontend} como React o Vue, ya que las
+plantillas de Django con JavaScript puntual cubren las necesidades del
+proyecto sin añadir complejidad innecesaria.
 
 
 \section{Modelo de datos\label{SEC:DIS_DATOS}}
 
-El modelo de datos se ha diseñado siguiendo la lógica natural del
-dominio. El grupo familiar agrupa a varios usuarios, cada uno con su rol
-correspondiente. Los contenidos de cada módulo se asocian a la entidad
-que resulta más adecuada en cada caso: los recordatorios y contactos se
-vinculan al usuario \emph{mayor} concreto al que pertenecen —reflejando
-que un mismo grupo puede contener varios mayores, cada uno con su propia
-agenda de recordatorios y su propia lista de contactos—, mientras que la
-galería se asocia al grupo familiar, ya que su naturaleza es compartida.
-La Figura~\ref{FIG:DIS_ER} muestra el diagrama entidad--relación
-simplificado.
+El modelo de datos sigue la lógica natural del dominio. El grupo familiar
+agrupa a varios usuarios, cada uno con su rol. El contenido cómo los recordatorios y los contactos se vinculan al
+usuario \emph{mayor} concreto al que pertenecen, de modo que un mismo
+grupo puede tener varios mayores con su propia agenda y sus propios
+contactos, mientras que la galería se asocia al grupo, porque el objetivo es que sea compartida por toda la familia. La Figura~\ref{FIG:DIS_ER} muestra el diagrama
+entidad-relación simplificado.
 
 \begin{figure}[modelo entidad relación]{FIG:DIS_ER}{Modelo
 entidad--relación de \emph{ConectaMayor}.}
@@ -387,139 +335,71 @@ entidad--relación de \emph{ConectaMayor}.}
 \end{figure}
 \FloatBarrier
 
-A continuación se describen las entidades principales y los atributos
-más relevantes de cada una. Los nombres de los modelos se corresponden
-con los empleados en la implementación.
+Las entidades principales son las siguientes. \textbf{Usuario} extiende
+el modelo \texttt{AbstractUser} de Django con el rol y el grupo familiar
+al que pertenece; el rol determina su pantalla principal y sus permisos.
+\textbf{GrupoFamiliar} identifica a una familia y se crea automáticamente
+al registrarse el primer \emph{familiar editor}, generando el código de
+invitación \texttt{FAM-XXXX}.Un mismo grupo puede contener varios usuarios
+mayores. \textbf{Recordatorio} y \textbf{Contacto} pertenecen a un usuario
+mayor concreto mediante clave foránea, lo que permite que varios mayores
+convivan en un grupo manteniendo separadas sus agendas y sus listas.
+\textbf{Mensaje} almacena emisor, receptor, texto, fecha y estado de
+lectura, y una conversación se reconstruye con los mensajes en los que
+participan ambos usuarios. Por último, \textbf{Foto} se asocia al grupo y
+al usuario que la subió, y cada \textbf{Comentario} apunta a su fotografía
+y a su autor.
 
-\paragraph{Usuario.} Extiende el modelo \texttt{AbstractUser} de Django
-añadiendo el rol y el grupo familiar al que pertenece. El rol determina
-la pantalla principal a la que se redirige al usuario tras iniciar
-sesión y los permisos que puede ejercer dentro del grupo.
-
-\paragraph{GrupoFamiliar.} Identifica de manera única a una familia
-dentro del sistema. Se crea automáticamente al registrarse el primer
-\emph{familiar editor} y genera un código de invitación con el formato
-\texttt{FAM-XXXX}, donde las cuatro últimas posiciones son
-alfanuméricas aleatorias. Los demás miembros se incorporan al grupo
-introduciendo este código durante su propio proceso de registro. Un
-mismo grupo puede contener varios usuarios con rol \emph{mayor}.
-
-\paragraph{Recordatorio.} Cada recordatorio pertenece a un usuario
-\emph{mayor} concreto, al que está vinculado mediante una relación de
-clave foránea. Además, almacena el usuario que lo creó —habitualmente un
-\emph{familiar editor}—, con el objetivo de poder consultar el origen de
-cada entrada. Incluye fecha, hora y un tipo que determina el icono que
-se mostrará en la agenda.
-
-\paragraph{Contacto.} De manera análoga al recordatorio, cada contacto
-pertenece a un usuario \emph{mayor} concreto. Esta vinculación directa
-con el mayor —y no con el grupo familiar— permite que varios mayores
-convivan en el mismo grupo manteniendo sus listas de contactos
-separadas. El contacto incluye un teléfono, una categoría y una nota
-opcional, y permite iniciar una llamada directa desde la interfaz del
-usuario mayor.
-
-\paragraph{Mensaje.} Cada mensaje almacena un emisor, un receptor y un
-texto, junto con la fecha de envío y un indicador de lectura. La
-conversación entre dos usuarios se reconstruye consultando todos los
-mensajes en los que ambos participan.
-
-\paragraph{Foto y Comentario.} La fotografía se asocia al grupo
-familiar y al usuario que la subió, mientras que cada comentario apunta
-a su fotografía y a su autor. La ordenación de la galería se realiza
-por fecha descendente, siguiendo el patrón habitual de las redes
-sociales.
-
-La organización del código en cinco aplicaciones Django independientes
-—\texttt{usuarios}, \texttt{agenda}, \texttt{contactos},
-\texttt{mensajes} y \texttt{galeria}— sigue esta misma división, lo
-que facilita el mantenimiento y la incorporación futura de nuevos
-módulos sin afectar al resto del sistema.
+Esta división se refleja en la organización del código en cinco
+aplicaciones Django independientes, una por subsistema, lo que facilita el
+mantenimiento y la incorporación de nuevos módulos sin afectar al resto.
 
 
 \section{Diseño de la interfaz\label{SEC:DIS_INTERFAZ}}
 
-El diseño de la interfaz es el aspecto en el que \emph{ConectaMayor} se
-diferencia con mayor claridad de las soluciones generalistas. Las
-decisiones aquí adoptadas afectan directamente a la experiencia de los
-usuarios mayores y son las que se evalúan en las pruebas de usabilidad
-del Capítulo~\ref{CAP:IMPLEMENTACION}.
+El diseño de la interfaz es donde \emph{ConectaMayor} se diferencia mas con las aplicaciones generalistas.
 
 \subsection{Dos interfaces para un mismo sistema\label{SUB:DIS_DOS_INTERFACES}}
 
-La aplicación implementa dos modos de interfaz claramente
-diferenciados, asociados al rol del usuario:
-
-\begin{itemize}
-  \item La \textbf{interfaz simplificada} se presenta al usuario
-  \emph{mayor} y a los \emph{familiares de solo lectura}. Está diseñada
-  para minimizar la carga cognitiva: muestra cuatro accesos directos a
-  los módulos principales, con iconos grandes y etiquetas de texto
-  amplias, y reserva las funciones de gestión para los usuarios con
-  permisos de edición. Junto a cada icono, cuando procede, aparece un
-  indicador numérico con las novedades pendientes, de acuerdo con lo
-  definido en el subsistema de notificaciones.
-
-  \item La \textbf{interfaz completa} se presenta al \emph{familiar
-  editor}. Incluye todos los formularios de creación, edición y borrado
-  de recordatorios y contactos, así como la posibilidad de gestionar el
-  perfil de los usuarios mayores del grupo. En los formularios de
-  agenda y de contactos, cuando el grupo familiar contiene varios
-  mayores, se ofrece un selector previo que permite al editor escoger
-  sobre qué mayor está actuando en cada momento, garantizando así la
-  separación de la información personal de cada uno. Esta interfaz se
-  asemeja, en su densidad informativa, a la de una aplicación de
-  productividad convencional.
-\end{itemize}
-
-El aspecto clave de este diseño es que ambas interfaces se construyen
-sobre el mismo conjunto de modelos y vistas en el servidor: lo que
-cambia es la plantilla que se renderiza en cada caso. Esta
-aproximación, característica de Django, permite mantener una única
-fuente de verdad para la lógica de negocio y evita la duplicación de
-código.
+La aplicación implementa dos modos de interfaz según el rol. La
+\textbf{interfaz simplificada} se presenta al usuario \emph{mayor} y a los
+\emph{familiares de solo lectura}. El
+usuario \emph{mayor} puede gestionar su propia información, creando y
+editando sus recordatorios y contactos, aunque la eliminación se reserva al
+editor para evitar borrados accidentales. La \textbf{interfaz completa} se
+presenta al \emph{familiar editor} y añade el control sobre la información
+de todos los mayores del grupo: crea, edita y elimina sus recordatorios y
+contactos, y gestiona sus perfiles. Cuando el grupo tiene varios mayores,
+los formularios de agenda y contactos ofrecen un selector previo para
+elegir el mayor, lo que garantiza la separación de la
+información de cada uno.
 
 \subsection{Principios de accesibilidad
 aplicados\label{SUB:DIS_WCAG}}
 
-El cumplimiento de las pautas WCAG 2.1 en su nivel AA se ha abordado de
-forma transversal, aplicando los siguientes criterios a todas las
-pantallas:
+El cumplimiento de las pautas WCAG 2.1 nivel AA se ha abordado para cumplir con los siguientes criterios en todas las pantallas:
 
 \begin{itemize}
-  \item \textbf{Tipografía generosa.} El tamaño base del cuerpo de
-  texto es de 18~px, frente a los 14--16~px habituales en aplicaciones
-  generalistas. Los títulos y los textos de los botones principales
-  emplean tamaños proporcionalmente mayores.
+  \item \textbf{Tipografía generosa.} El cuerpo de texto usa 18~px, frente
+  a los 14 o 16~px habituales, con títulos y botones proporcionalmente
+  mayores.
   \item \textbf{Contraste cromático.} Todos los textos respetan una
-  relación de contraste mínima de 4{,}5:1 con respecto a su fondo, y la
-  paleta de colores ha sido validada con la herramienta WebAIM Contrast
-  Checker.
-  \item \textbf{Áreas de interacción amplias.} Los botones y enlaces
-  presentan un área activa mínima de 44~$\times$~44 píxeles, en línea
-  con la recomendación de WCAG y con las directrices de las principales
-  guías de diseño táctil.
-  \item \textbf{Indicadores de foco visibles.} El contorno de foco del
-  navegador no se elimina mediante CSS y, además, se refuerza con un
-  borde adicional para mejorar su visibilidad en pantallas con poca
-  luz.
-  \item \textbf{Lenguaje sencillo.} Los textos de la interfaz evitan
-  tecnicismos y se redactan en imperativo directo (``Guardar'',
-  ``Llamar'') en lugar de en formas impersonales.
-  \item \textbf{Tres temas visuales.} La aplicación ofrece un tema
-  claro, un tema oscuro y un tema de alto contraste, que el usuario
-  puede alternar desde la barra superior. Esta funcionalidad atiende a
-  usuarios con sensibilidad a la luz o con dificultades visuales
-  específicas.
+  relación mínima de 4{,}5:1 con su fondo, validada con la herramienta
+  WebAIM Contrast Checker.
+  \item \textbf{Áreas de interacción amplias.} Los botones y enlaces tienen
+  un área activa mínima de 44~$\times$~44 píxeles.
+  \item \textbf{Indicadores de foco visibles.} El contorno de foco no se
+  elimina con CSS y se refuerza con un borde adicional.
+  \item \textbf{Lenguaje sencillo.} Los textos evitan tecnicismos y usan
+  imperativos directos como \emph{Guardar} o \emph{Llamar}.
+  \item \textbf{Tres temas visuales.} La aplicación ofrece un tema claro,
+  uno oscuro y uno de alto contraste, seleccionables desde la barra
+  superior, para usuarios con sensibilidad a la luz o dificultades
+  visuales.
 \end{itemize}
 
 % =============================================================================
-%  SECCIÓN 3.4.3 — Pantallas principales (v6)
-%  Tamaños ajustados a las dimensiones REALES de las imágenes recortadas.
-%  - PAREJAS: controladas por width (0.48\textwidth c/u) para que quepan
-%    lado a lado sin desbordar, independientemente de su proporción.
-%  - SOLAS: controladas por height (0.45\textheight).
-%  Para alinear verticalmente las parejas se usa \begin{minipage}[t].
+%  SECCIÓN 3.4.3 — Pantallas principales (v6, sin cambios)
 % =============================================================================
 
 \subsection{Pantallas principales de la
@@ -528,35 +408,32 @@ aplicación\label{SUB:DIS_PROTOTIPO}}
 A continuación se muestran capturas reales de las pantallas más
 representativas de \emph{ConectaMayor}, con la explicación de las
 decisiones de diseño de cada una. Las imágenes usan los datos de
-demostración —el grupo González-Pérez, con Carmen y Antonio como
-usuarios mayores y Laura como familiar editora— y reflejan el aspecto
-real de la aplicación en uso. Todas se han tomado sobre una tableta en
-formato vertical, que es el escenario de uso principal previsto. En
-varias de ellas se ve el botón flotante de \emph{Ayuda}, en la esquina
-inferior derecha, presente en todas las vistas.
+demostración, el grupo González-Pérez, con Carmen y Antonio como usuarios
+mayores y Laura como familiar editora, y reflejan el aspecto real de la
+aplicación en uso. Todas se han tomado sobre una tableta en formato
+vertical, que es el escenario de uso principal previsto. En varias de
+ellas se ve el botón flotante de \emph{Ayuda}, en la esquina inferior
+derecha.
 
 % -----------------------------------------------------------------------------
 \paragraph{Pantallas principales: mayor y editor.}
 
-Las dos pantallas de inicio parten de criterios opuestos. La del rol
-\emph{mayor} (Figura~\ref{FIG:DIS_INICIOS}, izquierda) reúne lo
-esencial del día a día sin menús: un saludo personalizado, los
-recordatorios pendientes de la jornada y, debajo, los cuatro accesos a
-los módulos en una cuadrícula de iconos grandes. Sobre los iconos con
-novedades aparece un contador numérico en rojo, según el subsistema de
-notificaciones de la Sección~\ref{SUB:REQ_NOTIFICACIONES}. La idea es
-que la persona mayor vea de un vistazo lo que necesita su atención sin
-explorar nada más.
+La pantalla del rol
+\emph{mayor} (Figura~\ref{FIG:DIS_INICIOS}, izquierda) reúne lo esencial
+del día a día sin menús: un saludo personalizado, los recordatorios
+pendientes del día y, debajo, los cuatro accesos a los módulos en
+una cuadrícula de iconos grandes. Sobre los iconos con novedades aparece
+un contador numérico en rojo, según el subsistema de notificaciones de la
+Sección~\ref{SUB:REQ_NOTIFICACIONES}. La idea es que la persona mayor vea rapidamente los módulos que necesitan su atención .
 
 La pantalla del \emph{familiar editor} (Figura~\ref{FIG:DIS_INICIOS},
-derecha) prioriza la densidad de información, porque la maneja alguien
-más habituado a la tecnología. Destaca el código del grupo familiar
-(\texttt{FAM-A3K9}), que el editor comparte para que los demás se
-unan, y una etiqueta junto al nombre que recuerda el rol activo.
+derecha) prioriza la rapidez y eficacia. Destaca el código del grupo familiar
+(\texttt{FAM-A3K9}), que el editor comparte para que los demás familiares se unan, y
+una etiqueta junto al nombre que recuerda el rol activo.
 
 \begin{figure}[pantallas principales]{FIG:DIS_INICIOS}{Pantallas
 principales de la aplicación. A la izquierda, el rol \emph{mayor} con
-los recordatorios del día y los indicadores de novedades; a la derecha,
+los recordatorios del día y los indicadores de novedades.A la derecha,
 el rol \emph{familiar editor} con el código del grupo destacado.}
 \begin{minipage}[t]{0.48\textwidth}\centering
   \includegraphics[width=\textwidth, keepaspectratio]{app_mayor_inicio.png}
@@ -571,17 +448,12 @@ el rol \emph{familiar editor} con el código del grupo destacado.}
 \paragraph{Agenda del usuario mayor.}
 
 La agenda muestra los recordatorios agrupados por días, empezando por el
-actual. La Figura~\ref{FIG:DIS_AGENDA_MAYOR} recoge la vista de Carmen.
-Cada tipo de recordatorio lleva un icono distintivo —una pastilla para
-la medicación, un teléfono para las llamadas, un hospital para las citas
-médicas o una tarta para los cumpleaños—, de forma que se reconoce el
-evento sin leer el título. El botón \emph{Hecho}, verde y grande, marca
-el recordatorio como completado de un solo toque, en línea con el
-principio de simplicidad de uso (RNF4).
+actual. La Figura~\ref{FIG:DIS_AGENDA_MAYOR} recoge la vista de Carmen (persona mayor).
+Cada tipo de recordatorio lleva un icono representativo. El botón \emph{Hecho}, verde y grande, marca el
+recordatorio como completado de un solo toque,siguiendo la simplicidad de uso (RNF4).
 
 \begin{figure}[agenda del mayor]{FIG:DIS_AGENDA_MAYOR}{Vista de agenda
-del usuario mayor, con los recordatorios del día y los siguientes, cada
-uno con un icono según su tipo.}
+del usuario mayor, con los recordatorios del día y los siguientes.}
 \includegraphics[height=0.45\textheight, keepaspectratio]{app_agenda_mayor.png}
 \end{figure}
 \FloatBarrier
@@ -589,26 +461,19 @@ uno con un icono según su tipo.}
 % -----------------------------------------------------------------------------
 \paragraph{Agenda del editor: selector de mayor y formulario.}
 
-La mayor diferencia entre la interfaz del mayor y la del editor está en
-la gestión de la agenda. Cuando un grupo tiene varios mayores —como el
-matrimonio de Carmen y Antonio—, el editor necesita elegir sobre cuál
-actúa. La Figura~\ref{FIG:DIS_AGENDA_EDITOR} (izquierda) muestra la
-solución: un selector en la parte superior con un botón por cada mayor,
-y el activo resaltado en azul. En la captura, Laura gestiona la agenda
-de Carmen y puede cambiar a la de Antonio con un clic. Junto a cada
+La mayor diferencia entre la interfaz del mayor y la del editor está en la
+gestión de la agenda. Cuando un grupo tiene varios mayores, como el
+matrimonio de Carmen y Antonio, el editor necesita elegir sobre cuál
+actúa. La Figura~\ref{FIG:DIS_AGENDA_EDITOR} (izquierda) muestra un selector en la parte superior con un botón por cada mayor. En la captura, Laura gestiona la agenda de
+Carmen y puede cambiar a la de Antonio con un clic. Junto a cada
 recordatorio aparecen, además del botón \emph{Hecho}, los botones de
-gestión \emph{Cambiar recordatorio} y la papelera para eliminarlo,
-reservados al editor.
+gestión \emph{Cambiar recordatorio} y la papelera para eliminarlo.
 
 Al pulsar \emph{Añadir recordatorio} se abre el formulario de creación
-(Figura~\ref{FIG:DIS_AGENDA_EDITOR}, derecha). El encabezado indica para
-qué mayor se crea el recordatorio (\emph{``Nuevo recordatorio para
-Carmen Pérez Ruiz''}), sin ambigüedad sobre el destinatario.
+(Figura~\ref{FIG:DIS_AGENDA_EDITOR}, derecha).
 
-\begin{figure}[agenda del editor]{FIG:DIS_AGENDA_EDITOR}{Gestión de la
-agenda desde el rol \emph{familiar editor}. A la izquierda, el selector
-superior para elegir el mayor; a la derecha, el formulario de creación,
-que indica en su encabezado el destinatario del recordatorio.}
+\begin{figure}[agenda del editor]{FIG:DIS_AGENDA_EDITOR}{A la izquierda la gestión de la
+agenda desde el rol \emph{familiar editor}. A la derecha, el formulario de creación.}
 \begin{minipage}[t]{0.48\textwidth}\centering
   \includegraphics[width=\textwidth, keepaspectratio]{app_agenda_editor_selector_1.png}
 \end{minipage}\hfill
@@ -621,19 +486,17 @@ que indica en su encabezado el destinatario del recordatorio.}
 % -----------------------------------------------------------------------------
 \paragraph{Listado de contactos.}
 
-La pantalla de contactos sustituye a la agenda telefónica del
-dispositivo con una organización más accesible. La
-Figura~\ref{FIG:DIS_CONTACTOS} muestra la vista de Carmen. Arriba están
-los miembros del grupo familiar, identificados con su rol mediante una
-etiqueta gris. Debajo, los contactos personales agrupados en categorías
-—\emph{Familia}, \emph{Médico}, \emph{Farmacia}, \emph{Vecino} y
-\emph{Otro}—. Cada contacto tiene un botón \emph{Llamar} (verde y
-grande), que inicia la llamada desde el dispositivo, y un botón
-\emph{Editar} para modificar sus datos.
+La pantalla de contactos sustituye a la agenda telefónica del dispositivo
+con una organización más accesible. La Figura~\ref{FIG:DIS_CONTACTOS}
+muestra la vista de Carmen. Arriba están los miembros del grupo familiar,
+identificados con su rol mediante una etiqueta gris. Debajo, los contactos
+personales agrupados en categorías como Familia, Médico, Farmacia, Vecino
+y Otro. Cada contacto tiene un botón \emph{Llamar}, que
+inicia la llamada desde el dispositivo, y un botón \emph{Editar} para
+modificar sus datos.
 
 \begin{figure}[listado de contactos]{FIG:DIS_CONTACTOS}{Listado de
-contactos del usuario mayor, agrupados por categorías, con botón de
-llamada directa.}
+contactos del usuario mayor, agrupados por categorías.}
 \includegraphics[height=0.45\textheight, keepaspectratio]{app_contactos.png}
 \end{figure}
 \FloatBarrier
@@ -642,13 +505,13 @@ llamada directa.}
 \paragraph{Conversación de mensajes.}
 
 El módulo de mensajería sigue el patrón habitual de las aplicaciones de
-chat, reconocible para quien haya usado otras antes. La
+chat. La
 Figura~\ref{FIG:DIS_MENSAJES} recoge una conversación entre Carmen y su
 hija Laura. Los mensajes recibidos van a la izquierda con fondo claro y
-los propios a la derecha con el color principal de la aplicación, cada
-uno con su hora de envío. La conversación se actualiza sola mediante
-sondeo AJAX, como se justificó en la Sección~\ref{SUB:DIS_STACK}, sin
-necesidad de refrescar la página.
+los propios a la derecha con el color principal de la aplicación, cada uno
+con su hora de envío. La conversación se actualiza sola mediante sondeo
+AJAX, como se justificó en la Sección~\ref{SUB:DIS_STACK}, sin necesidad
+de refrescar la página.
 
 \begin{figure}[conversación de mensajes]{FIG:DIS_MENSAJES}{Conversación
 uno a uno, con burbujas diferenciadas para los mensajes propios y los
@@ -668,10 +531,10 @@ una nueva.
 
 Como parte del cumplimiento de las pautas WCAG 2.1 nivel AA
 (Sección~\ref{SUB:DIS_WCAG}), la aplicación ofrece tres temas visuales
-desde la barra superior (Figura~\ref{FIG:DIS_GALERIA_TEMAS}, derecha).
-El tema elegido se guarda en el navegador y se mantiene entre sesiones.
-El de alto contraste se dirige a usuarios con dificultades visuales y el
-oscuro reduce la fatiga con poca luz.
+desde la barra superior (Figura~\ref{FIG:DIS_GALERIA_TEMAS}, derecha). El
+tema elegido se guarda en el navegador y se mantiene entre sesiones. El de
+alto contraste se dirige a usuarios con dificultades visuales y el oscuro
+reduce la fatiga con poca luz.
 
 \begin{figure}[galería y temas]{FIG:DIS_GALERIA_TEMAS}{A la izquierda,
 la galería compartida del grupo en formato mosaico; a la derecha, el
@@ -687,7 +550,4 @@ y de alto contraste.}
 \FloatBarrier
 
 % -----------------------------------------------------------------------------
-El conjunto de estas decisiones de interfaz da lugar a una experiencia
-que, como se discute en el Capítulo~\ref{CAP:IMPLEMENTACION}, resultó
-accesible para los participantes de las pruebas de usabilidad sin que
-necesitaran formación previa.
+
