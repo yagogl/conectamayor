@@ -195,6 +195,7 @@ La doble interfaz se resume en una vista de redirección que, al
 iniciar sesión, lleva a cada usuario a la pantalla de su rol, como muestra
 el Código~\ref{COD:IMP_REDIRECCION}:
 
+\needspace{10\baselineskip} 
 \begin{lstlisting}[language=Python, caption={Redirección a la
 pantalla principal según el rol del usuario.},
 label={COD:IMP_REDIRECCION}]
@@ -207,7 +208,6 @@ def inicio(request):
     return redirect('inicio_familiar')
 \end{lstlisting}
 
-Cada camino muestra una plantilla distinta sobre los mismos datos.
 
 \subsection{Agenda\label{SUB:IMP_AGENDA}}
 
@@ -245,6 +245,7 @@ JavaScript del cliente los añade al final del hilo y los marca como leídos
 si la pestaña está activa. El Código~\ref{COD:IMP_POLLING} recoge el
 mecanismo:
 
+\needspace{10\baselineskip} 
 \begin{lstlisting}[language=JavaScript, caption={Sondeo AJAX
 periódico para la actualización del chat sin recargar la página.},
 label={COD:IMP_POLLING}]
@@ -351,8 +352,7 @@ de la evaluación, del tratamiento anónimo de los datos y de la posibilidad
 de interrumpir la prueba en cualquier momento. En la memoria se hace
 referencia a ellos como \textbf{P1} y \textbf{P2}.
 
-El despliegue se realizó en local sobre el portátil del autor, conectado a
-la red doméstica del matrimonio y accesible desde otros dispositivos
+El despliegue se realizó en local sobre el portátil del autor, con la red doméstica del matrimonio y accesible desde otros dispositivos
 mediante \texttt{python manage.py runserver 0.0.0.0:8000}. Como dispositivo
 de interacción se usó una \emph{tablet} Lenovo de unas diez pulgadas.
 
